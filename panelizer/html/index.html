@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>Panelizer: Postscript Panelizer</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Panelizer
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generováno programem Doxygen 1.8.11 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li class="current"><a href="index.html"><span>Hlavní&#160;stránka</span></a></li>
+      <li><a href="namespaces.html"><span>Prostory&#160;jmen</span></a></li>
+      <li><a href="annotated.html"><span>Třídy</span></a></li>
+      <li><a href="files.html"><span>Soubory</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Hledat" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">Postscript Panelizer </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p>Program pro panelizaci postscriptových výstupů z grafických programů jako je Kicad nebo Eagle. </p><dl class="section author"><dt>Autor</dt><dd>Mrazík <a href="#" onclick="location.href='mai'+'lto:'+'mra'+'zi'+'k@v'+'ol'+'ny.'+'cz'; return false;">mrazi<span style="display: none;">.nosp@m.</span>k@vo<span style="display: none;">.nosp@m.</span>lny.c<span style="display: none;">.nosp@m.</span>z</a> </dd></dl>
+<h1><a class="anchor" id="Motivation"></a>
+Motivace.</h1>
+<p>Pokud si doma dělám plošný spoj, potřebuji dostat na jednu stranu A4 poněkud více motivů než jen jediný malý obrázek, který je produktem návrhu. Lze to řešit různě - mohu si např. zkopírovat motiv přímo jako celou desku v návrhovém systému a pak teprve generovat postscript. To je ale poněkud otravné (záleží na návrhovém systému), deska se pak dost spatně edituje. Dá se použít OpenOffice, jenže tento program má vlastní interpret postsciptu a ten to obvykle trochu zmrší. Další možnost je udělat to "ručně" pomocí ps kódu např. </p><div class="fragment"><div class="line">%!PS-Adobe-2.0</div><div class="line">gsave</div><div class="line">x y translate</div><div class="line">(soubor1.ps) run</div><div class="line">grestore</div><div class="line">gsave</div><div class="line">x y translate</div><div class="line">(soubor2.ps) run</div><div class="line">grestore</div><div class="line">%...</div><div class="line">showpage</div></div><!-- fragment --><p> Ani to není ideální. Sice to přesně zachová výstupní data, ale je nutné</p><ul>
+<li>pracně zjišťovat souřednice posunu x, y</li>
+<li>z původního ps kódu odstranit příkaz showpage</li>
+</ul>
+<p><b> A právě tuto práci by měl vykonat tento program. </b> </p>
+<h1><a class="anchor" id="Properties"></a>
+Vlastnosti.</h1>
+<ul>
+<li>Program používá pro zobrazení externí balík Ghostscript, který .ps soubor převede do .png a ten je možné pomocí Qt zobrazit.</li>
+<li>Zatím jsou implementovány pouze translace (přetažení myší) a rotace o 90st. (pravým uchem myši nebo F3).</li>
+<li>Přidána je změna měřítka kolečkem myši nebo klávesami F1 a F2.</li>
+<li>Vstup i výstup pouze na A4. Vstup je vlastně dán příkazem Ghostscriptu. Nic moc to neomezuje. </li>
+</ul>
+<h1><a class="anchor" id="Usage"></a>
+Použití.</h1>
+<div class="image">
+<img src="panelizer.png" alt="panelizer.png"/>
+</div>
+<p> Příklad. Tlačítkem (+) přidáme soubor, volně přetáhneme obrázek někam do horního levého rohu, zapneme posun jen v X, tlačítkem (DUP) uděláme kopii, tu přetáhneme vpravo, (DUP) ... atd. Po zaplnění vrchní části uložíme jako nový soubor, tlačítkem (-) postupně smažeme plochu, (+) otevřeme uložený soubor, zapneme posuv Y, (DUP) a posuv dolů ... atd. Nakonec uložit.</p>
+<h1><a class="anchor" id="download"></a>
+Ke stažení</h1>
+<p><a href="../panelizer.tgz">Testovací verze.</a> </p>
+<h1><a class="anchor" id="licence"></a>
+Licence</h1>
+<p>Kód bude uvolněn pod <a href="http://www.gnugpl.cz/">GPL2</a> licencí</p>
+<p><b> Některé lokální odkazy na této stránce nefungují, dokumentace není uložena na serveru celá. </b> </p>
+</div></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generováno programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.11
+</small></address>
+</body>
+</html>
