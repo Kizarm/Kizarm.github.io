@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>ARM_minimal.: Zdrojový soubor dbgmcu.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ARM_minimal.
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generováno programem Doxygen 1.8.11 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hlavní&#160;stránka</span></a></li>
+      <li><a href="annotated.html"><span>Třídy</span></a></li>
+      <li class="current"><a href="files.html"><span>Soubory</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Hledat" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Seznam&#160;souborů</span></a></li>
+      <li><a href="globals.html"><span>Symboly&#160;v&#160;souborech</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">dbgmcu.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="dbgmcu_8h.html">Zobrazit dokumentaci tohoto souboru.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef DBG_MCU_H</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define DBG_MCU_H</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">typedef</span> <span class="keyword">union </span>{</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;  <span class="keyword">struct </span>{</div><div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="unionDBGMCU__CR.html#a057df61fe4c5c2e5111753276f656312">   13</a></span>&#160;    uint32_t DBG_SLEEP   : 1;   </div><div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="unionDBGMCU__CR.html#a993631b53e4949f38d7d7a9ec1414fb3">   14</a></span>&#160;    uint32_t DBG_STOP    : 1;   </div><div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="unionDBGMCU__CR.html#af42aa761c89fa5269c9d9633302679ea">   15</a></span>&#160;    uint32_t DBG_STANDBY : 1;   </div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    uint32_t UNUSED1     : 2;</div><div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="unionDBGMCU__CR.html#a51f81611615ddea5eeb5a7c9fcdc6360">   17</a></span>&#160;    uint32_t TRACE_IOEN  : 1;   </div><div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="unionDBGMCU__CR.html#aa01b9847010016d11929a561d2799aaf">   18</a></span>&#160;    uint32_t TRACE_MODE  : 2;   </div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    uint32_t UNUSED2     : 24;</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  }        BIT;                 </div><div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="unionDBGMCU__CR.html#ac6dce572c9dc307fa649314d0ee0311b">   21</a></span>&#160;  uint32_t <a class="code" href="unionDBGMCU__CR.html#ac6dce572c9dc307fa649314d0ee0311b">VAL</a>;                 </div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;} <a class="code" href="unionDBGMCU__CR.html">DBGMCU_CR</a>;</div><div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="structDBGMCU__t.html">   24</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>{</div><div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="structDBGMCU__t.html#a2a8402b6852bca9b0b02f4bc82d489fa">   25</a></span>&#160;  <span class="keyword">volatile</span> uint32_t  <a class="code" href="structDBGMCU__t.html#a2a8402b6852bca9b0b02f4bc82d489fa">IDCODE</a>;    </div><div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="structDBGMCU__t.html#a6633ed0a1b615f4710dc3fc634edb4e6">   26</a></span>&#160;  <span class="keyword">volatile</span> <a class="code" href="unionDBGMCU__CR.html">DBGMCU_CR</a> <a class="code" href="structDBGMCU__t.html#a6633ed0a1b615f4710dc3fc634edb4e6">CR</a>;        </div><div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="structDBGMCU__t.html#a62dae152eeb7860c1da3cb53ce583635">   27</a></span>&#160;  <span class="keyword">volatile</span> uint32_t  <a class="code" href="structDBGMCU__t.html#a62dae152eeb7860c1da3cb53ce583635">APB1_FZ</a>;   </div><div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="structDBGMCU__t.html#abeb8d1f1a45d7d8174fd119650a66a32">   28</a></span>&#160;  <span class="keyword">volatile</span> uint32_t  <a class="code" href="structDBGMCU__t.html#abeb8d1f1a45d7d8174fd119650a66a32">APB2_FZ</a>;   </div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;} <a class="code" href="structDBGMCU__t.html">DBGMCU_t</a>;</div><div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="dbgmcu_8h.html#a12e9257d13f3f8bcf42cac9ce917ed78">   31</a></span>&#160;<span class="keyword">static</span> <a class="code" href="structDBGMCU__t.html">DBGMCU_t</a> * <span class="keyword">const</span>  <a class="code" href="dbgmcu_8h.html#a12e9257d13f3f8bcf42cac9ce917ed78">DBGMCU</a> = (<a class="code" href="structDBGMCU__t.html">DBGMCU_t</a> *) 0xE0042000;</div><div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="dbgmcu_8h.html#a1756eb148e235eeb4fc0bceb1ad7e106">   33</a></span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="dbgmcu_8h.html#a1756eb148e235eeb4fc0bceb1ad7e106">EnableDebugOnSleep</a> (<span class="keywordtype">void</span>) {</div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  DBGMCU-&gt;<a class="code" href="structDBGMCU__t.html#a6633ed0a1b615f4710dc3fc634edb4e6">CR</a>.<a class="code" href="unionDBGMCU__CR.html#a73d87e1f4a68bb1902bb17fe75482fc4">BIT</a>.<a class="code" href="unionDBGMCU__CR.html#a057df61fe4c5c2e5111753276f656312">DBG_SLEEP</a> = 1;</div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif //  DBG_MCU_H</span></div><div class="ttc" id="unionDBGMCU__CR_html"><div class="ttname"><a href="unionDBGMCU__CR.html">DBGMCU_CR</a></div><div class="ttdoc">Control registr DEBUG MCU. </div><div class="ttdef"><b>Definition:</b> dbgmcu.h:11</div></div>
+<div class="ttc" id="structDBGMCU__t_html_a2a8402b6852bca9b0b02f4bc82d489fa"><div class="ttname"><a href="structDBGMCU__t.html#a2a8402b6852bca9b0b02f4bc82d489fa">DBGMCU_t::IDCODE</a></div><div class="ttdeci">volatile uint32_t IDCODE</div><div class="ttdoc">ID procesoru. </div><div class="ttdef"><b>Definition:</b> dbgmcu.h:25</div></div>
+<div class="ttc" id="dbgmcu_8h_html_a1756eb148e235eeb4fc0bceb1ad7e106"><div class="ttname"><a href="dbgmcu_8h.html#a1756eb148e235eeb4fc0bceb1ad7e106">EnableDebugOnSleep</a></div><div class="ttdeci">static void EnableDebugOnSleep(void)</div><div class="ttdoc">Pokud použijeme v programu wfi/wfe, je nutné povolit debug i v tt. módu. </div><div class="ttdef"><b>Definition:</b> dbgmcu.h:33</div></div>
+<div class="ttc" id="structDBGMCU__t_html_abeb8d1f1a45d7d8174fd119650a66a32"><div class="ttname"><a href="structDBGMCU__t.html#abeb8d1f1a45d7d8174fd119650a66a32">DBGMCU_t::APB2_FZ</a></div><div class="ttdeci">volatile uint32_t APB2_FZ</div><div class="ttdoc">chování periferií při debug </div><div class="ttdef"><b>Definition:</b> dbgmcu.h:28</div></div>
+<div class="ttc" id="structDBGMCU__t_html_a6633ed0a1b615f4710dc3fc634edb4e6"><div class="ttname"><a href="structDBGMCU__t.html#a6633ed0a1b615f4710dc3fc634edb4e6">DBGMCU_t::CR</a></div><div class="ttdeci">volatile DBGMCU_CR CR</div><div class="ttdoc">Řízení debug při low power modech. </div><div class="ttdef"><b>Definition:</b> dbgmcu.h:26</div></div>
+<div class="ttc" id="structDBGMCU__t_html"><div class="ttname"><a href="structDBGMCU__t.html">DBGMCU_t</a></div><div class="ttdoc">Blok řízení DEBUG MCU. </div><div class="ttdef"><b>Definition:</b> dbgmcu.h:24</div></div>
+<div class="ttc" id="unionDBGMCU__CR_html_a057df61fe4c5c2e5111753276f656312"><div class="ttname"><a href="unionDBGMCU__CR.html#a057df61fe4c5c2e5111753276f656312">DBGMCU_CR::DBG_SLEEP</a></div><div class="ttdeci">uint32_t DBG_SLEEP</div><div class="ttdoc">Debug Sleep mode. </div><div class="ttdef"><b>Definition:</b> dbgmcu.h:13</div></div>
+<div class="ttc" id="unionDBGMCU__CR_html_a73d87e1f4a68bb1902bb17fe75482fc4"><div class="ttname"><a href="unionDBGMCU__CR.html#a73d87e1f4a68bb1902bb17fe75482fc4">DBGMCU_CR::BIT</a></div><div class="ttdeci">struct DBGMCU_CR::@0 BIT</div><div class="ttdoc">jednotlivé bity </div></div>
+<div class="ttc" id="dbgmcu_8h_html_a12e9257d13f3f8bcf42cac9ce917ed78"><div class="ttname"><a href="dbgmcu_8h.html#a12e9257d13f3f8bcf42cac9ce917ed78">DBGMCU</a></div><div class="ttdeci">static DBGMCU_t *const DBGMCU</div><div class="ttdoc">Adresa DBGMCU bloku. </div><div class="ttdef"><b>Definition:</b> dbgmcu.h:31</div></div>
+<div class="ttc" id="structDBGMCU__t_html_a62dae152eeb7860c1da3cb53ce583635"><div class="ttname"><a href="structDBGMCU__t.html#a62dae152eeb7860c1da3cb53ce583635">DBGMCU_t::APB1_FZ</a></div><div class="ttdeci">volatile uint32_t APB1_FZ</div><div class="ttdoc">chování periferií při debug </div><div class="ttdef"><b>Definition:</b> dbgmcu.h:27</div></div>
+<div class="ttc" id="unionDBGMCU__CR_html_ac6dce572c9dc307fa649314d0ee0311b"><div class="ttname"><a href="unionDBGMCU__CR.html#ac6dce572c9dc307fa649314d0ee0311b">DBGMCU_CR::VAL</a></div><div class="ttdeci">uint32_t VAL</div><div class="ttdoc">Celková hodnota. </div><div class="ttdef"><b>Definition:</b> dbgmcu.h:21</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generováno st 27. zář 2017 08.34:12 pro projekt ARM_minimal. programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.11
+</small></address>
+</body>
+</html>

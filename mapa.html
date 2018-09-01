@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+        <link rel="shortcut icon" href="houba.png">
+	<TITLE>Kde mne najdete</TITLE>
+	<META NAME="CREATED" CONTENT="20080327;20360700">
+	<META NAME="CHANGED" CONTENT="20080327;21071200">
+	<script src="http://api4.mapy.cz/loader.js"></script>
+	<script>Loader.load()</script>
+</HEAD>
+<BODY LANG="cs-CZ" DIR="LTR">
+
+<div id="m" style="width:640px; height:480px;"></div>
+	<script type="text/javascript">
+		var center = SMap.Coords.fromWGS84(13.8540369,50.0505333);
+		var m = new SMap(JAK.gel("m"), center, 13);
+		m.addDefaultLayer(SMap.DEF_BASE).enable();
+		m.addDefaultControls();
+
+		var layer = new SMap.Layer.Marker();
+		m.addLayer(layer);
+		layer.enable();
+
+		var card = new SMap.Card();
+		card.getHeader().innerHTML = "<strong>Mrazik:</strong>";
+		card.getBody().innerHTML = "Tady mne <em>najdete</em>!";
+
+		var options = { 
+		    title: "Dobrý den"
+		};
+		var marker = new SMap.Marker(center, "myMarker", options);
+		marker.decorate(SMap.Marker.Feature.Card, card);
+		layer.addMarker(marker);
+
+	</script>
+<TABLE WIDTH=637 BORDER=1 CELLPADDING=4 CELLSPACING=3>
+	<COL WIDTH=621>
+	<TR>
+		<TD WIDTH=621 HEIGHT=64 VALIGN=TOP BGCOLOR="#ffff00">
+		<P ALIGN=CENTER STYLE="margin-bottom: 0.5cm"><FONT COLOR="#0000ff">
+			<FONT FACE="Luxi Serif, serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Tady
+			mne najdete.</B></FONT></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="font-weight: medium"><FONT FACE="Luxi Serif, serif">Kolečkem
+			myši lze mapu přibl&iacute;žit nebo odd&aacute;lit. Kliknut&iacute;m
+			a přetažen&iacute;m lze mapou pohybovat. No a takhle to vypad&aacute;
+			z v&yacute;šky:</FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+<P><IMG SRC="domecek.png" NAME="obr&aacute;zky1" ALIGN=LEFT WIDTH=640 HEIGHT=480 BORDER=0><BR CLEAR=LEFT><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>

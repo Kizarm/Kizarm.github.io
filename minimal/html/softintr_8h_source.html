@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>ARM_minimal.: Zdrojový soubor soft/softintr.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ARM_minimal.
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generováno programem Doxygen 1.8.11 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hlavní&#160;stránka</span></a></li>
+      <li><a href="annotated.html"><span>Třídy</span></a></li>
+      <li class="current"><a href="files.html"><span>Soubory</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Hledat" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Seznam&#160;souborů</span></a></li>
+      <li><a href="globals.html"><span>Symboly&#160;v&#160;souborech</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_6912e1ab986db549babb9d93a41c0467.html">soft</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">softintr.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="softintr_8h.html">Zobrazit dokumentaci tohoto souboru.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef SOFTINTR_H</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define SOFTINTR_H</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;irq.h&quot;</span></div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">enum</span> <a class="code" href="softintr_8h.html#a2357eceda3831ad88b3aff34b4af5c12">SoftIntrNumber</a> {</div><div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="softintr_8h.html#a2357eceda3831ad88b3aff34b4af5c12a027c71a2928cd0b309fb386246bf0264">   12</a></span>&#160;  <a class="code" href="softintr_8h.html#a2357eceda3831ad88b3aff34b4af5c12a027c71a2928cd0b309fb386246bf0264">SoftIntrNumber0</a> = 0,  </div><div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="softintr_8h.html#a2357eceda3831ad88b3aff34b4af5c12a74241a081f22b1871dfc5b927fcd3eac">   13</a></span>&#160;  <a class="code" href="softintr_8h.html#a2357eceda3831ad88b3aff34b4af5c12a74241a081f22b1871dfc5b927fcd3eac">SoftIntrNumber1</a>,      </div><div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="softintr_8h.html#a2357eceda3831ad88b3aff34b4af5c12ac7632bbff32588a2ada32e22345d7c5a">   14</a></span>&#160;  <a class="code" href="softintr_8h.html#a2357eceda3831ad88b3aff34b4af5c12ac7632bbff32588a2ada32e22345d7c5a">SoftIntrNumber2</a>,      </div><div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="softintr_8h.html#a2357eceda3831ad88b3aff34b4af5c12a1e0e1b23fcf50d97876fc1290c2dcc87">   15</a></span>&#160;  <a class="code" href="softintr_8h.html#a2357eceda3831ad88b3aff34b4af5c12a1e0e1b23fcf50d97876fc1290c2dcc87">MaxSoftIntrs</a>          </div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;};</div><div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classSoftIntr.html">   27</a></span>&#160;<span class="keyword">class </span><a class="code" href="classSoftIntr.html">SoftIntr</a> {</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keyword">public</span>:</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="classSoftIntr.html#a0c138134c7e41f77d03914128773e248">SoftIntr</a> (<span class="keyword">const</span> <a class="code" href="softintr_8h.html#a2357eceda3831ad88b3aff34b4af5c12">SoftIntrNumber</a> n);</div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordtype">void</span>         <a class="code" href="classSoftIntr.html#a590ba296f06512a76ea31594b9dc3dc9">exec</a>  (<span class="keywordtype">void</span>);</div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classSoftIntr.html#aebcc3592bbce6ca88294dd7105ee45d1">run</a>   (<span class="keywordtype">void</span>) = 0;</div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keyword">private</span>:</div><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">const</span> <a class="code" href="io_8h.html#a7e1129cd8a196f4284d41db3e82ad5c8">IRQn_Type</a>  N;</div><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;};</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#endif // SOFTINTR_H</span></div><div class="ttc" id="softintr_8h_html_a2357eceda3831ad88b3aff34b4af5c12ac7632bbff32588a2ada32e22345d7c5a"><div class="ttname"><a href="softintr_8h.html#a2357eceda3831ad88b3aff34b4af5c12ac7632bbff32588a2ada32e22345d7c5a">SoftIntrNumber2</a></div><div class="ttdoc">2 </div><div class="ttdef"><b>Definition:</b> softintr.h:14</div></div>
+<div class="ttc" id="classSoftIntr_html"><div class="ttname"><a href="classSoftIntr.html">SoftIntr</a></div><div class="ttdoc">Softwarového přerušení pro STM32F0. </div><div class="ttdef"><b>Definition:</b> softintr.h:27</div></div>
+<div class="ttc" id="softintr_8h_html_a2357eceda3831ad88b3aff34b4af5c12a74241a081f22b1871dfc5b927fcd3eac"><div class="ttname"><a href="softintr_8h.html#a2357eceda3831ad88b3aff34b4af5c12a74241a081f22b1871dfc5b927fcd3eac">SoftIntrNumber1</a></div><div class="ttdoc">1 </div><div class="ttdef"><b>Definition:</b> softintr.h:13</div></div>
+<div class="ttc" id="io_8h_html_a7e1129cd8a196f4284d41db3e82ad5c8"><div class="ttname"><a href="io_8h.html#a7e1129cd8a196f4284d41db3e82ad5c8">IRQn_Type</a></div><div class="ttdeci">IRQn_Type</div><div class="ttdoc">Interrupt Numbers. </div><div class="ttdef"><b>Definition:</b> io.h:74</div></div>
+<div class="ttc" id="classSoftIntr_html_aebcc3592bbce6ca88294dd7105ee45d1"><div class="ttname"><a href="classSoftIntr.html#aebcc3592bbce6ca88294dd7105ee45d1">SoftIntr::run</a></div><div class="ttdeci">virtual void run(void)=0</div><div class="ttdoc">V potomku si napiš vlastní kód pro obsluhu. </div></div>
+<div class="ttc" id="softintr_8h_html_a2357eceda3831ad88b3aff34b4af5c12a1e0e1b23fcf50d97876fc1290c2dcc87"><div class="ttname"><a href="softintr_8h.html#a2357eceda3831ad88b3aff34b4af5c12a1e0e1b23fcf50d97876fc1290c2dcc87">MaxSoftIntrs</a></div><div class="ttdoc">Maximum pro tabulky. </div><div class="ttdef"><b>Definition:</b> softintr.h:15</div></div>
+<div class="ttc" id="classSoftIntr_html_a0c138134c7e41f77d03914128773e248"><div class="ttname"><a href="classSoftIntr.html#a0c138134c7e41f77d03914128773e248">SoftIntr::SoftIntr</a></div><div class="ttdeci">SoftIntr(const SoftIntrNumber n)</div><div class="ttdoc">Konstruktor. </div><div class="ttdef"><b>Definition:</b> softintr.cpp:20</div></div>
+<div class="ttc" id="classSoftIntr_html_a590ba296f06512a76ea31594b9dc3dc9"><div class="ttname"><a href="classSoftIntr.html#a590ba296f06512a76ea31594b9dc3dc9">SoftIntr::exec</a></div><div class="ttdeci">void exec(void)</div><div class="ttdoc">Vyvolej přerušení </div><div class="ttdef"><b>Definition:</b> softintr.cpp:25</div></div>
+<div class="ttc" id="softintr_8h_html_a2357eceda3831ad88b3aff34b4af5c12a027c71a2928cd0b309fb386246bf0264"><div class="ttname"><a href="softintr_8h.html#a2357eceda3831ad88b3aff34b4af5c12a027c71a2928cd0b309fb386246bf0264">SoftIntrNumber0</a></div><div class="ttdoc">0 </div><div class="ttdef"><b>Definition:</b> softintr.h:12</div></div>
+<div class="ttc" id="softintr_8h_html_a2357eceda3831ad88b3aff34b4af5c12"><div class="ttname"><a href="softintr_8h.html#a2357eceda3831ad88b3aff34b4af5c12">SoftIntrNumber</a></div><div class="ttdeci">SoftIntrNumber</div><div class="ttdoc">Vyčíslení použité instance. </div><div class="ttdef"><b>Definition:</b> softintr.h:11</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generováno st 27. zář 2017 08.34:12 pro projekt ARM_minimal. programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.11
+</small></address>
+</body>
+</html>
