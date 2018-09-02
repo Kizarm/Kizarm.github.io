@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>fm2kicad: Formica to Kicad Board.</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">fm2kicad
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generováno programem Doxygen 1.8.11 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li class="current"><a href="index.html"><span>Hlavní&#160;stránka</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Hledat" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">Formica to Kicad Board. </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><h1><a class="anchor" id="mot"></a>
+Motivace.</h1>
+<p>Pokud chcete přejít z programu Formica na volný Kicad, většinou odradí množství knihoven, které jste předtím vytvořili a které by bylo nutné překreslit. Tento problém by měl řešit tento převodní prográmek.</p>
+<p>Není to úplná konverze formátů, to by bylo dost složité (i když ne nemožné), pracuje to jen nad deskou (*.BRD), pouzdra by to mělo zpracovat korektně. Je to ale zcela bez záruky, mapování vrstev asi není úplně ideální - oba návrhové programy se koncepcí vrstev poněkud liší, takže skoro vše je mapováno na SilkScreen. Dá se to opravit v souboru maps.cpp, tabulka scLayerMap. Různé verze Formica používají i jiný počet vrstev. Dále mapa pinů je poněkud nejasná, takže mnoho vlastností je děláno pouze odhadem a následným zkoušením. Výstupní formát je starý, ale Kicad si s tím poradí. Nový formát je složitější a nenašel jsem dobrý popis. Z desky lze generovat i podklady pro výrobu, lze měnit i detaily, větší změny moc nejdou, nelze synchronizovat schéma a desku (netlist). A samozřejmě lze exportovat knihovnu použitých modulů.</p>
+<h1><a class="anchor" id="todo"></a>
+Není doděláno.</h1>
+<ul>
+<li>Těžko říct, jestli funguje správně načtení netlistu a jeho překlad. Některý design projde bez problémů i DRC. TRACK nemá příznak NET, Kicad si to dopočítá sám. Formica používá pro vyplnění zón TRACKy, takže pokud je v designu zóna, trvá výpočet dlouho a nemusí být úspěšný. Používá se iterace a jejich počet je omezen, takže třeba klikatá čára (např. meandr) může dělat problém. Počet iterací lze zvětšit - Board::assignNetsToTracks. Dá se vygenerovat GERBER (zřejmě korektní pro 1-2 vrstvy spojů včetně nepájivé masky, texty součástek na straně spojů jsou zrcadlově obráceny).</li>
+<li>Vůbec jsem se nazabýval schematem. I když formát ascii by měl jít načíst do základního seznamu objektů (class Element).</li>
+</ul>
+<h1><a class="anchor" id="ends"></a>
+Závěr.</h1>
+<p>Program je napsán s ohledem na rychlé vytvoření něčeho funkčního. Takže dost prasecky. Použité třídy jsou používány spíš jako struktury, takže data jsou veřejná. Chybí kontroly které by korektně být měly. Dá se říct, že struktury dat nejsou dobře navrženy, kód se mnohdy dost opakuje, ale je to tím, že předem nebylo jasné, co se s daty bude dít dál. Takže pro pokračování by bylo dobře to překopat na základě znalosti věci, jinak to dost postrádá smysl. Parser textu používá flex a bison. Naštěstí jsem našel popis gramatiky PCB později, takže jsem se nesnažil ho striktně přepsat. Možná by to stálo za úvahu. I když odlišnost přístupu obou programů je dost velká a bylo by i s tím dost problémů.</p>
+<p>Co není na první pohled zřejmé. Formica má opačně orientovanou y-ovou osu. Součástky (souřadnice) jsou pojaty absolutně, v Kicadu relativně vzhledem ke knihovně.</p>
+<h1><a class="anchor" id="dnl"></a>
+Ke stažení.</h1>
+<p>Zdrojové texty v C/C++ pro prostředí Linuxu jsou ke stažení <a href="../formica.zip">zde</a>. Kód je uvolněn pod <a href="http://www.gnugpl.cz/">GPL3</a> licencí, podklady pro program jsou z veřejných zdrojů (web) a i když jsem si vědom, že tato aktivita může poškozovat původní autory programu formica není zde použito žádné "reverzní inženýrství" nebo jiná metoda za hranicí etiky. </p>
+</div></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generováno programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.11
+</small></address>
+</body>
+</html>
