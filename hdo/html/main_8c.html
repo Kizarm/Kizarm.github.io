@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>hdo: Dokumentace souboru /home/mrazik/Projekty/Kizarm.github.io/hdo/hdo/main.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">hdo
+   &#160;<span id="projectnumber">beta</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generováno programem Doxygen 1.8.11 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hlavní&#160;stránka</span></a></li>
+      <li><a href="pages.html"><span>Ostatní&#160;stránky</span></a></li>
+      <li><a href="annotated.html"><span>Třídy</span></a></li>
+      <li class="current"><a href="files.html"><span>Soubory</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Seznam&#160;souborů</span></a></li>
+      <li><a href="globals.html"><span>Globální&#160;symboly</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_43e0a1f539e00dcfa1a6bc4d4fee4fc2.html">home</a></li><li class="navelem"><a class="el" href="dir_92b95843e90daadc485b14226e438e59.html">mrazik</a></li><li class="navelem"><a class="el" href="dir_f3ad28f1896cd39387847ce3c3236ab1.html">Projekty</a></li><li class="navelem"><a class="el" href="dir_0a864d6769c20f4e975f7bd32848bb20.html">Kizarm.github.io</a></li><li class="navelem"><a class="el" href="dir_d5357cb57dcee12078a4c73baa854556.html">hdo</a></li><li class="navelem"><a class="el" href="dir_1b8f3ca87cec8965627da2ca6054f7aa.html">hdo</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Definice maker</a> &#124;
+<a href="#func-members">Funkce</a> &#124;
+<a href="#var-members">Proměnné</a>  </div>
+  <div class="headertitle">
+<div class="title">Dokumentace souboru main.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Demonstrace dekódování HDO signálu pomocí ADC na čipu.  
+<a href="#details">...</a></p>
+<div class="textblock"><code>#include &lt;<a class="el" href="board_8h_source.html">board.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="pio_8h_source.html">pio/pio.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="pit_8h_source.html">pit/pit.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="dbgu_8h_source.html">dbgu/dbgu.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="aic_8h_source.html">aic/aic.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="trace_8h_source.html">utility/trace.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="led_8h_source.html">utility/led.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="adc_8h_source.html">adc/adc.h</a>&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="goertzel_8h_source.html">goertzel.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="hdo_8h_source.html">hdo.h</a>&quot;</code><br />
+</div>
+<p><a href="main_8c_source.html">Zobrazit zdrojový text tohoto souboru.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Definice maker</h2></td></tr>
+<tr class="memitem:a60b1362f77905db322205b68512cc3b9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60b1362f77905db322205b68512cc3b9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a60b1362f77905db322205b68512cc3b9">BOARD_ADC_FREQ</a>&#160;&#160;&#160;6000000</td></tr>
+<tr class="memdesc:a60b1362f77905db322205b68512cc3b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">frekvence hodin ADC převodníku <br /></td></tr>
+<tr class="separator:a60b1362f77905db322205b68512cc3b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f945ece6843f9a3540423f3782983b6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9f945ece6843f9a3540423f3782983b6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a9f945ece6843f9a3540423f3782983b6">PIT_PERIOD</a>&#160;&#160;&#160;1000</td></tr>
+<tr class="memdesc:a9f945ece6843f9a3540423f3782983b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">PIT perioda timeru - hodnota v �sekundách. <br /></td></tr>
+<tr class="separator:a9f945ece6843f9a3540423f3782983b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7274e11e5026e6364ff703661611b25e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7274e11e5026e6364ff703661611b25e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ADC_NUM_1</b>&#160;&#160;&#160;ADC_CHANNEL_4</td></tr>
+<tr class="separator:a7274e11e5026e6364ff703661611b25e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Funkce</h2></td></tr>
+<tr class="memitem:ae042ff7607b467a923e8151dbf363ef0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae042ff7607b467a923e8151dbf363ef0"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ae042ff7607b467a923e8151dbf363ef0">ISR_Pit</a> (void)</td></tr>
+<tr class="memdesc:ae042ff7607b467a923e8151dbf363ef0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Přerušovací rutina pro PIT interrupt. Inkrementuje timestamp a startuje převod. <br /></td></tr>
+<tr class="separator:ae042ff7607b467a923e8151dbf363ef0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a142bb31180c2ee763974cb8532cc0758"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a142bb31180c2ee763974cb8532cc0758">ISR_Adc</a> (void)</td></tr>
+<tr class="separator:a142bb31180c2ee763974cb8532cc0758"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fe8ff2042aa1f358f3cc24971f0d65f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a6fe8ff2042aa1f358f3cc24971f0d65f">ConfigurePit</a> (void)</td></tr>
+<tr class="separator:a6fe8ff2042aa1f358f3cc24971f0d65f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a840291bc02cba5474a4cb46a9b9566fe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a840291bc02cba5474a4cb46a9b9566fe"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a840291bc02cba5474a4cb46a9b9566fe">main</a> (void)</td></tr>
+<tr class="memdesc:a840291bc02cba5474a4cb46a9b9566fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vlastní program. <br /></td></tr>
+<tr class="separator:a840291bc02cba5474a4cb46a9b9566fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Proměnné</h2></td></tr>
+<tr class="memitem:a7278b38581116a93504819a7126161da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7278b38581116a93504819a7126161da"></a>
+static const <a class="el" href="structPin.html">Pin</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a7278b38581116a93504819a7126161da">pinsADC</a> [] = {<a class="el" href="board_8h.html#a0c6ba600c2305b2347eaa9e00e4d8add">PINS_ADC</a>}</td></tr>
+<tr class="memdesc:a7278b38581116a93504819a7126161da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Použité Pio piny (ADC). <br /></td></tr>
+<tr class="separator:a7278b38581116a93504819a7126161da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93e43f445f37f6b4655bd3d596950db5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a93e43f445f37f6b4655bd3d596950db5"></a>
+static volatile unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a93e43f445f37f6b4655bd3d596950db5">timestamp</a> = 0</td></tr>
+<tr class="memdesc:a93e43f445f37f6b4655bd3d596950db5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pomocný timestamp v milisekundách. <br /></td></tr>
+<tr class="separator:a93e43f445f37f6b4655bd3d596950db5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f1b4498916ca8ad87eb9fd6f97b8404"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f1b4498916ca8ad87eb9fd6f97b8404"></a>
+static volatile unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a3f1b4498916ca8ad87eb9fd6f97b8404">counter</a> = 0</td></tr>
+<tr class="memdesc:a3f1b4498916ca8ad87eb9fd6f97b8404"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index pro zápis do buferu. <br /></td></tr>
+<tr class="separator:a3f1b4498916ca8ad87eb9fd6f97b8404"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89600146ff1cdb297db482a9731aefc0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89600146ff1cdb297db482a9731aefc0"></a>
+static short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a89600146ff1cdb297db482a9731aefc0">result</a></td></tr>
+<tr class="memdesc:a89600146ff1cdb297db482a9731aefc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Výsledek A/D převodu. <br /></td></tr>
+<tr class="separator:a89600146ff1cdb297db482a9731aefc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29495fd34275d2f9954bfe6a9e1aec3f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a29495fd34275d2f9954bfe6a9e1aec3f"></a>
+static short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a29495fd34275d2f9954bfe6a9e1aec3f">buf_a</a> [<a class="el" href="goertzel_8h.html#a3e54a43ba47c98ea91d741ae4a1719ed">GOERTZEL_N</a>]</td></tr>
+<tr class="memdesc:a29495fd34275d2f9954bfe6a9e1aec3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">první bufer pro AD data <br /></td></tr>
+<tr class="separator:a29495fd34275d2f9954bfe6a9e1aec3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9179a79580e2761d7045b0e4b005ccb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9179a79580e2761d7045b0e4b005ccb"></a>
+static short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#af9179a79580e2761d7045b0e4b005ccb">buf_b</a> [<a class="el" href="goertzel_8h.html#a3e54a43ba47c98ea91d741ae4a1719ed">GOERTZEL_N</a>]</td></tr>
+<tr class="memdesc:af9179a79580e2761d7045b0e4b005ccb"><td class="mdescLeft">&#160;</td><td class="mdescRight">druhý bufer pro AD data <br /></td></tr>
+<tr class="separator:af9179a79580e2761d7045b0e4b005ccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af50205b6311e3e2b696db2ff888dbaed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af50205b6311e3e2b696db2ff888dbaed"></a>
+static volatile int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#af50205b6311e3e2b696db2ff888dbaed">pswitch</a> = 0</td></tr>
+<tr class="memdesc:af50205b6311e3e2b696db2ff888dbaed"><td class="mdescLeft">&#160;</td><td class="mdescRight">přepínač buferů <br /></td></tr>
+<tr class="separator:af50205b6311e3e2b696db2ff888dbaed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59bc5ec2d75b7f3e260870366c6880f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59bc5ec2d75b7f3e260870366c6880f8"></a>
+static volatile int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a59bc5ec2d75b7f3e260870366c6880f8">change</a> = 0</td></tr>
+<tr class="memdesc:a59bc5ec2d75b7f3e260870366c6880f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">změna přepínače buferů <br /></td></tr>
+<tr class="separator:a59bc5ec2d75b7f3e260870366c6880f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailní popis</h2>
+<div class="textblock"><p><b>Účel</b> </p>
+<p>Demonstrace dekódování HDO signálu pomocí ADC na čipu</p>
+<p><b>Popis</b> </p>
+<p>Tento program demonstruje použití ADC na čipu AT91SAM7S256. Měří napětí na pinu AD4 se vzorkováním 1000 Hz a vyhodnocuje obsah o frekvenci 216,6 Hz. ADC používá přerušení,jež proběhne po skončení převodu. Převod se startuje opět z přerušení a to od časovače PIT. Ten má periodu 1/1000 s.</p>
+<p><b>Použití</b> </p><ol type="1">
+<li>Vývojový kit od Kramara: Měří se napětí na AD4, reference je 3,3V (napájení). Pro indikaci jsou použity LED na pinu PA31 - bliká v rytmu výpočtu (1/6 s), PA0 - svítí, pokud je obsah signálu 213,6 Hz větší než nastavená hodnota.</li>
+<li>Zkompilovat projekt pomoci GNU nástrojů (arm-elf-gcc).</li>
+<li>DBGU port připojit k počítači, a spustit terminál<ul>
+<li>Nastavení: 115200 baud, 8 bit, 1 stop bit, bez parity, bez flow control.</li>
+</ul>
+</li>
+<li>Soubor na <b></b>./bin/hdo-flash.bin nahrát do čipu. Více informací na <a href="http://www.atmel.com/dyn/resources/prod_documents/doc6132.pdf">SAM-BA User Guide </a>, <a href="http://www.atmel.com/dyn/resources/prod_documents/doc6310.pdf">the GNU-Based Software Development</a></li>
+<li>Po startu programu vypisuje na DBGU následující (překlad s TRACE_LEVEL = 4): <div class="fragment"><div class="line">-- ADC Projekt HDO xxx --</div><div class="line">-- AT91xxxxxx-xx</div><div class="line">-- Compiled: xxx xx xxxx xx:xx:xx --</div></div><!-- fragment --></li>
+<li>a pak vypisuje přijaté telegramy např.: <div class="fragment"><div class="line">A1---B1-3-56-8 DP: -VZZ ZZZZ ---- ---V</div><div class="line">A1---B12------ DP: VVZZ ZZZZ ---- VZ-V</div><div class="line">A1---B---4--7- DP: V-ZZ ZZZZ --V- VZ-V</div><div class="line">A-2--B-------8 DP: ---- ---- V--- ----</div><div class="line">A1---B12------ DP: VVVV VVVZ ---- -Z-V</div><div class="line">A1---B-2------ DP: VVVV VVVZ ---V VZVV</div><div class="line">A1---B-2------ DP: VZVV VVVZ ---V VZVV</div><div class="line">A1---B1------- DP: VVVV VVVZ ---- -Z-V</div><div class="line">A1---B-2------ DP: VZVV VVVZ ---V VZVV</div><div class="line">A1---B12-4-678 DP: V--- ---V ---- -V-V</div><div class="line">A1---B--3-5--- DP: Z-ZZ ZZZV ---Z ---V</div></div><!-- fragment --></li>
+</ol>
+<dl class="section note"><dt>Poznámka</dt><dd>Rutiny použité pro inicializaci procesoru jsou převzaty z programového balíku softpack-1.15 firmy Atmel co. </dd></dl>
+
+<p>Definice v souboru <a class="el" href="main_8c_source.html">main.c</a>.</p>
+</div><h2 class="groupheader">Dokumentace funkcí</h2>
+<a class="anchor" id="a6fe8ff2042aa1f358f3cc24971f0d65f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ConfigurePit </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Konfiguruje periodický intervalový časovač, aby generoval přerušení každou milisekundu. </p>
+
+<p>Definice je uvedena na řádku <a class="el" href="main_8c_source.html#l00195">195</a> v souboru <a class="el" href="main_8c_source.html">main.c</a>.</p>
+
+<p>Odkazuje se na <a class="el" href="aic_8c_source.html#l00054">AIC_ConfigureIT()</a>, <a class="el" href="aic_8c_source.html#l00083">AIC_DisableIT()</a>, <a class="el" href="aic_8c_source.html#l00074">AIC_EnableIT()</a>, <a class="el" href="board_8h_source.html#l00096">BOARD_MCK</a>, <a class="el" href="main_8c_source.html#l00147">ISR_Pit()</a>, <a class="el" href="pit_8c_source.html#l00064">PIT_Enable()</a>, <a class="el" href="pit_8c_source.html#l00072">PIT_EnableIT()</a>, <a class="el" href="pit_8c_source.html#l00046">PIT_Init()</a> a <a class="el" href="main_8c_source.html#l00123">PIT_PERIOD</a>.</p>
+
+<p>Používá se v <a class="el" href="main_8c_source.html#l00215">main()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a142bb31180c2ee763974cb8532cc0758"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ISR_Adc </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Přerušovací rutina pro ADC. Zapíše hodnotu AD převodu do buferu. Pokud je bufer plný, přepne pswitch. Tím dá povel funci main, že může počítat goertzelův algoritmus </p>
+
+<p>Definice je uvedena na řádku <a class="el" href="main_8c_source.html#l00166">166</a> v souboru <a class="el" href="main_8c_source.html">main.c</a>.</p>
+
+<p>Odkazuje se na <a class="el" href="adc_8c_source.html#l00276">ADC_DisableIt()</a>, <a class="el" href="adc_8c_source.html#l00208">ADC_GetConvertedData()</a>, <a class="el" href="adc_8c_source.html#l00297">ADC_GetStatus()</a>, <a class="el" href="adc_8c_source.html#l00337">ADC_IsChannelInterruptStatusSet()</a>, <a class="el" href="main_8c_source.html#l00135">buf_a</a>, <a class="el" href="main_8c_source.html#l00136">buf_b</a>, <a class="el" href="main_8c_source.html#l00138">change</a>, <a class="el" href="main_8c_source.html#l00133">counter</a>, <a class="el" href="goertzel_8h_source.html#l00036">GOERTZEL_N</a>, <a class="el" href="main_8c_source.html#l00137">pswitch</a>, <a class="el" href="main_8c_source.html#l00134">result</a> a <a class="el" href="trace_8h_source.html#l00186">TRACE_DEBUG</a>.</p>
+
+<p>Používá se v <a class="el" href="main_8c_source.html#l00215">main()</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generováno programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.11
+</small></address>
+</body>
+</html>

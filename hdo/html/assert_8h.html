@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>hdo: Dokumentace souboru /home/mrazik/Projekty/Kizarm.github.io/hdo/hdo/at91lib/utility/assert.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">hdo
+   &#160;<span id="projectnumber">beta</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generováno programem Doxygen 1.8.11 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hlavní&#160;stránka</span></a></li>
+      <li><a href="pages.html"><span>Ostatní&#160;stránky</span></a></li>
+      <li><a href="annotated.html"><span>Třídy</span></a></li>
+      <li class="current"><a href="files.html"><span>Soubory</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Seznam&#160;souborů</span></a></li>
+      <li><a href="globals.html"><span>Globální&#160;symboly</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_43e0a1f539e00dcfa1a6bc4d4fee4fc2.html">home</a></li><li class="navelem"><a class="el" href="dir_92b95843e90daadc485b14226e438e59.html">mrazik</a></li><li class="navelem"><a class="el" href="dir_f3ad28f1896cd39387847ce3c3236ab1.html">Projekty</a></li><li class="navelem"><a class="el" href="dir_0a864d6769c20f4e975f7bd32848bb20.html">Kizarm.github.io</a></li><li class="navelem"><a class="el" href="dir_d5357cb57dcee12078a4c73baa854556.html">hdo</a></li><li class="navelem"><a class="el" href="dir_1b8f3ca87cec8965627da2ca6054f7aa.html">hdo</a></li><li class="navelem"><a class="el" href="dir_12d1aae7d01de2a295c37139ba1460fc.html">at91lib</a></li><li class="navelem"><a class="el" href="dir_af21248a537764a3a3d67a83eea22e02.html">utility</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Definice maker</a>  </div>
+  <div class="headertitle">
+<div class="title">Dokumentace souboru assert.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="trace_8h_source.html">trace.h</a>&quot;</code><br />
+</div>
+<p><a href="assert_8h_source.html">Zobrazit zdrojový text tohoto souboru.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Definice maker</h2></td></tr>
+<tr class="memitem:a9179532e575967b12397ed528dd4b498"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="assert_8h.html#a9179532e575967b12397ed528dd4b498">ASSERT</a>(condition, ...)</td></tr>
+<tr class="separator:a9179532e575967b12397ed528dd4b498"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3a3b21a3142d047cba142ced18eada7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3a3b21a3142d047cba142ced18eada7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>SANITY_ERROR</b>&#160;&#160;&#160;&quot;Sanity check failed at %s:%d\n\r&quot;</td></tr>
+<tr class="separator:ac3a3b21a3142d047cba142ced18eada7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e5c97531a0e301cdcd98432abdc3945"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="assert_8h.html#a8e5c97531a0e301cdcd98432abdc3945">SANITY_CHECK</a>(condition)&#160;&#160;&#160;<a class="el" href="assert_8h.html#a9179532e575967b12397ed528dd4b498">ASSERT</a>(condition, SANITY_ERROR, __FILE__, __LINE__)</td></tr>
+<tr class="separator:a8e5c97531a0e301cdcd98432abdc3945"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailní popis</h2>
+<div class="textblock"><p><b>Purpose</b> </p>
+<p>Definition of the <a class="el" href="assert_8h.html#a9179532e575967b12397ed528dd4b498">ASSERT()</a> and <a class="el" href="assert_8h.html#a8e5c97531a0e301cdcd98432abdc3945">SANITY_CHECK()</a> macros, which are used for runtime condition &amp; parameter verifying.</p>
+<p><b>Usage</b> </p>
+<ol type="1">
+<li>Use <a class="el" href="assert_8h.html#a9179532e575967b12397ed528dd4b498">ASSERT()</a> in your code to check the value of function parameters, return values, etc. <em>Warning:</em> the <a class="el" href="assert_8h.html#a9179532e575967b12397ed528dd4b498">ASSERT()</a> condition must not have any side-effect; otherwise, the program may not work properly anymore when assertions are disabled.</li>
+<li>Use <a class="el" href="assert_8h.html#a8e5c97531a0e301cdcd98432abdc3945">SANITY_CHECK()</a> to perform checks with a default error message (outputs the file and line number where the error occured). This reduces memory overhead caused by assertion error strings.</li>
+<li>Initialize the dbgu to see failed assertions at run-time.</li>
+<li>Assertions can be entirely disabled by defining the NOASSERT symbol at compilation time. </li>
+</ol>
+
+<p>Definice v souboru <a class="el" href="assert_8h_source.html">assert.h</a>.</p>
+</div><h2 class="groupheader">Dokumentace k definicím maker</h2>
+<a class="anchor" id="a9179532e575967b12397ed528dd4b498"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ASSERT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">condition, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Hodnota:</b><div class="fragment"><div class="line">{ \</div><div class="line">            if (!(condition)) { <a class="code" href="stdio_8c.html#ad6c265f6d41266cbb62035915f9c0030">\</a></div><div class="line"><a class="code" href="stdio_8c.html#ad6c265f6d41266cbb62035915f9c0030">                printf</a>(<span class="stringliteral">&quot;-F- ASSERT: &quot;</span>); <a class="code" href="stdio_8c.html#ad6c265f6d41266cbb62035915f9c0030">\</a></div><div class="line"><a class="code" href="stdio_8c.html#ad6c265f6d41266cbb62035915f9c0030">                printf</a>(__VA_ARGS__); \</div><div class="line">                while (1); \</div><div class="line">            } \</div><div class="line">        }</div><div class="ttc" id="stdio_8c_html_ad6c265f6d41266cbb62035915f9c0030"><div class="ttname"><a href="stdio_8c.html#ad6c265f6d41266cbb62035915f9c0030">printf</a></div><div class="ttdeci">signed int printf(const char *pFormat,...)</div><div class="ttdef"><b>Definition:</b> <a href="stdio_8c_source.html#l00473">stdio.c:473</a></div></div>
+</div><!-- fragment --><p>Checks that the given condition is true, otherwise displays an error message and stops the program execution. </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">condition</td><td>Condition to verify. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="assert_8h_source.html#l00088">88</a> v souboru <a class="el" href="assert_8h_source.html">assert.h</a>.</p>
+
+<p>Používá se v <a class="el" href="adc_8c_source.html#l00161">ADC_DisableChannel()</a>, <a class="el" href="adc_8c_source.html#l00276">ADC_DisableIt()</a>, <a class="el" href="adc_8c_source.html#l00149">ADC_EnableChannel()</a>, <a class="el" href="adc_8c_source.html#l00247">ADC_EnableIt()</a>, <a class="el" href="adc_8c_source.html#l00208">ADC_GetConvertedData()</a> a <a class="el" href="adc_8c_source.html#l00070">ADC_Initialize()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8e5c97531a0e301cdcd98432abdc3945"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SANITY_CHECK</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">condition</td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="assert_8h.html#a9179532e575967b12397ed528dd4b498">ASSERT</a>(condition, SANITY_ERROR, __FILE__, __LINE__)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Performs the same duty as the <a class="el" href="assert_8h.html#a9179532e575967b12397ed528dd4b498">ASSERT()</a> macro, except a default error message is output if the condition is false. </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">condition</td><td>Condition to verify. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="assert_8h_source.html#l00100">100</a> v souboru <a class="el" href="assert_8h_source.html">assert.h</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generováno programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.11
+</small></address>
+</body>
+</html>

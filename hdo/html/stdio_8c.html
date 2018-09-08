@@ -1,0 +1,513 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>hdo: Dokumentace souboru /home/mrazik/Projekty/Kizarm.github.io/hdo/hdo/at91lib/utility/stdio.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">hdo
+   &#160;<span id="projectnumber">beta</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generováno programem Doxygen 1.8.11 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hlavní&#160;stránka</span></a></li>
+      <li><a href="pages.html"><span>Ostatní&#160;stránky</span></a></li>
+      <li><a href="annotated.html"><span>Třídy</span></a></li>
+      <li class="current"><a href="files.html"><span>Soubory</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Seznam&#160;souborů</span></a></li>
+      <li><a href="globals.html"><span>Globální&#160;symboly</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_43e0a1f539e00dcfa1a6bc4d4fee4fc2.html">home</a></li><li class="navelem"><a class="el" href="dir_92b95843e90daadc485b14226e438e59.html">mrazik</a></li><li class="navelem"><a class="el" href="dir_f3ad28f1896cd39387847ce3c3236ab1.html">Projekty</a></li><li class="navelem"><a class="el" href="dir_0a864d6769c20f4e975f7bd32848bb20.html">Kizarm.github.io</a></li><li class="navelem"><a class="el" href="dir_d5357cb57dcee12078a4c73baa854556.html">hdo</a></li><li class="navelem"><a class="el" href="dir_1b8f3ca87cec8965627da2ca6054f7aa.html">hdo</a></li><li class="navelem"><a class="el" href="dir_12d1aae7d01de2a295c37139ba1460fc.html">at91lib</a></li><li class="navelem"><a class="el" href="dir_af21248a537764a3a3d67a83eea22e02.html">utility</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Definice maker</a> &#124;
+<a href="#func-members">Funkce</a> &#124;
+<a href="#var-members">Proměnné</a>  </div>
+  <div class="headertitle">
+<div class="title">Dokumentace souboru stdio.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdarg.h&gt;</code><br />
+</div>
+<p><a href="stdio_8c_source.html">Zobrazit zdrojový text tohoto souboru.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Definice maker</h2></td></tr>
+<tr class="memitem:a220f38b26fa99d4d91b574f42d991516"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a220f38b26fa99d4d91b574f42d991516"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MAX_STRING_SIZE</b>&#160;&#160;&#160;100</td></tr>
+<tr class="separator:a220f38b26fa99d4d91b574f42d991516"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Funkce</h2></td></tr>
+<tr class="memitem:a9d6957a52d69935cd92755844e9252be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d6957a52d69935cd92755844e9252be"></a>
+signed int&#160;</td><td class="memItemRight" valign="bottom"><b>PutChar</b> (char *pStr, char c)</td></tr>
+<tr class="separator:a9d6957a52d69935cd92755844e9252be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9692c423423d4787d69f090a359c5644"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9692c423423d4787d69f090a359c5644"></a>
+signed int&#160;</td><td class="memItemRight" valign="bottom"><b>PutString</b> (char *pStr, const char *pSource)</td></tr>
+<tr class="separator:a9692c423423d4787d69f090a359c5644"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afeda5b1cd1c8e201b2fc997b35d03281"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afeda5b1cd1c8e201b2fc997b35d03281"></a>
+signed int&#160;</td><td class="memItemRight" valign="bottom"><b>PutUnsignedInt</b> (char *pStr, char fill, signed int width, unsigned int value)</td></tr>
+<tr class="separator:afeda5b1cd1c8e201b2fc997b35d03281"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7337166e7d8bcc7d589e63777ae2541"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae7337166e7d8bcc7d589e63777ae2541"></a>
+signed int&#160;</td><td class="memItemRight" valign="bottom"><b>PutSignedInt</b> (char *pStr, char fill, signed int width, signed int value)</td></tr>
+<tr class="separator:ae7337166e7d8bcc7d589e63777ae2541"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b3bdb18a334228eb2b08b1a70c1a62a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3b3bdb18a334228eb2b08b1a70c1a62a"></a>
+signed int&#160;</td><td class="memItemRight" valign="bottom"><b>PutHexa</b> (char *pStr, char fill, signed int width, unsigned char maj, unsigned int value)</td></tr>
+<tr class="separator:a3b3bdb18a334228eb2b08b1a70c1a62a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f2d28f08e5d66db9a14ed70cb1f4220"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stdio_8c.html#a8f2d28f08e5d66db9a14ed70cb1f4220">vsnprintf</a> (char *pStr, size_t length, const char *pFormat, va_list ap)</td></tr>
+<tr class="separator:a8f2d28f08e5d66db9a14ed70cb1f4220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4d7a9a581baef0b2b2174383580ab15"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stdio_8c.html#ae4d7a9a581baef0b2b2174383580ab15">snprintf</a> (char *pString, size_t length, const char *pFormat,...)</td></tr>
+<tr class="separator:ae4d7a9a581baef0b2b2174383580ab15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2bd6c4c9ad1b563bdcd20f18a36811a"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stdio_8c.html#ac2bd6c4c9ad1b563bdcd20f18a36811a">vsprintf</a> (char *pString, const char *pFormat, va_list ap)</td></tr>
+<tr class="separator:ac2bd6c4c9ad1b563bdcd20f18a36811a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c938d1cedba90cbc8107400ebea6100"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stdio_8c.html#a4c938d1cedba90cbc8107400ebea6100">vfprintf</a> (FILE *pStream, const char *pFormat, va_list ap)</td></tr>
+<tr class="separator:a4c938d1cedba90cbc8107400ebea6100"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc27df6594a246219000f9d2a584a3be"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stdio_8c.html#adc27df6594a246219000f9d2a584a3be">vprintf</a> (const char *pFormat, va_list ap)</td></tr>
+<tr class="separator:adc27df6594a246219000f9d2a584a3be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a714a7aeb0b480bc7cc85c1685964861f"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stdio_8c.html#a714a7aeb0b480bc7cc85c1685964861f">fprintf</a> (FILE *pStream, const char *pFormat,...)</td></tr>
+<tr class="separator:a714a7aeb0b480bc7cc85c1685964861f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6c265f6d41266cbb62035915f9c0030"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stdio_8c.html#ad6c265f6d41266cbb62035915f9c0030">printf</a> (const char *pFormat,...)</td></tr>
+<tr class="separator:ad6c265f6d41266cbb62035915f9c0030"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ab9fb00bf66223b1a3f334376963100"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stdio_8c.html#a2ab9fb00bf66223b1a3f334376963100">sprintf</a> (char *pStr, const char *pFormat,...)</td></tr>
+<tr class="separator:a2ab9fb00bf66223b1a3f334376963100"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a8c5f197e584138be351a4437f67689"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stdio_8c.html#a5a8c5f197e584138be351a4437f67689">puts</a> (const char *pStr)</td></tr>
+<tr class="separator:a5a8c5f197e584138be351a4437f67689"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Proměnné</h2></td></tr>
+<tr class="memitem:a933442104e916763ad534cd32e42bbae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a933442104e916763ad534cd32e42bbae"></a>
+struct _reent&#160;</td><td class="memItemRight" valign="bottom"><b>r</b> = {0, (FILE *) 0, (FILE *) 1, (FILE *) 0}</td></tr>
+<tr class="separator:a933442104e916763ad534cd32e42bbae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a961919482965d7c4c2c243439dd036df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a961919482965d7c4c2c243439dd036df"></a>
+struct _reent *&#160;</td><td class="memItemRight" valign="bottom"><b>_impure_ptr</b> = &amp;r</td></tr>
+<tr class="separator:a961919482965d7c4c2c243439dd036df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailní popis</h2>
+<div class="textblock"><p>!Purpose</p>
+<p>Implementation of several stdio.h methods, such as <a class="el" href="stdio_8c.html#ad6c265f6d41266cbb62035915f9c0030">printf()</a>, <a class="el" href="stdio_8c.html#a2ab9fb00bf66223b1a3f334376963100">sprintf()</a> and so on. This reduces the memory footprint of the binary when using those methods, compared to the libc implementation.</p>
+<p>!Usage</p>
+<p>Adds <a class="el" href="stdio_8c.html">stdio.c</a> to the list of file to compile for the project. This will automatically replace libc methods by the custom ones. </p>
+
+<p>Definice v souboru <a class="el" href="stdio_8c_source.html">stdio.c</a>.</p>
+</div><h2 class="groupheader">Dokumentace funkcí</h2>
+<a class="anchor" id="a714a7aeb0b480bc7cc85c1685964861f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">signed int fprintf </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>pStream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>pFormat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Outputs a formatted string on the given stream, using a variable number of arguments. </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pStream</td><td>Output stream. </td></tr>
+    <tr><td class="paramname">pFormat</td><td>Format string. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="stdio_8c_source.html#l00455">455</a> v souboru <a class="el" href="stdio_8c_source.html">stdio.c</a>.</p>
+
+<p>Odkazuje se na <a class="el" href="main_8c_source.html#l00134">result</a> a <a class="el" href="stdio_8c_source.html#l00422">vfprintf()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad6c265f6d41266cbb62035915f9c0030"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">signed int printf </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>pFormat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Outputs a formatted string on the DBGU stream, using a variable number of arguments. </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pFormat</td><td>Format string. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="stdio_8c_source.html#l00473">473</a> v souboru <a class="el" href="stdio_8c_source.html">stdio.c</a>.</p>
+
+<p>Odkazuje se na <a class="el" href="main_8c_source.html#l00134">result</a> a <a class="el" href="stdio_8c_source.html#l00444">vprintf()</a>.</p>
+
+<p>Používá se v <a class="el" href="main_8c_source.html#l00215">main()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5a8c5f197e584138be351a4437f67689"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">signed int puts </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>pStr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Outputs a string on stdout. </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pStr</td><td>String to output. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="stdio_8c_source.html#l00508">508</a> v souboru <a class="el" href="stdio_8c_source.html">stdio.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae4d7a9a581baef0b2b2174383580ab15"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">signed int snprintf </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>pString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>pFormat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stores the result of a formatted string into another string. Format arguments are given in a va_list instance. Return the number of characters written. </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pString</td><td>Destination string. </td></tr>
+    <tr><td class="paramname">length</td><td>Length of Destination string. </td></tr>
+    <tr><td class="paramname">pFormat</td><td>Format string. </td></tr>
+    <tr><td class="paramname">...</td><td>Other arguments </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="stdio_8c_source.html#l00390">390</a> v souboru <a class="el" href="stdio_8c_source.html">stdio.c</a>.</p>
+
+<p>Odkazuje se na <a class="el" href="stdio_8c_source.html#l00292">vsnprintf()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2ab9fb00bf66223b1a3f334376963100"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">signed int sprintf </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>pStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>pFormat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Writes a formatted string inside another string. </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pStr</td><td>Storage string. </td></tr>
+    <tr><td class="paramname">pFormat</td><td>Format string. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="stdio_8c_source.html#l00491">491</a> v souboru <a class="el" href="stdio_8c_source.html">stdio.c</a>.</p>
+
+<p>Odkazuje se na <a class="el" href="main_8c_source.html#l00134">result</a> a <a class="el" href="stdio_8c_source.html#l00410">vsprintf()</a>.</p>
+
+<p>Používá se v <a class="el" href="hdo_8c_source.html#l00084">tlg_decode()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4c938d1cedba90cbc8107400ebea6100"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">signed int vfprintf </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>pStream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>pFormat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">va_list&#160;</td>
+          <td class="paramname"><em>ap</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Outputs a formatted string on the given stream. Format arguments are given in a va_list instance. </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pStream</td><td>Output stream. </td></tr>
+    <tr><td class="paramname">pFormat</td><td>Format string </td></tr>
+    <tr><td class="paramname">ap</td><td>Argument list. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="stdio_8c_source.html#l00422">422</a> v souboru <a class="el" href="stdio_8c_source.html">stdio.c</a>.</p>
+
+<p>Odkazuje se na <a class="el" href="stdio_8c_source.html#l00410">vsprintf()</a>.</p>
+
+<p>Používá se v <a class="el" href="stdio_8c_source.html#l00455">fprintf()</a> a <a class="el" href="stdio_8c_source.html#l00444">vprintf()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adc27df6594a246219000f9d2a584a3be"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">signed int vprintf </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>pFormat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">va_list&#160;</td>
+          <td class="paramname"><em>ap</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Outputs a formatted string on the DBGU stream. Format arguments are given in a va_list instance. </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pFormat</td><td>Format string </td></tr>
+    <tr><td class="paramname">ap</td><td>Argument list. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="stdio_8c_source.html#l00444">444</a> v souboru <a class="el" href="stdio_8c_source.html">stdio.c</a>.</p>
+
+<p>Odkazuje se na <a class="el" href="stdio_8c_source.html#l00422">vfprintf()</a>.</p>
+
+<p>Používá se v <a class="el" href="stdio_8c_source.html#l00473">printf()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8f2d28f08e5d66db9a14ed70cb1f4220"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">signed int vsnprintf </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>pStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>pFormat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">va_list&#160;</td>
+          <td class="paramname"><em>ap</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stores the result of a formatted string into another string. Format arguments are given in a va_list instance. Return the number of characters written. </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pStr</td><td>Destination string. </td></tr>
+    <tr><td class="paramname">length</td><td>Length of Destination string. </td></tr>
+    <tr><td class="paramname">pFormat</td><td>Format string. </td></tr>
+    <tr><td class="paramname">ap</td><td>Argument list. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="stdio_8c_source.html#l00292">292</a> v souboru <a class="el" href="stdio_8c_source.html">stdio.c</a>.</p>
+
+<p>Používá se v <a class="el" href="stdio_8c_source.html#l00390">snprintf()</a> a <a class="el" href="stdio_8c_source.html#l00410">vsprintf()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac2bd6c4c9ad1b563bdcd20f18a36811a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">signed int vsprintf </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>pString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>pFormat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">va_list&#160;</td>
+          <td class="paramname"><em>ap</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stores the result of a formatted string into another string. Format arguments are given in a va_list instance. Return the number of characters written. </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pString</td><td>Destination string. </td></tr>
+    <tr><td class="paramname">pFormat</td><td>Format string. </td></tr>
+    <tr><td class="paramname">ap</td><td>Argument list. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="stdio_8c_source.html#l00410">410</a> v souboru <a class="el" href="stdio_8c_source.html">stdio.c</a>.</p>
+
+<p>Odkazuje se na <a class="el" href="stdio_8c_source.html#l00292">vsnprintf()</a>.</p>
+
+<p>Používá se v <a class="el" href="stdio_8c_source.html#l00491">sprintf()</a> a <a class="el" href="stdio_8c_source.html#l00422">vfprintf()</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generováno programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.11
+</small></address>
+</body>
+</html>

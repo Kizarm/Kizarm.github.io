@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>hdo: HDO Detector</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">hdo
+   &#160;<span id="projectnumber">beta</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generováno programem Doxygen 1.8.11 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li class="current"><a href="index.html"><span>Hlavní&#160;stránka</span></a></li>
+      <li><a href="pages.html"><span>Ostatní&#160;stránky</span></a></li>
+      <li><a href="annotated.html"><span>Třídy</span></a></li>
+      <li><a href="files.html"><span>Soubory</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">HDO Detector </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p>Projekt pro demostraci vyhodnocení signálu HDO 216,6 Hz v síťovém napětí. Oproti dříve používaným metodám, které sice používaly k vyhodnocení procesor, ale jen na určení tvaru telegramu tato metoda nevyžaduje prakticky žádný analogový filtr, napětí z rozvodné sítě se přivádí (po transformaci, tj. jen oddělení) přímo do A/D převodníku. Moderní rychlé procesory tak umožňují trochu jiný přístup k problému a to vede k podstatnému zjednodušení hardware. Zajímavé je zjištění, že tento přístup by zřejmě vedl k úspěchu i při použití 8-bitového procesoru a to i nikterak rychlého.</p>
+<p><b>Projekt není stavebním návodem na koncové zařízení, které bude spínat spotřebiče podle nastaveného tarifu, případně indikovat tarif, ale jen popis několika praktických zkoušek principu, na němž je možné takovéto zařízení úspěšně zhotovit.</b></p>
+<p>Vše podstatné je zde zveřejněno v podobě zdrojových kódů v jazyce C, je to jen dost hrubá, avšak funkční kostra, komerční zařízení by vyžadovalo dodělat ještě několik konfiguračních parametrů (216,6 Hz není jediná používaná frekvence) a metodu jak tyto parametry nastavit. Jako inspirace pro vlastní konstrukci tento projekt může docela dobře posloužit.</p>
+<h1><a class="anchor" id="description"></a>
+Bližší popis</h1>
+<ol type="1">
+<li><a class="el" href="main_8c.html">main.c</a> - hlavní program</li>
+<li><a class="el" href="goertzel_8h.html">goertzel.h</a> - utility pro výpočet poměrného výkonu signálu pomocí Goertzelova algoritmu</li>
+<li><a class="el" href="hdo_8h.html">hdo.h</a> - dekódování telegramu a převod do čitelné podoby, jednoduchý konečný automat </li>
+</ol>
+<h1><a class="anchor" id="supportedplatforms"></a>
+Podporované platformy</h1>
+<p>Projekt byl vytvořen pro procesor AT91SAM7S256 a vývojový kit od fy. Kramara. Nástrojová sada je GNU ARM - arm-elf-gcc ... Vyzkoušel jsem rychlost výpočtu na 8-bit architektuře AT89C51ED2 v normálním módu, s oscilátorem na 11,0592 MHz, data pro výpočet v XRAM, aritfmt long (32 bit). Výpočet trvá asi 42 msec, takže zatížení je tak 1/3. Z toho je vidět, že portovat metodu na osmibitovou architekturu je možné, chtělo by to ale provádět výpočet koeficientů Goertzelova algoritmu přímo v přerušení, pouze vyhodnocení v main. Tím by klesly nároky na paměť a zvýšila by se rychlost. </p>
+<h1><a class="anchor" id="images"></a>
+Obrázky</h1>
+<div class="image">
+<img src="tlg.png" alt="tlg.png"/>
+</div>
+<p> Ukazuje tvar telegramu po vyhodnocení Goertzelovým algoritmem </p><div class="image">
+<img src="hdo.png" alt="hdo.png"/>
+</div>
+<p> Schéma realizovaného přípravku. Funguje, ale mohlo by to mít větší citlivost. </p><div class="image">
+<img src="wien.png" alt="wien.png"/>
+</div>
+<p> Schéma, jak by se to dalo zlepšit. Wienův můstek potlačí 50 Hz, přičemž signál 216,6Hz je tlumen jen málo. Dá se přesněji nastavit pomocí RV1. Vinutí transformátoru musí být symetrické. </p>
+<h1><a class="anchor" id="Licence"></a>
+Licence</h1>
+<p>Program je publikován pod <a href="http://www.gnugpl.cz">GPL License</a> </p>
+<h1><a class="anchor" id="Download"></a>
+Ke stažení</h1>
+<p><a href="../hdo.tgz">Testovací verze</a> </p>
+<h1><a class="anchor" id="Appendix"></a>
+Doplnění.</h1>
+<p>Protože se ozývají jedinci, že použitý procesor není žádná špička, přidal jsem zdrojáky pro STM32F0 Discovery kit. Je to dost překopáno, protože jsem použil již hotové kusy kódu psané v C++ a ADC v tomto procesoru se chová trochu odlišně, bylo nutné předělat i vyhodnocení telegramu. Možná je to tak lépe. Princip i fukčnost zůstává. Kód je trochu úspornější, takže nic nebrání použít i menší procesor s jádrem Cortex-M0+, který je ještě levnější (F030,31). Pro praktické použití by bylo nutné připojit krystal 8 MHz a v csystem.c přepnout hodiny na HSE. Sice to funguje i s HSI, ale obávám se, že tyto hodiny nejsou dostatečně stabilní. Ostatně je vidět i velký jitter, který znesnadňuje vyhodnocování telegramu. Právě z tohoto důvodu je i v ADC použit PCLK/2 místo ADCCLK, jehož jitter je ještě větší. Obsah signálu HDO v síťovém napětí je dost malý, takže nastavit to na spolehlivé vyhodnocení vyžaduje poměrně značné úsilí. S původní periodou vyhodnocení 166 ms se mi to vůbec nepodařilo, bylo nutno zvolit periodu 120 ms, což je násobek (26.) periody signálu 216.66 Hz.</p>
+<p><a href="../stm32f051_hdo.tgz">Verze pro STM32F0 Discovery</a> </p>
+</div></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generováno programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.11
+</small></address>
+</body>
+</html>

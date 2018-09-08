@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>hdo: Dokumentace souboru /home/mrazik/Projekty/Kizarm.github.io/hdo/hdo/at91lib/utility/trace.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">hdo
+   &#160;<span id="projectnumber">beta</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generováno programem Doxygen 1.8.11 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hlavní&#160;stránka</span></a></li>
+      <li><a href="pages.html"><span>Ostatní&#160;stránky</span></a></li>
+      <li><a href="annotated.html"><span>Třídy</span></a></li>
+      <li class="current"><a href="files.html"><span>Soubory</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Seznam&#160;souborů</span></a></li>
+      <li><a href="globals.html"><span>Globální&#160;symboly</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_43e0a1f539e00dcfa1a6bc4d4fee4fc2.html">home</a></li><li class="navelem"><a class="el" href="dir_92b95843e90daadc485b14226e438e59.html">mrazik</a></li><li class="navelem"><a class="el" href="dir_f3ad28f1896cd39387847ce3c3236ab1.html">Projekty</a></li><li class="navelem"><a class="el" href="dir_0a864d6769c20f4e975f7bd32848bb20.html">Kizarm.github.io</a></li><li class="navelem"><a class="el" href="dir_d5357cb57dcee12078a4c73baa854556.html">hdo</a></li><li class="navelem"><a class="el" href="dir_1b8f3ca87cec8965627da2ca6054f7aa.html">hdo</a></li><li class="navelem"><a class="el" href="dir_12d1aae7d01de2a295c37139ba1460fc.html">at91lib</a></li><li class="navelem"><a class="el" href="dir_af21248a537764a3a3d67a83eea22e02.html">utility</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Definice maker</a>  </div>
+  <div class="headertitle">
+<div class="title">Dokumentace souboru trace.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;<a class="el" href="board_8h_source.html">board.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="dbgu_8h_source.html">dbgu/dbgu.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="pio_8h_source.html">pio/pio.h</a>&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+</div>
+<p><a href="trace_8h_source.html">Zobrazit zdrojový text tohoto souboru.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Definice maker</h2></td></tr>
+<tr class="memitem:a6370af17e72f0c84861c670a3086a3ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6370af17e72f0c84861c670a3086a3ed"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="trace_8h.html#a6370af17e72f0c84861c670a3086a3ed">SOFTPACK_VERSION</a>&#160;&#160;&#160;&quot;1.5&quot;</td></tr>
+<tr class="memdesc:a6370af17e72f0c84861c670a3086a3ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Softpack Version. <br /></td></tr>
+<tr class="separator:a6370af17e72f0c84861c670a3086a3ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b5b02969ffaed72c7b2ea6bbd1f0064"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b5b02969ffaed72c7b2ea6bbd1f0064"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_LEVEL_DEBUG</b>&#160;&#160;&#160;5</td></tr>
+<tr class="separator:a4b5b02969ffaed72c7b2ea6bbd1f0064"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a805a48ca8324f35a46f5251265d7d668"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a805a48ca8324f35a46f5251265d7d668"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_LEVEL_INFO</b>&#160;&#160;&#160;4</td></tr>
+<tr class="separator:a805a48ca8324f35a46f5251265d7d668"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a80e607aaa7ad84205d3ebea58353b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a80e607aaa7ad84205d3ebea58353b7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_LEVEL_WARNING</b>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:a3a80e607aaa7ad84205d3ebea58353b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af31e23d153918f8c507a0d46fbf2b2a9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af31e23d153918f8c507a0d46fbf2b2a9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_LEVEL_ERROR</b>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:af31e23d153918f8c507a0d46fbf2b2a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fc69a80873c48381834a93137525658"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9fc69a80873c48381834a93137525658"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_LEVEL_FATAL</b>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a9fc69a80873c48381834a93137525658"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a781061ccd9c7ab336ab95c4c6719e281"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a781061ccd9c7ab336ab95c4c6719e281"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_LEVEL_NO_TRACE</b>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:a781061ccd9c7ab336ab95c4c6719e281"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcdf5e66fd927a7f4cc64295acd20407"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afcdf5e66fd927a7f4cc64295acd20407"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_LEVEL</b>&#160;&#160;&#160;TRACE_LEVEL_INFO</td></tr>
+<tr class="separator:afcdf5e66fd927a7f4cc64295acd20407"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e2adf2ce454803177b0e0e568648bac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e2adf2ce454803177b0e0e568648bac"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DYN_TRACES</b>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:a0e2adf2ce454803177b0e0e568648bac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdc0f56a5b5521c1ae4f8fab505c6620"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="trace_8h.html#afdc0f56a5b5521c1ae4f8fab505c6620">TRACE_CONFIGURE</a>(mode,  baudrate,  mck)</td></tr>
+<tr class="separator:afdc0f56a5b5521c1ae4f8fab505c6620"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeebf751915529db9818f1d72a71ee336"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="trace_8h.html#aeebf751915529db9818f1d72a71ee336">TRACE_CONFIGURE_ISP</a>(mode,  baudrate,  mck)</td></tr>
+<tr class="separator:aeebf751915529db9818f1d72a71ee336"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67a8f9bc74358aa21745a76e23768dae"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="trace_8h.html#a67a8f9bc74358aa21745a76e23768dae">TRACE_DEBUG</a>(...)&#160;&#160;&#160;{ }</td></tr>
+<tr class="separator:a67a8f9bc74358aa21745a76e23768dae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a584e05aa0ae4b6c0bf0eee6d559dbda3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a584e05aa0ae4b6c0bf0eee6d559dbda3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_DEBUG_WP</b>(...)&#160;&#160;&#160;{ }</td></tr>
+<tr class="separator:a584e05aa0ae4b6c0bf0eee6d559dbda3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7339bfd784193a5c79efcef2eeb2d6df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7339bfd784193a5c79efcef2eeb2d6df"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_INFO</b>(...)&#160;&#160;&#160;{ <a class="el" href="stdio_8c.html#ad6c265f6d41266cbb62035915f9c0030">printf</a>(&quot;-I- &quot; __VA_ARGS__); }</td></tr>
+<tr class="separator:a7339bfd784193a5c79efcef2eeb2d6df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0830ea532df7991c854a5175615fde2f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0830ea532df7991c854a5175615fde2f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_INFO_WP</b>(...)&#160;&#160;&#160;{ <a class="el" href="stdio_8c.html#ad6c265f6d41266cbb62035915f9c0030">printf</a>(__VA_ARGS__); }</td></tr>
+<tr class="separator:a0830ea532df7991c854a5175615fde2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72b9761add7486364dba449091cd2579"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a72b9761add7486364dba449091cd2579"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_WARNING</b>(...)&#160;&#160;&#160;{ <a class="el" href="stdio_8c.html#ad6c265f6d41266cbb62035915f9c0030">printf</a>(&quot;-W- &quot; __VA_ARGS__); }</td></tr>
+<tr class="separator:a72b9761add7486364dba449091cd2579"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab574697859059a215da53004c0c26d31"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab574697859059a215da53004c0c26d31"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_WARNING_WP</b>(...)&#160;&#160;&#160;{ <a class="el" href="stdio_8c.html#ad6c265f6d41266cbb62035915f9c0030">printf</a>(__VA_ARGS__); }</td></tr>
+<tr class="separator:ab574697859059a215da53004c0c26d31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf9a5c67ad0ffd97cfca6d77c6af536f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf9a5c67ad0ffd97cfca6d77c6af536f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ERROR</b>(...)&#160;&#160;&#160;{ <a class="el" href="stdio_8c.html#ad6c265f6d41266cbb62035915f9c0030">printf</a>(&quot;-E- &quot; __VA_ARGS__); }</td></tr>
+<tr class="separator:aaf9a5c67ad0ffd97cfca6d77c6af536f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fa29e92fc38c62220c3885d213f5d73"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3fa29e92fc38c62220c3885d213f5d73"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ERROR_WP</b>(...)&#160;&#160;&#160;{ <a class="el" href="stdio_8c.html#ad6c265f6d41266cbb62035915f9c0030">printf</a>(__VA_ARGS__); }</td></tr>
+<tr class="separator:a3fa29e92fc38c62220c3885d213f5d73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7309f9ffcf79bc396c9223ff06568ba1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7309f9ffcf79bc396c9223ff06568ba1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FATAL</b>(...)&#160;&#160;&#160;{ <a class="el" href="stdio_8c.html#ad6c265f6d41266cbb62035915f9c0030">printf</a>(&quot;-F- &quot; __VA_ARGS__); while(1); }</td></tr>
+<tr class="separator:a7309f9ffcf79bc396c9223ff06568ba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a7f11935a265c16ab18900bad78e8cd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a7f11935a265c16ab18900bad78e8cd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FATAL_WP</b>(...)&#160;&#160;&#160;{ <a class="el" href="stdio_8c.html#ad6c265f6d41266cbb62035915f9c0030">printf</a>(__VA_ARGS__); while(1); }</td></tr>
+<tr class="separator:a3a7f11935a265c16ab18900bad78e8cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailní popis</h2>
+<div class="textblock"><p><b>Purpose</b> </p>
+<p>Standard output methods for reporting debug information, warnings and errors, which can be easily be turned on/off.</p>
+<p><b>Usage</b> </p><ol type="1">
+<li>Initialize the DBGU using <a class="el" href="trace_8h.html#afdc0f56a5b5521c1ae4f8fab505c6620">TRACE_CONFIGURE()</a> if you intend to eventually disable ALL traces; otherwise use <a class="el" href="dbgu_8h.html#a6d09d67a5aada200b1bfa36a57e3b62e">DBGU_Configure()</a>.</li>
+<li>Uses the <a class="el" href="trace_8h.html#a67a8f9bc74358aa21745a76e23768dae">TRACE_DEBUG()</a>, TRACE_INFO(), TRACE_WARNING(), TRACE_ERROR() TRACE_FATAL() macros to output traces throughout the program.</li>
+<li>Each type of trace has a level : Debug 5, Info 4, Warning 3, Error 2 and Fatal 1. Disable a group of traces by changing the value of TRACE_LEVEL during compilation; traces with a level bigger than TRACE_LEVEL are not generated. To generate no trace, use the reserved value 0.</li>
+<li>Trace disabling can be static or dynamic. If dynamic disabling is selected the trace level can be modified in runtime. If static disabling is selected the disabled traces are not compiled.</li>
+</ol>
+<p><b>Trace</b> level description</p><ol type="1">
+<li>TRACE_DEBUG (5): Traces whose only purpose is for debugging the program, and which do not produce meaningful information otherwise.</li>
+<li>TRACE_INFO (4): Informational trace about the program execution. Should enable the user to see the execution flow.</li>
+<li>TRACE_WARNING (3): Indicates that a minor error has happened. In most case it can be discarded safely; it may even be expected.</li>
+<li>TRACE_ERROR (2): Indicates an error which may not stop the program execution, but which indicates there is a problem with the code.</li>
+<li>TRACE_FATAL (1): Indicates a major error which prevents the program from going any further. </li>
+</ol>
+
+<p>Definice v souboru <a class="el" href="trace_8h_source.html">trace.h</a>.</p>
+</div><h2 class="groupheader">Dokumentace k definicím maker</h2>
+<a class="anchor" id="afdc0f56a5b5521c1ae4f8fab505c6620"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TRACE_CONFIGURE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">mode, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">baudrate, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">mck&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Hodnota:</b><div class="fragment"><div class="line">{ \</div><div class="line">    const <a class="code" href="structPin.html">Pin</a> pinsDbgu[] = {<a class="code" href="board_8h.html#afb190781ee50122b9398b05dfb1a2c3b">PINS_DBGU</a>}; <a class="code" href="pio_8h.html#a12d75e14e0ca9a69bf4a60bdd4a62af6">\</a></div><div class="line"><a class="code" href="pio_8h.html#a12d75e14e0ca9a69bf4a60bdd4a62af6">    PIO_Configure</a>(pinsDbgu, <a class="code" href="pio_8h.html#a2e86ed748eb3ae9574ac9822e67154f6">PIO_LISTSIZE</a>(pinsDbgu)); <a class="code" href="dbgu_8h.html#a6d09d67a5aada200b1bfa36a57e3b62e">\</a></div><div class="line"><a class="code" href="dbgu_8h.html#a6d09d67a5aada200b1bfa36a57e3b62e">    DBGU_Configure</a>(mode, baudrate, mck); \</div><div class="line">    }</div><div class="ttc" id="dbgu_8h_html_a6d09d67a5aada200b1bfa36a57e3b62e"><div class="ttname"><a href="dbgu_8h.html#a6d09d67a5aada200b1bfa36a57e3b62e">DBGU_Configure</a></div><div class="ttdeci">void DBGU_Configure(unsigned int mode, unsigned int baudrate, unsigned int mck)</div><div class="ttdef"><b>Definition:</b> <a href="dbgu_8c_source.html#l00051">dbgu.c:51</a></div></div>
+<div class="ttc" id="structPin_html"><div class="ttname"><a href="structPin.html">Pin</a></div><div class="ttdef"><b>Definition:</b> <a href="pio_8h_source.html#l00131">pio.h:131</a></div></div>
+<div class="ttc" id="pio_8h_html_a12d75e14e0ca9a69bf4a60bdd4a62af6"><div class="ttname"><a href="pio_8h.html#a12d75e14e0ca9a69bf4a60bdd4a62af6">PIO_Configure</a></div><div class="ttdeci">unsigned char PIO_Configure(const Pin *list, unsigned int size)</div><div class="ttdef"><b>Definition:</b> <a href="pio_8c_source.html#l00217">pio.c:217</a></div></div>
+<div class="ttc" id="board_8h_html_afb190781ee50122b9398b05dfb1a2c3b"><div class="ttname"><a href="board_8h.html#afb190781ee50122b9398b05dfb1a2c3b">PINS_DBGU</a></div><div class="ttdeci">#define PINS_DBGU</div><div class="ttdoc">DBGU pins definition. Contains DRXD (PA9) and DTXD (PA10). </div><div class="ttdef"><b>Definition:</b> <a href="board_8h_source.html#l00143">board.h:143</a></div></div>
+<div class="ttc" id="pio_8h_html_a2e86ed748eb3ae9574ac9822e67154f6"><div class="ttname"><a href="pio_8h.html#a2e86ed748eb3ae9574ac9822e67154f6">PIO_LISTSIZE</a></div><div class="ttdeci">#define PIO_LISTSIZE(pPins)</div><div class="ttdef"><b>Definition:</b> <a href="pio_8h_source.html#l00110">pio.h:110</a></div></div>
+</div><!-- fragment --><p>Initializes the DBGU </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mode</td><td>DBGU mode. </td></tr>
+    <tr><td class="paramname">baudrate</td><td>DBGU baudrate. </td></tr>
+    <tr><td class="paramname">mck</td><td>Master clock frequency. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="trace_8h_source.html#l00122">122</a> v souboru <a class="el" href="trace_8h_source.html">trace.h</a>.</p>
+
+<p>Používá se v <a class="el" href="main_8c_source.html#l00215">main()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aeebf751915529db9818f1d72a71ee336"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TRACE_CONFIGURE_ISP</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">mode, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">baudrate, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">mck&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Hodnota:</b><div class="fragment"><div class="line">{ \</div><div class="line">    const <a class="code" href="structPin.html">Pin</a> pinsDbgu[] = {<a class="code" href="board_8h.html#afb190781ee50122b9398b05dfb1a2c3b">PINS_DBGU</a>}; <a class="code" href="pio_8h.html#a12d75e14e0ca9a69bf4a60bdd4a62af6">\</a></div><div class="line"><a class="code" href="pio_8h.html#a12d75e14e0ca9a69bf4a60bdd4a62af6">    PIO_Configure</a>(pinsDbgu, <a class="code" href="pio_8h.html#a2e86ed748eb3ae9574ac9822e67154f6">PIO_LISTSIZE</a>(pinsDbgu)); <a class="code" href="dbgu_8h.html#a6d09d67a5aada200b1bfa36a57e3b62e">\</a></div><div class="line"><a class="code" href="dbgu_8h.html#a6d09d67a5aada200b1bfa36a57e3b62e">    DBGU_Configure</a>(mode, baudrate, mck); \</div><div class="line">    }</div><div class="ttc" id="dbgu_8h_html_a6d09d67a5aada200b1bfa36a57e3b62e"><div class="ttname"><a href="dbgu_8h.html#a6d09d67a5aada200b1bfa36a57e3b62e">DBGU_Configure</a></div><div class="ttdeci">void DBGU_Configure(unsigned int mode, unsigned int baudrate, unsigned int mck)</div><div class="ttdef"><b>Definition:</b> <a href="dbgu_8c_source.html#l00051">dbgu.c:51</a></div></div>
+<div class="ttc" id="structPin_html"><div class="ttname"><a href="structPin.html">Pin</a></div><div class="ttdef"><b>Definition:</b> <a href="pio_8h_source.html#l00131">pio.h:131</a></div></div>
+<div class="ttc" id="pio_8h_html_a12d75e14e0ca9a69bf4a60bdd4a62af6"><div class="ttname"><a href="pio_8h.html#a12d75e14e0ca9a69bf4a60bdd4a62af6">PIO_Configure</a></div><div class="ttdeci">unsigned char PIO_Configure(const Pin *list, unsigned int size)</div><div class="ttdef"><b>Definition:</b> <a href="pio_8c_source.html#l00217">pio.c:217</a></div></div>
+<div class="ttc" id="board_8h_html_afb190781ee50122b9398b05dfb1a2c3b"><div class="ttname"><a href="board_8h.html#afb190781ee50122b9398b05dfb1a2c3b">PINS_DBGU</a></div><div class="ttdeci">#define PINS_DBGU</div><div class="ttdoc">DBGU pins definition. Contains DRXD (PA9) and DTXD (PA10). </div><div class="ttdef"><b>Definition:</b> <a href="board_8h_source.html#l00143">board.h:143</a></div></div>
+<div class="ttc" id="pio_8h_html_a2e86ed748eb3ae9574ac9822e67154f6"><div class="ttname"><a href="pio_8h.html#a2e86ed748eb3ae9574ac9822e67154f6">PIO_LISTSIZE</a></div><div class="ttdeci">#define PIO_LISTSIZE(pPins)</div><div class="ttdef"><b>Definition:</b> <a href="pio_8h_source.html#l00110">pio.h:110</a></div></div>
+</div><!-- fragment --><p>Initializes the DBGU for ISP project </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mode</td><td>DBGU mode. </td></tr>
+    <tr><td class="paramname">baudrate</td><td>DBGU baudrate. </td></tr>
+    <tr><td class="paramname">mck</td><td>Master clock frequency. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="trace_8h_source.html#l00137">137</a> v souboru <a class="el" href="trace_8h_source.html">trace.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a67a8f9bc74358aa21745a76e23768dae"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TRACE_DEBUG</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em></td><td>)</td>
+          <td>&#160;&#160;&#160;{ }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Outputs a formatted string using "printf" if the log level is high enough. Can be disabled by defining TRACE_LEVEL=0 during compilation. </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">...</td><td>Additional parameters depending on formatted string. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definice je uvedena na řádku <a class="el" href="trace_8h_source.html#l00186">186</a> v souboru <a class="el" href="trace_8h_source.html">trace.h</a>.</p>
+
+<p>Používá se v <a class="el" href="adc_8c_source.html#l00070">ADC_Initialize()</a> a <a class="el" href="main_8c_source.html#l00166">ISR_Adc()</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generováno programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.11
+</small></address>
+</body>
+</html>
