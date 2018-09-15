@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>Standalone SWD programator: Standalone programátor čipů STM32Fx.</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Standalone SWD programator
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generováno programem Doxygen 1.8.11 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li class="current"><a href="index.html"><span>Hlavní&#160;stránka</span></a></li>
+      <li><a href="annotated.html"><span>Třídy</span></a></li>
+      <li><a href="files.html"><span>Soubory</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Hledat" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">Standalone programátor čipů STM32Fx. </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p>Procesory STM32F a nakonec ARM Cortex-Mx obecně používají pro ladění a zavádění programu do flash rozhraní SWD, které nahrazuje dřívější JTAG. Bylo by sice možné použít interní bootloader, ale v tomto případě je nutné propojit BOOT pin na plus a pak propojku odstranit, což zdržuje. A tak abych babám ve výrobě usnadnil práci, vyrobil jsem jednoduchý standalone programátor, který se umí bavit s cílovým procesorem přes SWD.</p>
+<dl class="section author"><dt>Autor</dt><dd>Mrazik <a href="#" onclick="location.href='mai'+'lto:'+'mra'+'zi'+'k@v'+'ol'+'ny.'+'cz'; return false;">mrazi<span style="display: none;">.nosp@m.</span>k@vo<span style="display: none;">.nosp@m.</span>lny.c<span style="display: none;">.nosp@m.</span>z</a> s použitím různých zdrojů z Webu</dd></dl>
+<h1><a class="anchor" id="a00"></a>
+Jak to funguje.</h1>
+<p>Funguje to tak, že se do RAM cílového procesoru STM32F0 po SWD nahraje stub, tedy program pro zápis do flash a zároveň data pro zápis. Pak se stub spustí, čímž dojde k přepisu z RAM do FLASH. Do FLASH totiž nejde zapisovat přímo, zapisuje se po 16.bit slovech a po každém zápisu je nutné počkat, až se provede. Takhle řečeno to vypadá jednoduše, ono to jednoduché také je, ale SWD je opravdu oříšek. Má sice jen dva dráty, komunikace je dobře zdokumentovaná, ale donutit to ke spolupráci s ARM není tak snadné. Dokumentace ARM je asi dělána nějak automaticky, obsahuje neuvěřitelné množství informací, ale čert aby poznal, co je podstatné a co ne. Lecos by šlo vykoumat ze zdrojáků k openocd, blackmagic a jiného, ale i zde tomu poněkud brání velká komplikovanost tohoto software, které se snaží postihnout všechny možnosti, takže to vlastní jádro se v tom ztratí. No a to jádro jsem nakonec vyhrabal z hloubi Webu někde na lpcware.com (viz swd.c), dopatlal k tomu kousky kódu z STM std. periph. library a nakonec se povedlo i zamknout procesor proti nechtěnému přepisu.</p>
+<p>To, že je použit jako zdrojový procesor LPC11U24 má jediný důvod - byl v šuplíku. Tedy druhým důvodem bylo, po pravdě řečeno i to, že umožňuje změnit velice jednoduše firmware po USB, ale nic nebrání použít jakýkoli jiný procesor, třeba i 8-bit. Pak je ovšem nutné předělat ty low-level rutiny, které cvičí s piny, což by nemělo být tak hrozné. Stejně tak je možné upravit funkce pro zápis do flash pro jiný procesor. Zde byl jako cílový procesor použit STM32F051.</p>
+<p>Za zmínku stojí soubor bindata.S. Není to jediný kousek kódu v assembleru, jsou v něm i rutiny pro zápis do flash (adresář stub) a zápis do option (adresář optb), to je však jen kvůli tomu, že jsem to takhle našel hotové a funkční v blackmagic. Tohle je hezký trik, jak zahrnout do zdrojového kódu i binárky pro cílovou platformu aniž by bylo nutné je jakkoli upravovat.</p>
+<h1><a class="anchor" id="a01"></a>
+Hardware.</h1>
+<p>Pokud možno co nejjednodušší. USB je použito pro změnu firmware zdrojového procesoru, zároveň je pak použito pro napájení jak zdrojové, tak cílové platformy. Doporučuji pak použít nějakou USB nabíječku, mít to připojené k PC v režimu programování cíle není dobré - USB se snaží vyčíslovat a moc mu to nejde. Stejně to bylo vymyšleno jen proto, aby ve výrobě nemuseli mít zapnuté PC. </p><div class="image">
+<img src="boot.png" alt="boot.png"/>
+</div>
+<p> <b>Pozn.</b><em> Pin PA18 (označený jako RxD) je použit jako SWCLK pro cílový procesor, PA19 (TxD) jako SWDIO.</em></p>
+<p>A protože je to umístěno v prostředí, kde je potřeba už trochu ochrana, najdeme zde omezovač proudu (40 mA, stačí i pro cílový procesor) a ochranné odpory na SWCLK i SWDIO. A protože je to kompaktní, je to zároveň i svižné - nahrání 8KB firmware včetně verifikace proběhne za sekundu. Spínačem SW1 pustíme šťávu do zdrojového i cílového systému, což indikuje LED D2, systém chvíli počká až se poměry ustálí, LED D1 pak indikuje průběh a dokončení operace. Pokud je cílový procesor už od počátku chráněn proti zápisu, programování neproběhne ale ochrana se zruší a D1 10x blikne. Pak už je možné postup opakovat (vypnout a znovu zapnout SW1), cílový procesor se normálně naprogramuje a prvních 8KB flash se zamkne proti zápisu. Bylo by možné zamykat ho i proti čtení, viz komentář ve funkci writeProtection(), soubor flash.c.</p>
+<h1><a class="anchor" id="a02"></a>
+Závěr.</h1>
+<p>Asi to moc lidí nevyužije i když standalone programovátka na různé ty Atmely byl oblíbený námět konstrukcí. Ale věřím, že pro seznámení s principem komunikace SWD je to celkem slušný základ. Snad právě proto, že jsem vyházel vše zbytečné a zbylo jen nezbytné jádro, zůstalo to poměrně přehledné, takže je to otevřeno pro lidovou tvořivost.</p>
+<h1><a class="anchor" id="a03"></a>
+Doplňky.</h1>
+<ul>
+<li>02.06.2016 doplněn jako další target LPC11.. Ověřeno na LPC11U34, nechodí verifikace, pokud nesedí kontrolní suma vektorů. Zároveň jsem z toho udělal knihovny, finálně stačí assemblerem zkompilovat jeden soubor a celé to zlinkovat. Takže stačí binutils pro ARM.</li>
+<li>04.06.2016 Nastavení souboru pro upload je v Makefile. Soubor např. firmware.bin nakopírujeme do kořenového adresáře projektu (kde je i tt. Makefile) a spustíme příkaz <em>make FWFILE=firmware.bin</em>. Default je make nastaveno tak, že se do cílového procesoru LPC11U.. nakopíruje vlastní (self) firmware - je to tedy jakýsi "virus", který kopíruje sám sebe pomocí SWD. To je samosebou k ničemu, je to jen demo, z kterého je vidět velikost kódu, potřebného pro upload.</li>
+</ul>
+<h1><a class="anchor" id="a04"></a>
+Download.</h1>
+<p>Archiv boot.zip se zdrojáky je možné stáhnout <a href="../boot.zip">zde</a>. </p>
+</div></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generováno so 15. zář 2018 14.46:19 pro projekt Standalone SWD programator programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.11
+</small></address>
+</body>
+</html>

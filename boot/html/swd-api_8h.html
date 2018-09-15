@@ -1,0 +1,727 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>Standalone SWD programator: Dokumentace souboru inc/swd-api.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Standalone SWD programator
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generováno programem Doxygen 1.8.11 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hlavní&#160;stránka</span></a></li>
+      <li><a href="annotated.html"><span>Třídy</span></a></li>
+      <li class="current"><a href="files.html"><span>Soubory</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Hledat" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Seznam&#160;souborů</span></a></li>
+      <li><a href="globals.html"><span>Globální&#160;symboly</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Funkce</a>  </div>
+  <div class="headertitle">
+<div class="title">Dokumentace souboru swd-api.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>API funkce SWD komunikace - mělo by chodit na Cortex-Mx.  
+<a href="#details">...</a></p>
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Graf závislostí na vkládaných souborech pro swd-api.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="swd-api_8h__incl.png" border="0" usemap="#inc_2swd-api_8h" alt=""/></div>
+<map name="inc_2swd-api_8h" id="inc_2swd-api_8h">
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+Následující graf ukazuje, které soubory přímo nebo nepřímo vkládají tento soubor:</div>
+<div class="dyncontent">
+<div class="center"><img src="swd-api_8h__dep__incl.png" border="0" usemap="#inc_2swd-api_8hdep" alt=""/></div>
+<map name="inc_2swd-api_8hdep" id="inc_2swd-api_8hdep">
+<area shape="rect" id="node2" href="main_8c.html" title="Download firmware do STM32F0, LPC11xx prostřednictvím SWD vytvořeného na pinech LPC11U24. " alt="" coords="13,80,96,107"/>
+</map>
+</div>
+</div>
+<p><a href="swd-api_8h_source.html">Zobrazit zdrojový text tohoto souboru.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Funkce</h2></td></tr>
+<tr class="memitem:a567bf713f2acfa25e719545cef1b1c59"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#a567bf713f2acfa25e719545cef1b1c59">ReadDP</a> (uint8_t address, uint32_t *data)</td></tr>
+<tr class="memdesc:a567bf713f2acfa25e719545cef1b1c59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Čtení DP.  <a href="#a567bf713f2acfa25e719545cef1b1c59">...</a><br /></td></tr>
+<tr class="separator:a567bf713f2acfa25e719545cef1b1c59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae64a4195cea1da0c7238061857f232b7"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#ae64a4195cea1da0c7238061857f232b7">WriteDP</a> (uint8_t address, uint32_t data)</td></tr>
+<tr class="memdesc:ae64a4195cea1da0c7238061857f232b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zápis DP.  <a href="#ae64a4195cea1da0c7238061857f232b7">...</a><br /></td></tr>
+<tr class="separator:ae64a4195cea1da0c7238061857f232b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e8e8aa7714d64aa29ee8d29d66beba6"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#a3e8e8aa7714d64aa29ee8d29d66beba6">SetAPSelect</a> (uint8_t address)</td></tr>
+<tr class="memdesc:a3e8e8aa7714d64aa29ee8d29d66beba6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nastavení AP.  <a href="#a3e8e8aa7714d64aa29ee8d29d66beba6">...</a><br /></td></tr>
+<tr class="separator:a3e8e8aa7714d64aa29ee8d29d66beba6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8877bbc9dbaa69327418506c5558fe5f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#a8877bbc9dbaa69327418506c5558fe5f">ReadAP</a> (uint8_t address, uint32_t *data)</td></tr>
+<tr class="memdesc:a8877bbc9dbaa69327418506c5558fe5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Čtení AP.  <a href="#a8877bbc9dbaa69327418506c5558fe5f">...</a><br /></td></tr>
+<tr class="separator:a8877bbc9dbaa69327418506c5558fe5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ad7e1cdfb5370ea705759ced357f79f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#a8ad7e1cdfb5370ea705759ced357f79f">ReadAP2</a> (uint8_t address, uint32_t *data)</td></tr>
+<tr class="memdesc:a8ad7e1cdfb5370ea705759ced357f79f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Čtení AP dvakrát.  <a href="#a8ad7e1cdfb5370ea705759ced357f79f">...</a><br /></td></tr>
+<tr class="separator:a8ad7e1cdfb5370ea705759ced357f79f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b1727710ed756f1a6253415140c96b0"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#a7b1727710ed756f1a6253415140c96b0">WriteAP</a> (uint8_t address, uint32_t data)</td></tr>
+<tr class="memdesc:a7b1727710ed756f1a6253415140c96b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zápis AP.  <a href="#a7b1727710ed756f1a6253415140c96b0">...</a><br /></td></tr>
+<tr class="separator:a7b1727710ed756f1a6253415140c96b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fba5f14e4945cde3ef9b9545d547e7a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#a0fba5f14e4945cde3ef9b9545d547e7a">Connect</a> (uint32_t *CoreID)</td></tr>
+<tr class="memdesc:a0fba5f14e4945cde3ef9b9545d547e7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Připojení k cíli.  <a href="#a0fba5f14e4945cde3ef9b9545d547e7a">...</a><br /></td></tr>
+<tr class="separator:a0fba5f14e4945cde3ef9b9545d547e7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55506c1aebc1024cc12ea9fa2bfdc4d8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#a55506c1aebc1024cc12ea9fa2bfdc4d8">ReadMemory</a> (uint32_t address, uint32_t *data)</td></tr>
+<tr class="memdesc:a55506c1aebc1024cc12ea9fa2bfdc4d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Čtení slova paměti.  <a href="#a55506c1aebc1024cc12ea9fa2bfdc4d8">...</a><br /></td></tr>
+<tr class="separator:a55506c1aebc1024cc12ea9fa2bfdc4d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acde27bb8006989a8cb0146cb0d1d0e0e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#acde27bb8006989a8cb0146cb0d1d0e0e">ReadMemoryArray</a> (uint32_t address, uint32_t *data, uint32_t count)</td></tr>
+<tr class="memdesc:acde27bb8006989a8cb0146cb0d1d0e0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Čtení bloku paměti.  <a href="#acde27bb8006989a8cb0146cb0d1d0e0e">...</a><br /></td></tr>
+<tr class="separator:acde27bb8006989a8cb0146cb0d1d0e0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12dccad61f6a2583846c79dfe75b8593"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#a12dccad61f6a2583846c79dfe75b8593">WriteMemory</a> (uint32_t address, uint32_t data)</td></tr>
+<tr class="memdesc:a12dccad61f6a2583846c79dfe75b8593"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zápis slova do paměti.  <a href="#a12dccad61f6a2583846c79dfe75b8593">...</a><br /></td></tr>
+<tr class="separator:a12dccad61f6a2583846c79dfe75b8593"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d0b2232f80fbe32f161b3360398a244"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#a9d0b2232f80fbe32f161b3360398a244">WriteMemoryArray</a> (uint32_t address, const uint32_t *data, uint32_t count)</td></tr>
+<tr class="memdesc:a9d0b2232f80fbe32f161b3360398a244"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zápis bloku do paměti.  <a href="#a9d0b2232f80fbe32f161b3360398a244">...</a><br /></td></tr>
+<tr class="separator:a9d0b2232f80fbe32f161b3360398a244"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad729f1fe2a05fc52ae16a6a347ca8854"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#ad729f1fe2a05fc52ae16a6a347ca8854">Attach</a> (void)</td></tr>
+<tr class="separator:ad729f1fe2a05fc52ae16a6a347ca8854"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61f6a03921a1315958d8b9775428fddf"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#a61f6a03921a1315958d8b9775428fddf">Run</a> (void)</td></tr>
+<tr class="separator:a61f6a03921a1315958d8b9775428fddf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad60ae1ba39d8cfae9c87d70d83897e83"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#ad60ae1ba39d8cfae9c87d70d83897e83">Step</a> (void)</td></tr>
+<tr class="separator:ad60ae1ba39d8cfae9c87d70d83897e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc61671fe20ad417ceebe5de5a1ccde9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#acc61671fe20ad417ceebe5de5a1ccde9">Stop</a> (void)</td></tr>
+<tr class="separator:acc61671fe20ad417ceebe5de5a1ccde9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58f5414e19052fe1f8d2dadd5db806d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a58f5414e19052fe1f8d2dadd5db806d0"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#a58f5414e19052fe1f8d2dadd5db806d0">Reset</a> (void)</td></tr>
+<tr class="memdesc:a58f5414e19052fe1f8d2dadd5db806d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset. <br /></td></tr>
+<tr class="separator:a58f5414e19052fe1f8d2dadd5db806d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a957fb210c230f585327a56d01f951bd6"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#a957fb210c230f585327a56d01f951bd6">WaitHalt</a> (void)</td></tr>
+<tr class="separator:a957fb210c230f585327a56d01f951bd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69dfba406f09a33cab628b6128bc3a9c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#a69dfba406f09a33cab628b6128bc3a9c">ReadCore</a> (uint8_t regno, uint32_t *data)</td></tr>
+<tr class="memdesc:a69dfba406f09a33cab628b6128bc3a9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Čtení registru.  <a href="#a69dfba406f09a33cab628b6128bc3a9c">...</a><br /></td></tr>
+<tr class="separator:a69dfba406f09a33cab628b6128bc3a9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2218b4c959e667ee75e447fa2b8d6582"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="swd-api_8h.html#a2218b4c959e667ee75e447fa2b8d6582">WriteCore</a> (uint8_t regno, uint32_t data)</td></tr>
+<tr class="memdesc:a2218b4c959e667ee75e447fa2b8d6582"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zápis do registru.  <a href="#a2218b4c959e667ee75e447fa2b8d6582">...</a><br /></td></tr>
+<tr class="separator:a2218b4c959e667ee75e447fa2b8d6582"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailní popis</h2>
+<div class="textblock"><p>API funkce SWD komunikace - mělo by chodit na Cortex-Mx. </p>
+</div><h2 class="groupheader">Dokumentace funkcí</h2>
+<a class="anchor" id="ad729f1fe2a05fc52ae16a6a347ca8854"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t Attach </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Počáteční připojení k SWD </p><dl class="section return"><dt>Návratová hodnota</dt><dd>uint8_t Chybový kód </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a0fba5f14e4945cde3ef9b9545d547e7a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t Connect </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>CoreID</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Připojení k cíli. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">CoreID</td><td>ukazatel na identifikátor jádra </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Návratová hodnota</dt><dd>uint8_t chybový kód </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a8877bbc9dbaa69327418506c5558fe5f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ReadAP </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Čtení AP. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Adresa </td></tr>
+    <tr><td class="paramname">data</td><td>ukazatel na vrácená data </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Návratová hodnota</dt><dd>uint8_t Chybový kód </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a8ad7e1cdfb5370ea705759ced357f79f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ReadAP2 </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Čtení AP dvakrát. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Adresa </td></tr>
+    <tr><td class="paramname">data</td><td>ukazatel na vrácená data </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Návratová hodnota</dt><dd>uint8_t Chybový kód </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a69dfba406f09a33cab628b6128bc3a9c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ReadCore </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>regno</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Čtení registru. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">regno</td><td>Jeho číslo </td></tr>
+    <tr><td class="paramname">data</td><td>ukazatel na vrácená data </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Návratová hodnota</dt><dd>uint8_t Chybový kód </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a567bf713f2acfa25e719545cef1b1c59"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ReadDP </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Čtení DP. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Adresa </td></tr>
+    <tr><td class="paramname">data</td><td>ukazatel na vrácená data </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Návratová hodnota</dt><dd>uint8_t Chybový kód </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a55506c1aebc1024cc12ea9fa2bfdc4d8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ReadMemory </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Čtení slova paměti. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Adresa </td></tr>
+    <tr><td class="paramname">data</td><td>ukazatel na vrácená data </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Návratová hodnota</dt><dd>uint8_t Chybový kód </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="acde27bb8006989a8cb0146cb0d1d0e0e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ReadMemoryArray </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Čtení bloku paměti. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Adresa </td></tr>
+    <tr><td class="paramname">data</td><td>ukazatel na vrácená data </td></tr>
+    <tr><td class="paramname">count</td><td>počet slov </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Návratová hodnota</dt><dd>uint8_t Chybový kód </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a61f6a03921a1315958d8b9775428fddf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t Run </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Spuštění programu </p><dl class="section return"><dt>Návratová hodnota</dt><dd>uint8_t Chybový kód </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a3e8e8aa7714d64aa29ee8d29d66beba6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t SetAPSelect </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>address</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Nastavení AP. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Adresa </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Návratová hodnota</dt><dd>uint8_t Chybový kód </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad60ae1ba39d8cfae9c87d70d83897e83"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t Step </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Krok </p><dl class="section return"><dt>Návratová hodnota</dt><dd>uint8_t Chybový kód </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="acc61671fe20ad417ceebe5de5a1ccde9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t Stop </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Zastavení </p><dl class="section return"><dt>Návratová hodnota</dt><dd>uint8_t Chybový kód </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a957fb210c230f585327a56d01f951bd6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t WaitHalt </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Čekání na zastavení (po breakpoint) </p><dl class="section return"><dt>Návratová hodnota</dt><dd>uint8_t Chybový kód </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7b1727710ed756f1a6253415140c96b0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t WriteAP </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Zápis AP. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Adresa </td></tr>
+    <tr><td class="paramname">data</td><td>zapisovaná data </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Návratová hodnota</dt><dd>uint8_t Chybový kód </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a2218b4c959e667ee75e447fa2b8d6582"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t WriteCore </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>regno</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Zápis do registru. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">regno</td><td>Jeho číslo </td></tr>
+    <tr><td class="paramname">data</td><td>zpisovaná hodnota </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Návratová hodnota</dt><dd>uint8_t Chybový kód </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae64a4195cea1da0c7238061857f232b7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t WriteDP </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Zápis DP. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Adresa </td></tr>
+    <tr><td class="paramname">data</td><td>zapisovaná data </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Návratová hodnota</dt><dd>uint8_t Chybový kód </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a12dccad61f6a2583846c79dfe75b8593"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t WriteMemory </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Zápis slova do paměti. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Adresa </td></tr>
+    <tr><td class="paramname">data</td><td>zapisovaná data </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Návratová hodnota</dt><dd>uint8_t Chybový kód </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a9d0b2232f80fbe32f161b3360398a244"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t WriteMemoryArray </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Zápis bloku do paměti. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Adresa </td></tr>
+    <tr><td class="paramname">data</td><td>zapisovaná data </td></tr>
+    <tr><td class="paramname">count</td><td>počet slov </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Návratová hodnota</dt><dd>uint8_t Chybový kód </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generováno so 15. zář 2018 14.46:19 pro projekt Standalone SWD programator programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.11
+</small></address>
+</body>
+</html>
