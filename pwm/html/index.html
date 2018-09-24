@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>Sigma-Delta a PWM: Vylepšení PWM.</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Sigma-Delta a PWM
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generováno programem Doxygen 1.8.11 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li class="current"><a href="index.html"><span>Hlavní&#160;stránka</span></a></li>
+      <li><a href="files.html"><span>Soubory</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Hledat" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">Vylepšení PWM. </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><h1><a class="anchor" id="s01"></a>
+Motivace.</h1>
+<p>Moderní jednočipy někdy obsahují DA převodník, ale v některých situacích potřebujeme výstup analogového signálu a tento převodník chybí. Nabízí se použít časovač a generovat jím signál s pulsně šířkovou modulací (PWM) a ten pak analově filtrovat dolní propustí. Jenže pro rozumnou frekvenci buzení časovače a rovněž rozumnou maximální frekvenci výstupního signálu bývá rozlišení PWM poměrně malé - např. 256 kroků, tedy 8 bitů. To vadí především tam, kde je potřeba udržovat na výstupu přesné a stabilní napětí.</p>
+<h1><a class="anchor" id="s02"></a>
+Jak to funguje.</h1>
+<p>Můžeme to zkusit vylepšit. Půjčíme si na to techniku Sigma-Delta převodníku. Spíš než dlouhý popis je lépe se podívat na tento kousek kódu: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;stdint.h&gt;</span></div><div class="line"><span class="keyword">extern</span> <span class="keywordtype">short</span> sampleCallback ();         <span class="comment">// externí funkce pro získání 16.bit vzorku</span></div><div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> ReloadTimer (uint16_t);     <span class="comment">// Systémová funkce pro obsluhu timeru a reload PWM.</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> maxpwm = 256;</div><div class="line"><span class="keywordtype">void</span> PWM_Timer_Interrupt (<span class="keywordtype">void</span>) {       <span class="comment">// přerušení od časovače PWM na fN</span></div><div class="line">  <span class="keyword">static</span> <span class="keywordtype">unsigned</span> sigma  = 0, resample = 0;</div><div class="line">  <span class="keyword">static</span> <span class="keywordtype">unsigned</span> sample = 0; <span class="comment">// 16.bit signed, převedeme na unsigned</span></div><div class="line">  <span class="keyword">static</span> uint16_t pwm;        <span class="comment">// šířka pulsu od 0 do maxpwm</span></div><div class="line">  ReloadTimer (pwm);          <span class="comment">// zapiš minulou šířku a pak v klidu počítej</span></div><div class="line">  <span class="keywordflow">if</span> ((resample &amp; 0x1u) == 0) {   <span class="comment">// převzorkování 1/2, tedy fN/2 callback</span></div><div class="line">    <span class="keywordflow">if</span> (sampleCallback) sample = sampleCallback () + 0x8000;</div><div class="line">    sample *= maxpwm;             <span class="comment">// finta</span></div><div class="line">  }</div><div class="line">  sigma += sample;                <span class="comment">// sigma</span></div><div class="line">  pwm    = sigma &gt;&gt; 16;           <span class="comment">// delta</span></div><div class="line">  sigma &amp;= 0xFFFFu;               <span class="comment">// zůstatek do dalšího kola</span></div><div class="line">  resample += 1;</div><div class="line">}</div></div><!-- fragment --><h1><a class="anchor" id="s03"></a>
+Můžete si vyzkoušet.</h1>
+<p>Jednoduchý prográmek je napsán v Qt. </p><div class="image">
+<img src="pwm.png" alt="pwm.png"/>
+</div>
+<p> I z tohoto obrázku je vidět, že odstup signál/šum je na nízkých frekvencích opravdu o dost nižší. Pokud si chcete pohrát, <a href="../bin/pwm.html">verze pro WebAssembly je zde</a>.</p>
+<p>Pozn.:</p><ol type="1">
+<li>Zřejmě to nebude fungovat ve všech prohlížečích (technologie je zatím dost neodladěná).</li>
+<li>Je to pomalejší než nativní aplikace a i ta je dost pomalá - vykresluje poměrně dost bodů ve frekvenční oblasti. Takže po změně parametru je potřeba několik sekund počkat než se to překreslí.</li>
+<li>Horní graf (časová závislost) je možné kolečkem myši zoomovat a myší tahat po widgetu.</li>
+<li>Spodní graf je pevný.</li>
+<li>Menu ve verzi pro WebAssembly nic nedělá. Zatím není podpora pro vlákna.</li>
+</ol>
+<p>Simulovaný čítač je krmen frekvencí cca 6.5 MHz, rozlišení PWM je 256 kroků, což dává opakovací frekvenci PWM 25 kHz. Parametrem převzorkování můžeme zmenšit pro SD-PWM tuto frekvenci a tím zároveň ve stejném poměru zmenšit i rozlišení (čítač je krmen stále 6.5 MHz, krok tedy zůstává). Samozřejmě se tím zvětší i frekvence přerušení, takže je potřeba v praxi s tím zacházet rozumně. Převzorkování 1:256 by zde znamenalo čistou Sigma-Delta modulaci (střídání 0 a 1 s frekvencí 6.5 MHz).</p>
+<h1><a class="anchor" id="s04"></a>
+Ke stažení.</h1>
+<p>Zdrojáky pro Qt5 jsou <a href="../src.zip">zde</a>. </p>
+</div></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generováno programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.11
+</small></address>
+</body>
+</html>
