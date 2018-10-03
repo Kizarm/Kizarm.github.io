@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>PID: PID Diskrétní regulátor</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">PID
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generováno programem Doxygen 1.8.11 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li class="current"><a href="index.html"><span>Hlavní&#160;stránka</span></a></li>
+      <li><a href="annotated.html"><span>Třídy</span></a></li>
+      <li><a href="files.html"><span>Soubory</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Hledat" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title"><a class="el" href="classPID.html">PID</a> Diskrétní regulátor </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><dl class="section author"><dt>Autor</dt><dd>Mrazík <a href="#" onclick="location.href='mai'+'lto:'+'mra'+'zi'+'k@v'+'ol'+'ny.'+'cz'; return false;">mrazi<span style="display: none;">.nosp@m.</span>k@vo<span style="display: none;">.nosp@m.</span>lny.c<span style="display: none;">.nosp@m.</span>z</a> </dd></dl>
+<h1><a class="anchor" id="Pream"></a>
+Úvod.</h1>
+<p><a class="el" href="classPID.html">PID</a> regulátor je často používaný prvek v automatizaci. Celá problematika regulace je dost obsáhlá, teorie řeší stabilitu systému, kvalitu regulace atd. V zásadě je dobře vypracována pro lineární spojité systémy, pokud má v systému některý z prvků nelineární závislosti, což je v praxi dost častý případ, stejně je nutné použít nějakou heuristickou metodu nebo číslicový model.<br />
+Na webu lze najít klasický analogový přístup, přechod na číslicovou metodu regulace - a to je v době mikroprocesorů docela důležité - je řešen jen okrajově. Takže se zkusme na problém podívat trochu blíže. Jako výchozí bod lze vzít například dokument <a href="http://www.atmel.com/images/doc2558.pdf">AVR221</a> od fy Atmel. Zde se pokusíme ukázat co v něm chybí, resp. udělat to snad o trochu lépe. Není zde snaha to matematicky precizovat, na to jsou jiní, ale bez pár vzorečků se to neobejde. Výpočet koeficientů IIR je sice o něco náročnější než jen výpočet koeficientů <a class="el" href="classPID.html">PID</a>, ale není to tragédie a metoda generuje o něco čistší kód.</p>
+<h1><a class="anchor" id="ANALOG"></a>
+Analogová část.</h1>
+<div class="image">
+<img src="blok.png" alt="blok.png"/>
+</div>
+<p> To je popsáno dobře. Alespoň v časové oblasti. Pokud vstup regulátoru označíme jako \( e(t) \), výstup jako \( u(t) \), samotný regulátor je pak popsán odezvou: </p><p class="formulaDsp">
+\[ u(t) = K_p \left\{ e(t) + \frac {1}{T_i} \int_0^t e(\tau) d\tau + T_d \frac{de(t)}{dt} \right\} \]
+</p>
+<p> Koeficienty \( K_p \), \( T_i \), \( T_d \) lze určit pomocí <a href="http://en.wikipedia.org/wiki/Ziegler%E2%80%93Nichols_method">Ziegler–Nicholsovy metody</a>. Praktická realizace <a class="el" href="classPID.html">PID</a> regulátoru pak používá namísto integrace prostou sumaci, místo derivace diferenci. </p><p class="formulaDsp">
+\[ \int_0^t e(\tau) d\tau = T \sum_{k = 0}^n e_k ; \frac {de(t)}{dt} = \frac {e_n - e_{n - 1}}{T} ; t = n T \]
+</p>
+<p> n je diskrétní krok v čase t, T perioda vzorkování. Realizujeme tak digitální formuli </p><p class="formulaDsp">
+\[ u_n = K_p \left\{ e_n + K_i \sum_{k=0}^n e_k + K_d ( e_n - e_{n-1} ) \right\} \]
+</p>
+<p> Je zřejmé, že \( K_i = \frac{T}{T_i} , K_d = \frac{T_d}{T} \). To je srozumitelné, výpočetně poměrně nenáročné, leč má to omezení. <b> Tuto metodu lze použít jen v tom případě, pokud perioda vlastních kmitů soustavy ( viz. <a class="el" href="index.html#ZNM">Ziegler–Nicholsova metoda.</a> ) \( T_u \) je daleko větší než perioda vzorkování (opakování výpočtu) T. </b> Pro kontrolu je tato metoda aplikována ve třídě <a class="el" href="classPID.html">PID</a>. Zde se pokusíme to trochu zdigitalizovat - převést problém na jednoduchý číslicový filtr typu IIR (Infinite Impulse Response). Blíže viz. <a class="el" href="classPIDIIR.html">PIDIIR</a>.</p>
+<h1><a class="anchor" id="ZNM"></a>
+Ziegler–Nicholsova metoda.</h1>
+<p>Používá se pro otimální nastavení analogového <a class="el" href="classPID.html">PID</a> regulátoru. Předpokladem je, že je možné regulovanou soustavu spolu s regulátorem rozkmitat. Měří se tedy na uzavřené smyčce, přičemž koeficient integrální části Ki a diferenciální části Kd regulátoru jsou nulové a proporcionální koeficient Kp se zvětšuje postupně tak, aby systém právě začal neomezeně kmitat (unstable). Tím dostaneme koeficient Ku a periodu kmitání Tu. Pak lze vyjít z tabulky koeficientů (Z anglické wikipedie, údaje z různých zdrojů se mírně liší, jednotky jsou uvedeny podle použitého výrazu pro <a class="el" href="classPID.html">PID</a>, ale třeba AVR221 používá jiné jednotky, takže koeficienty se liší dost podstatně. Když to pak aplikujeme v praxi, musí to rozměrově "sedět".)</p>
+<ul>
+<li>Kp - zde násobek celkového kritického zesílení Ku (viz vzorce výše)</li>
+<li>Ti - (časová) integrační konstanta v násobcích periody Tu</li>
+<li>Td - (časová) derivační konstanta v násobcích periody Tu</li>
+</ul>
+<table  border="1">
+<tr>
+<th>Typ </th><th>Kp </th><th>Ti </th><th>Td  </th></tr>
+<tr>
+<th>P </th><td>0.50 </td><td>- </td><td>-  </td></tr>
+<tr>
+<th>PI </th><td>0.45 </td><td>0.83 </td><td>-  </td></tr>
+<tr>
+<th>Klasický <a class="el" href="classPID.html">PID</a> </th><td>0.60 </td><td>0.50 </td><td>0.12  </td></tr>
+<tr>
+<th>Malý překmit </th><td>0.33 </td><td>0.50 </td><td>0.33  </td></tr>
+<tr>
+<th>Bez překmitu </th><td>0.20 </td><td>0.50 </td><td>0.33  </td></tr>
+</table>
+<p><b>Dále - výsledky simulací -</b> viz dokumentace <a class="el" href="main_8cpp.html">main.cpp</a></p>
+<h1><a class="anchor" id="SRC"></a>
+Zdrojové kódy.</h1>
+<p><a href="../pid.zip">Kdyby si s tím někdo chtěl pohrát.</a> </p>
+</div></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generováno programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.11
+</small></address>
+</body>
+</html>

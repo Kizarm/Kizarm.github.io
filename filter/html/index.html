@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>IIR filtr: Výpočet IIR filtru.</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">IIR filtr
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generováno programem Doxygen 1.8.11 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Hledat');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li class="current"><a href="index.html"><span>Hlavní&#160;stránka</span></a></li>
+      <li><a href="files.html"><span>Soubory</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Hledat" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">Výpočet IIR filtru. </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><h1><a class="anchor" id="s01"></a>
+Motivace.</h1>
+<p>Pro jednoduchou filtraci signálu v časové oblasti je docela výhodné používat IIR (Infinite Impulse Response) filtry. Pokud známe jejich omezení, zbývá spočítat koeficienty. Je na to spousta programů na webu, například <a href="https://www-users.cs.york.ac.uk/~fisher/mkfilter/trad.html">tento</a>. Z těchto stránek vychází i zde uvedený program. Fakticky se to počítá stejně jako klasický filtr z diskrétních prvků (kondenzátorů a indukčností), jen se nakonec provede bilineární transformace z vyjádření v Laplaceově obrazu do Z-obrazu. Jak to funguje (malý matematický background) jsem kdysi popisoval pro realizaci <a href="../pid/html/index.html">PID regulátoru</a>.</p>
+<h1><a class="anchor" id="s02"></a>
+K vyzkoušení.</h1>
+<p>Zde je <a href="../bin/filter.html">WebAssembly aplikace</a>. Není to celkem k ničemu, ale umožňuje interaktivně vyzkoušet odezvy na změnu různých voleb. Program používá fixní vzorkovací frekvenci fs=8000Hz, nechtělo se mi dohledávat všechny závislosti. I v původním programu se frekvence zlomu přepočítávají vzhledem ke vzorkování ručně.</p>
+<h1><a class="anchor" id="s03"></a>
+Ke stažení.</h1>
+<p><a href="../src.zip">Zdrojáky</a> v Qt4/5, nativní aplikace funguje lépe. Lze z ní vyexportovat fungující C++ kód, který realizuje zadaný filtr. WebAssembly tohle zatím neumí. </p>
+</div></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generováno programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.11
+</small></address>
+</body>
+</html>
