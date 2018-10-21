@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+    </META>
+    <title>Metrika
+    </title>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+    tex2jax: {inlineMath: [['$','$']]},
+    displayAlign: "left"});
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+    </script>
+  </head>
+  <body>
+    <div>
+      <h1>Výpočet Schwarzschildovy metriky.
+      </h1>
+      <div><p>
+Příklad ukazuje jak spočítat Schwarzschildovu metriku v jazyce python. Pro podobné
+symbolické výpočty je určena knihovna <a href="https://www.sympy.org/cs/">SymPy</a>, 
+která ku podivu zvládá i takovéto poměrně komplikované výpočty u nichž při ručním způsobu
+snadno uděláme chybu (i když tady samozřejmě také, ale jde to o něco hůř). Mohla by to
+tedy být jakási alternativa k programům jako je Wolfram Mathematica a jiné. Už proto,
+že python je hodně obecný a tak umožňuje integrovat tyto výpočty do širších souvislostí.
+Zde příkladně integruje výpočet a zobrazení jeho průběhu v html stránce. Je zajímavé, že původní
+<a href="https://github.com/sympy/sympy/blob/master/examples/advanced/relativity.py">zdroj</a>,
+ze kterého jsem čerpal jak nakládat s tenzory počítá tu výslednou metriku špatně - pokládá Ricciho tenzor
+rovný nule, a přesto mu vychází správné řešení.
+Tento příklad je tedy jakési doplnění především publikace pana profesora Kulhánka
+<a href="https://www.aldebaran.cz/studium/otr.pdf">[1]Obecná relativita</a>, kapitola 10, kde se
+podrobný výpočet z pochopitelných důvodů neprovádí.
+</p><h2>Počáteční metrika.</h2><p>Vychází ze sférických souřadnic $ \{ t, r, \Theta, \phi \} $, přičemž r vlastně není radiální souřadnice ve zvoleném systému, ale jakýsi poloměr, který zachovává plochu koule $ 4\pi r^2 $, symbol t zde má rozměr délky (správně by to tedy mělo být ct, což není podstatné, v $g_{00}$ by přibyla jen konstanta $c^2$). Je to tak pro snazší výpočet. Hledáme tedy funkce $ \lambda(r), \nu(r) $. Pro více informací proč se to dělá právě takto viz <a href="https://www.aldebaran.cz/studium/otr.pdf">[1]</a> , kapitola 10.</p>
+      </div>
+      <p class="formulaDsp">\[g_{\mu\nu} = \left[\begin{matrix}- \lambda{\left (r \right )} & 0 & 0 & 0\\0 & \nu{\left (r \right )} & 0 & 0\\0 & 0 & r^{2} & 0\\0 & 0 & 0 & r^{2} \sin^{2}{\left (\theta \right )}\end{matrix}\right]\]
+      </p>
+      <div><h2>Christoffelovy symboly.</h2><p>Vzorec je z <a href="https://www.aldebaran.cz/studium/otr.pdf">[1]</a>, rovnice (87): $ \Gamma^{\gamma}_{\alpha\beta} = \frac{1}{2} g^{\gamma\xi} (g_{\xi\alpha,\beta} + g_{\xi\beta,\alpha} - g_{\alpha\beta,\xi}) $ . Dále se pak tyto symboly používají k výpočtům Riemannova tenzoru. Vypíšeme jen nenulové členy.</p>
+      </div>
+      <p class="formulaDsp">\[\Gamma^{0}_{01} = \frac{\frac{d}{d r} \lambda{\left (r \right )}}{2 \lambda{\left (r \right )}}\]
+      </p>
+      <p class="formulaDsp">\[\Gamma^{0}_{10} = \frac{\frac{d}{d r} \lambda{\left (r \right )}}{2 \lambda{\left (r \right )}}\]
+      </p>
+      <p class="formulaDsp">\[\Gamma^{1}_{00} = \frac{\frac{d}{d r} \lambda{\left (r \right )}}{2 \nu{\left (r \right )}}\]
+      </p>
+      <p class="formulaDsp">\[\Gamma^{1}_{11} = \frac{\frac{d}{d r} \nu{\left (r \right )}}{2 \nu{\left (r \right )}}\]
+      </p>
+      <p class="formulaDsp">\[\Gamma^{1}_{22} = - \frac{r}{\nu{\left (r \right )}}\]
+      </p>
+      <p class="formulaDsp">\[\Gamma^{1}_{33} = - \frac{r \sin^{2}{\left (\theta \right )}}{\nu{\left (r \right )}}\]
+      </p>
+      <p class="formulaDsp">\[\Gamma^{2}_{12} = \frac{1}{r}\]
+      </p>
+      <p class="formulaDsp">\[\Gamma^{2}_{21} = \frac{1}{r}\]
+      </p>
+      <p class="formulaDsp">\[\Gamma^{2}_{33} = - \sin{\left (\theta \right )} \cos{\left (\theta \right )}\]
+      </p>
+      <p class="formulaDsp">\[\Gamma^{3}_{13} = \frac{1}{r}\]
+      </p>
+      <p class="formulaDsp">\[\Gamma^{3}_{23} = \frac{\cos{\left (\theta \right )}}{\sin{\left (\theta \right )}}\]
+      </p>
+      <p class="formulaDsp">\[\Gamma^{3}_{31} = \frac{1}{r}\]
+      </p>
+      <p class="formulaDsp">\[\Gamma^{3}_{32} = \frac{\cos{\left (\theta \right )}}{\sin{\left (\theta \right )}}\]
+      </p>
+      <div><h2>Ricciho tenzor.</h2><p>Výpočet je už dost komplikovaný. Nejprve spočteme Riemannův tenzor (256 složek) z <a href="https://www.aldebaran.cz/studium/otr.pdf">[1]</a> rovnice (170): $ R^{\eta}_{\beta\gamma\delta} = \Gamma^{\eta}_{\beta\delta,\gamma} - \Gamma^{\eta}_{\beta\gamma,\delta} + \Gamma^{\xi}_{\beta\delta}\Gamma^{\eta}_{\xi\gamma} - \Gamma^{\xi}_{\beta\gamma}\Gamma^{\eta}_{\xi\delta} $. Pak jej zúžíme podle rovnice (174) : $ R_{\alpha\beta} = R^{\xi}_{\alpha\xi\beta} $ a máme výsledek. Vypíšeme nenulové členy.</p>
+      </div>
+      <p class="formulaDsp">\[R_{00} = \frac{\frac{d^{2}}{d r^{2}}  \lambda{\left (r \right )}}{2 \nu{\left (r \right )}} - \frac{\frac{d}{d r} \lambda{\left (r \right )}}{4 \nu^{2}{\left (r \right )}} \frac{d}{d r} \nu{\left (r \right )} - \frac{\left(\frac{d}{d r} \lambda{\left (r \right )}\right)^{2}}{4 \lambda{\left (r \right )} \nu{\left (r \right )}} + \frac{\frac{d}{d r} \lambda{\left (r \right )}}{r \nu{\left (r \right )}}\]
+      </p>
+      <p class="formulaDsp">\[R_{11} = - \frac{\frac{d^{2}}{d r^{2}}  \lambda{\left (r \right )}}{2 \lambda{\left (r \right )}} + \frac{\frac{d}{d r} \lambda{\left (r \right )} \frac{d}{d r} \nu{\left (r \right )}}{4 \lambda{\left (r \right )} \nu{\left (r \right )}} + \frac{\left(\frac{d}{d r} \lambda{\left (r \right )}\right)^{2}}{4 \lambda^{2}{\left (r \right )}} + \frac{\frac{d}{d r} \nu{\left (r \right )}}{r \nu{\left (r \right )}}\]
+      </p>
+      <p class="formulaDsp">\[R_{22} = \frac{r \frac{d}{d r} \nu{\left (r \right )}}{2 \nu^{2}{\left (r \right )}} - \frac{r \frac{d}{d r} \lambda{\left (r \right )}}{2 \lambda{\left (r \right )} \nu{\left (r \right )}} + 1 - \frac{1}{\nu{\left (r \right )}}\]
+      </p>
+      <p class="formulaDsp">\[R_{33} = \frac{\sin^{2}{\left (\theta \right )}}{\lambda{\left (r \right )} \nu^{2}{\left (r \right )}} \left(\frac{r}{2} \lambda{\left (r \right )} \frac{d}{d r} \nu{\left (r \right )} - \frac{r}{2} \nu{\left (r \right )} \frac{d}{d r} \lambda{\left (r \right )} + \lambda{\left (r \right )} \nu^{2}{\left (r \right )} - \lambda{\left (r \right )} \nu{\left (r \right )}\right)\]
+      </p>
+      <div><h2>Skalární křivost.</h2><p>Je už jen další zúžení Ricciho tenzoru podle (175): $ R = R^{\xi}_{\xi} $, které se dále používá v Einsteinových rovnicích. Pozor není to prostý součet výše uvedených členů, výpočet je o něco složitější (zvýšení indexu pomocí metriky).</p>
+      </div>
+      <p class="formulaDsp">\[R = - \frac{\frac{d^{2}}{d r^{2}}  \lambda{\left (r \right )}}{\lambda{\left (r \right )} \nu{\left (r \right )}} + \frac{\frac{d}{d r} \lambda{\left (r \right )} \frac{d}{d r} \nu{\left (r \right )}}{2 \lambda{\left (r \right )} \nu^{2}{\left (r \right )}} + \frac{\left(\frac{d}{d r} \lambda{\left (r \right )}\right)^{2}}{2 \lambda^{2}{\left (r \right )} \nu{\left (r \right )}} + \frac{2 \frac{d}{d r} \nu{\left (r \right )}}{r \nu^{2}{\left (r \right )}} - \frac{2 \frac{d}{d r} \lambda{\left (r \right )}}{r \lambda{\left (r \right )} \nu{\left (r \right )}} + \frac{2}{r^{2}} - \frac{2}{r^{2} \nu{\left (r \right )}}\]
+      </p>
+      <div><h2>Výpočet Einsteinovy rovnice $  G_{\mu\nu} = R_{\mu\nu} - \frac{1}{2} R g_{\mu\nu} = T_{\mu\nu} $.</h2><p> Je to vakuové řešení (hmotnost je jen ve "středu", tedy pro r=0), pravá strana T je tedy nulová. Použitelné rovnice jsou pouze na diagonále, zbytek jsou rovnosti typu 0=0</p>
+      </div>
+      <p class="formulaDsp">\[G_{00} = \frac{\lambda{\left (r \right )}}{r^{2} \nu^{2}{\left (r \right )}} \left(r \frac{d}{d r} \nu{\left (r \right )} + \nu^{2}{\left (r \right )} - \nu{\left (r \right )}\right)\]
+      </p>
+      <p class="formulaDsp">\[G_{11} = \frac{\frac{d}{d r} \lambda{\left (r \right )}}{r \lambda{\left (r \right )}} - \frac{1}{r^{2}} \nu{\left (r \right )} + \frac{1}{r^{2}}\]
+      </p>
+      <p class="formulaDsp">\[G_{22} = - \frac{r}{4 \lambda^{2}{\left (r \right )} \nu^{2}{\left (r \right )}} \left(- 2 r \lambda{\left (r \right )} \nu{\left (r \right )} \frac{d^{2}}{d r^{2}}  \lambda{\left (r \right )} + r \lambda{\left (r \right )} \frac{d}{d r} \lambda{\left (r \right )} \frac{d}{d r} \nu{\left (r \right )} + r \nu{\left (r \right )} \left(\frac{d}{d r} \lambda{\left (r \right )}\right)^{2} + 2 \lambda^{2}{\left (r \right )} \frac{d}{d r} \nu{\left (r \right )} - 2 \lambda{\left (r \right )} \nu{\left (r \right )} \frac{d}{d r} \lambda{\left (r \right )}\right)\]
+      </p>
+      <p class="formulaDsp">\[G_{33} = - \frac{r \sin^{2}{\left (\theta \right )}}{4 \lambda^{2}{\left (r \right )} \nu^{2}{\left (r \right )}} \left(- 2 r \lambda{\left (r \right )} \nu{\left (r \right )} \frac{d^{2}}{d r^{2}}  \lambda{\left (r \right )} + r \lambda{\left (r \right )} \frac{d}{d r} \lambda{\left (r \right )} \frac{d}{d r} \nu{\left (r \right )} + r \nu{\left (r \right )} \left(\frac{d}{d r} \lambda{\left (r \right )}\right)^{2} + 2 \lambda^{2}{\left (r \right )} \frac{d}{d r} \nu{\left (r \right )} - 2 \lambda{\left (r \right )} \nu{\left (r \right )} \frac{d}{d r} \lambda{\left (r \right )}\right)\]
+      </p>
+      <div><h2>A nakonec je vyřešíme ...</h2><p> Použijeme jen první dvě rovnice (poslední dvě jsou závislé), vykrátíme co je možné, výsledek z první rovnice dosadíme do druhé, z Newtonovské limity určíme integrační konstanty a máme hotovo. Zbývá jen zkontrolovat výsledek.</p>
+      </div>
+      <p class="formulaDsp">\[0 = r \frac{d}{d r} \nu{\left (r \right )} + \nu^{2}{\left (r \right )} - \nu{\left (r \right )} => \]
+      </p>
+      <p class="formulaDsp">\[\nu{\left (r \right )} = \frac{r}{r - r_{0}}\]
+      </p>
+      <p class="formulaDsp">\[0 = r \frac{d}{d r} \lambda{\left (r \right )} - r_{0} \frac{d}{d r} \lambda{\left (r \right )} - \frac{r_{0}}{r} \lambda{\left (r \right )} => \]
+      </p>
+      <p class="formulaDsp">\[\lambda{\left (r \right )} = 1 - \frac{r_{0}}{r}\]
+      </p>
+      <div><h2>Výsledná metrika.</h2><p>Z Newtonovské limity je $ r_0 = \frac {2 GM}{c^2} $, kde G je gravitační konstanta, M hmotnost objektu a c rychlost světla ve vakuu. A je hotovo.</p>
+      </div>
+      <p class="formulaDsp">\[g_{\mu\nu} = \left[\begin{matrix}\frac{- r + r_{0}}{r} & 0 & 0 & 0\\0 & \frac{r}{r - r_{0}} & 0 & 0\\0 & 0 & r^{2} & 0\\0 & 0 & 0 & r^{2} \sin^{2}{\left (\theta \right )}\end{matrix}\right]\]
+      </p>
+      <div><h2>Nakonec přidáme i zdrojové texty programu.</h2><p>Tady jsou : <a href="./schwarzschild.zip">schwarzschild.zip</a></p><p>A to je vše. Je celkem zřejmé, že provádět podobné výpočty tužkou na papíře a přitom se nesplést není asi legrace. Karl Schwarzschild to dělal v zákopech za světové války, stříleli po něm a spočítal to dobře. Za to určitě zaslouží úctu.</p>
+      </div>
+    </div>
+  </body>
+</html>
