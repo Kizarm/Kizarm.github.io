@@ -29,8 +29,10 @@ tedy být jakási alternativa k programům jako je Wolfram Mathematica a jiné. 
 že python je hodně obecný a tak umožňuje integrovat tyto výpočty do širších souvislostí.
 Zde příkladně integruje výpočet a zobrazení jeho průběhu v html stránce. Je zajímavé, že původní
 <a href="https://github.com/sympy/sympy/blob/master/examples/advanced/relativity.py">zdroj</a>,
-ze kterého jsem čerpal jak nakládat s tenzory počítá tu výslednou metriku špatně - pokládá Ricciho tenzor
-rovný nule, a přesto mu vychází správné řešení.
+ze kterého jsem čerpal jak nakládat s tenzory počítá tu výslednou metriku jinak - pokládá Ricciho tenzor
+rovný nule, a přesto mu vychází správné řešení. Je patrné, že používá druhou formu Einsteinových rovnic, 
+ale nekontroloval jsem, zda je pak pravá strana rovnic také nulová. Zřejmě ano a proto to vychází. Nicméně 
+není to jednodušší, musí použít trik pro výsledné řešení rovnic, který zde není potřeba. 
 Tento příklad je tedy jakési doplnění především publikace pana profesora Kulhánka
 <a href="https://www.aldebaran.cz/studium/otr.pdf">[1]Obecná relativita</a>, kapitola 10, kde se
 podrobný výpočet z pochopitelných důvodů neprovádí.
