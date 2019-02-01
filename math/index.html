@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Haluze</TITLE>
+</HEAD>
+
+  <body bgcolor=#FFFFA0>
+    <h2 align=center>Utility v nichž je trochu matematiky.</h2>
+    <p>V průběhu let se nahromadily různé problémy, které bylo nutno vyřešit a pokud se jejich
+       řešení někde na webu našlo, bylo to komplikované. Protože většina věcí má jednoduché jádro
+       vždy jsem se snažil toho jádro vyloupnout a udělat z něj vlastní aplikaci. Lépe se tak
+       pochopí jak věci fungují a jde je snadněji optimalizovat, pokud je to potřeba. Celkem
+       nemá smysl používat rozsáhlou knihovnu tam, kde lze popsat problém na pár řádcích zdrojáku.
+    </p>
+    <p>Samozřejmě zde knihovny použity jsou. Někde jen pro generování kódu, jinde pro grafickou
+       reprezentaci dat, ale i jako ukázka jejich použití. Ve většině příkladů se používá python
+       a balíky numpy a scipy, gnuplot a samozřejmě gcc, g++. Jsou to vlastně řešené příklady,
+       které se narodily při řešení zcela určitého problému, většinou v oblasti bare-metal
+       programování, kde je určitý stupeň optimalizace nutný nebo při zpracování naměřených dat.
+       Některé příklady obsahují ve zdrojácích komentáře z nichž by mělo být patrné, jak to
+       funguje, jiné jsou zabaleny jen tak jak byly a ukládám je sem abych na ně nezapomněl,
+       protože jejich jádro používám opakovaně.
+    </p>
+    <p><b>Odkazy na zabalené zdrojáky :</b></p>
+    <ul>
+      <li>1. <a href="./interpolace.zip">Interpolace funkce (např. z naměřených dat) lineárně, kubickými spline polynomy a to jak v plovoucí tak pevné řádové čárce</a>.
+      <li>2. <a href="./regrese.zip">Opět interpolace, tentokrát je dat opravdu hodně a tak použijeme polynomiální regresi, příp. hledání Gaussovy křivky v pythonu</a>.
+      <li>3. <a href="./romberg.zip">Numerická integrace funkce Rombergovou metodou</a>.
+      <li>4. <a href="./solver.zip">Řešení soustavy (i nelineárních) diferenciálních rovnic metodou Runge-Kutta 4. řádu</a>.
+    </ul>
+
+  </body>
+
+</HTML>
+
