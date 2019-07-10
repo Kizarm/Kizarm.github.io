@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <title>Tree</title>
+      <style>
+          html,
+          body {
+              height:  100%;
+              margin:  0;
+              padding: 0;
+          }
+          .canvas {
+              width:  95vw;
+          }
+      </style>
+  </head>
+  <body>
+      <h1 align="center">Pythagorův strom jedním tahem.</h1>
+      <p align="center"><select id="depthid" onchange="RecurseDepth()"></select>
+      <canvas id="myCanvas" class="canvas"></canvas></p>
+      <script>
+        class Point {
+          constructor (x, y) {
+            this.x = x;
+            this.y = y;
+          }
+          static distance(a, b) {
+            const dx = a.x - b.x;
+            const dy = a.y - b.y;
+            return Math.hypot(dx, dy);
+          }
+          static sub (x, y) {
+            var r = new Point (x.x, x.y);
+            r.x -= y.x; r.y -= y.y;
+            return r;
+          }
+          add (a) {
+            this.x += a.x;  this.y += a.y;
+          }
+          mul (a) {
+            this.x *= a;    this.y *= a;
+          }
+        }
+        var   recurse  = 4;
+        var   one_wire = false;
+        const canvas   = document.getElementById('myCanvas');
+        const context  = canvas.getContext('2d');
+        canvas.onclick = OneWire;
+        window.addEventListener('resize', resizeCanvas, false);
+        
+        resizeCanvas();
+        AddDepths (10);
+        
+        function resizeCanvas() {
+          const width   = canvas.clientWidth;
+          const height  = 0.667 * width;
+          canvas.width  = width;
+          canvas.height = height;
+          drawStuff (width, height);
+        }
+        //const maxx = canvas.width, maxy = canvas.height;
+        function drawStuff (maxx, maxy) {
+          //console.log (maxx, maxy);
+          if (canvas.getContext) {
+            context.fillStyle = "#FFFFC0";
+            context.fillRect (0,0, maxx,maxy);
+            context.lineWidth   = 2;
+            context.strokeStyle = "#000000";
+            context.transform (1,0,0,-1,0,maxy);
+            const s =  0.5 * maxx, d = 0.08 * maxx;
+            const aa = new Point (s - d, 10), bb = new Point (s + d, 10);
+            FillPolygon (aa,bb, recurse);
+            context.beginPath();
+            context.moveTo (aa.x, aa.y);
+            Building (aa, bb, recurse);
+            context.stroke ();
+          }
+        }
+        function FillPolygon  (a, b, depth) {
+          const c = new Point (a.x - (b.y - a.y), a.y + (b.x - a.x));
+          const d = new Point (b.x + (a.y - b.y), b.y - (a.x - b.x));
+          var   e = new Point (0.5 * (b.x + c.x), 0.5 * (b.y + c.y));
+          e.add (Point.sub (c, a));
+          
+          if (depth % 2) {
+            context.fillStyle = "#C0FFFF";
+          } else {
+            context.fillStyle = "#FFC0FF";
+          }
+          context.beginPath();
+          context.moveTo(a.x, a.y);
+          context.lineTo(b.x, b.y);
+          context.lineTo(d.x, d.y);
+          context.lineTo(e.x, e.y);
+          context.lineTo(c.x, c.y);
+          context.closePath();
+          context.fill();
+          if (depth <= 1) {
+            return;
+          } else {
+            FillPolygon (c,e,depth - 1);
+            FillPolygon (e,d,depth - 1);
+          }          
+        }
+        
+        function Building (a, b, depth) {
+          const sm = one_wire ? 5 : 0;
+          const l  = Point.distance (a,b);
+          const ll = sm / l;
+          const c = new Point (a.x - (b.y - a.y), a.y + (b.x - a.x));
+          const d = new Point (b.x + (a.y - b.y), b.y - (a.x - b.x));
+          var   e = new Point (0.5 * (b.x + c.x), 0.5 * (b.y + c.y));
+          e.add (Point.sub (c, a));
+          
+          var dx = Point.sub(b, a);
+          var dy = Point.sub(c, a);
+          dx.mul (ll); dy.mul (ll);
+          const aa = new Point (a.x + dx.x, a.y + dx.y), bb = new Point (b.x + dy.x, b.y + dy.y);
+          const cc = new Point (c.x + dx.x, c.y + dx.y), dd = new Point (d.x - dy.x, d.y - dy.y);
+          
+          context.lineTo (c.x, c.y);
+          if (depth <= 1) {
+            context.lineTo (e.x, e.y);
+            context.lineTo (d.x, d.y);
+          } else {
+            Building (c,e,depth - 1);
+            Building (e,d,depth - 1);
+          }
+          context.lineTo (cc.x, cc.y);  
+          context.lineTo (bb.x, bb.y);
+          context.lineTo (dd.x, dd.y);
+          context.lineTo (aa.x, aa.y);
+          context.lineTo (b.x,  b.y );
+        }
+        function OneWire () {
+          one_wire = ! one_wire;
+          //console.log ("click", one_wire);
+          resizeCanvas ();
+        }
+        function RecurseDepth() {
+          var list  = document.getElementById ('depthid');
+          var index = list.selectedIndex + 1;
+          //console.log ("select", index);
+          recurse = index;
+          resizeCanvas ();
+        }
+        function Count (n) {
+          var r = 1;
+          for (i=0; i<n; i++) r *= 2;
+          return r - 1;
+        }
+        function AddDepths (max) {
+          var list = document.getElementById ('depthid');
+          for (i=1; i<=max; i++) {
+            var option = document.createElement ('option');
+            option.text = 'počet : ' + Count(i);
+            list.add (option);
+          }
+          list.selectedIndex = recurse - 1;
+        }
+      </script>
+  </body>
+</html>
