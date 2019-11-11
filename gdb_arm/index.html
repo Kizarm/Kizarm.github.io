@@ -1,0 +1,118 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>gdb-arm</title>
+        <style>
+          code {
+            font-family: monospace;
+            color: #8000A0;
+          }
+        </style>
+    </head>
+    <body bgcolor=#FFFFA0>
+        <h1>GDB a ARM - několik triků.</h1>
+        <h2>1. WiFi debuger ESP32.</h2>
+        <p> Tohle jsem našel náhodou na <a href="https://github.com/Ebiroll/esp32_blackmagic" target="_blank">webu</a> 
+        a přijde mi to jako docela vtipné řešení. Původní <a href="https://github.com/blacksphere/blackmagic/wiki" target="_blank">Blackmagic</a> je připojen pomocí USB
+        k počítači, pokud jej postavíme na ESP32, půjde to i bez drátů. Bylo sice potřeba udělat několik drobných úprav, ale vcelku to funguje.
+        <ul>
+          <li>V adresáři /components/target/flashstub spustit Makefile a následně odstranit všechny *.c soubory. Pak lze projekt natáhnout a přeložit pomocí platformio.
+          <li>Upravit SSID a heslo v main.c. ESP32 se zde chová jako WiFi station, musíme mít tedy funkční AP na lokální síti.
+          <li>Do makra gpio_set_val v souboru platform.h přidat na konec chvilku čekání např. volatile unsigned val = 20; while (val--);
+          <li>Propojky mezi ESP32 a cílovým procesorem (signály SWDIO, SWCLK) co nejkratší, osvědčilo se dát sériově odpory cca 150 Ohm, potlačí trochu zákmity.
+        </ul>
+        </p>
+        <h2>2. Používání skriptů v jazyce python a debug stacku.</h2>
+        <p> Tady bude těch triků vlastně povícero. Novější verze gdb umožňují spouštět python skripty a ty mohou definovat nové příkazy. Je to tedy spíš pro ty,
+        kteří jsou zvyklí pracovat s gdb z příkazové řádky. Je to však docela užitečné - i když v pythonu jen spouštíme příkazy gdb, lze vrácená data dost
+        dobře a jednoduše analyzovat. Nebo lze spustit příkazy gdb na základě toho, co se děje jinde v systému. Třeba podle toho jaký máme připojen adaptér.
+        </p>
+        <p> Zde uvedu jednoduchý skript pro analýzu použití stacku. Protože píšu většinou v C++, kde je možné vytvářet i poměrně složité lokální objekty
+        a ty se ukládají právě na stacku, může být tento dost obsazen a pro kontrolu je pak potřeba nějaký nástroj. Existují sice statické analyzátory,
+        ale nejsou zas tak moc spolehlivé. Použitá metoda je primitivní:
+        <ul>
+          <li>V linker skriptu vytvoříme symboly _ebss a _estack - <b>mezi nimi se nalézá zásobník</b>. Tyto symboly bývají už definovány, _estack je u CortexMx architektury potřeba pro určení
+          vrcholu zásobníku a je to obvykle adresa za nejvyšší buňkou RAM. Symbol _ebss je word align adresa za všemi statickými proměnnými. Tedy jak
+          inicializovanými na určitou hodnotu (.data), tak inicializovanými na nulu (.bss).
+          <li>Oblast mezi _ebss a _estack naplníme v programu (obvykle startup.c) hned na začátku definovaným vzorem, zde 0xDEADBEEF. To ničemu nevadí,
+          tato oblast má defaultně náhodný obsah.
+          <li>S připojeným debug adaptérem necháme program v procesoru běžet, pak se k němu připojíme, zastavíme a přečteme tuto oblast paměti. Běh
+          programu přepíše obrazec tam, kde se na zásobník něco ukládá a to umožní zjistit kam až použití zásobníku došlo.
+        </ul>
+        A tuhle práci vykoná <a href="stack.html" target="_blank">tento skript</a>. Skript sice používá pro vyhledání použitého stacku metodu bisekce,
+        protože je pro velký zásobník (>cca 8KiB) rychlejší, ale může ukázat nesmysl pokud struktury na zásobníku neinicializují data. Metodu výpisu
+        do souboru a jeho následnou analýzu (method_file (adr_from, adr_to)) lze odkomentovat a použít místo method_bisect (adr_from, adr_to).
+        </p>
+        <p>Příklad velmi zjednodušeného linker skriptu (umístění symbolů, podstatné pro tento účel je tučně):</p>
+        <code>
+        ENTRY(<b>Reset_Handler</b>)<br />
+        MEMORY {<br />
+          FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 64K<br />
+          RAM (xrw)       : ORIGIN = 0x20000000, LENGTH = 8K<br />
+        }<br />
+        <b>_estack = ORIGIN(RAM) + LENGTH(RAM);</b><br />
+        /* Define output sections */<br />
+        SECTIONS {<br />
+          .text :  {<br />
+            *(.text*)          /* .text* sections (code) */<br />
+            *(.rodata*)        /* .rodata* sections (constants, strings, etc.) */<br />
+            _etext = .;        /* define a global symbols at end of code */<br />
+          } >FLASH<br />
+          _sidata = .;<br />
+          .data : AT ( _sidata )  {<br />
+            . = ALIGN(4);<br />
+            _sdata = .;        /* create a global symbol at data start */<br />
+            *(.data*)          /* .data* sections */<br />
+            . = ALIGN(4);<br />
+            _edata = .;        /* define a global symbol at data end */<br />
+          } >RAM<br />
+          .bss :  {<br />
+            . = ALIGN(4);<br />
+            _sbss = .;         /* define a global symbol at bss start */<br />
+            *(.bss*)<br />
+            *(COMMON)<br />
+            <b>. = ALIGN(4);</b><br />
+            <b>_ebss = .;         /* define a global symbol at bss end */</b><br />
+          } >RAM<br />
+        }<br />
+        </code>
+        <p>Příklad použití v kódu procesoru (startup.c)</p>
+        <code>
+        extern unsigned int _estack;<br />
+        extern unsigned int _sidata;<br />
+        extern unsigned int _sdata;<br />
+        extern unsigned int _edata;<br />
+        extern unsigned int _sbss;<br />
+        extern unsigned int _ebss;<br />
+        <b>static inline void fillStack (void)</b> {<br />
+          register unsigned int *dst, *end;<br />
+          dst = &_ebss;<br />
+          end = &_estack;<br />
+          while (dst < end)  *dst++ = 0xDEADBEEFU;<br />
+        }<br />
+        void <b>Reset_Handler</b>(void) {<br />
+          <b>fillStack(); /* pokud neladíme stack, můžeme tt. řádek zakomentovat */</b><br />
+          /* Pak už to poktačuje asi takto ... */<br />
+          register unsigned int *src, *dst, *end;<br />
+          /* Zero fill the bss section */<br />
+          dst = &_sbss;<br />
+          end = &_ebss;<br />
+          while (dst < end)  *dst++ = 0U;<br />
+          /* Copy data section from flash to RAM */<br />
+          src = &_sidata;<br />
+          dst = &_sdata;<br />
+          end = &_edata;<br />
+          while (dst < end) *dst++ = *src++;<br />
+          /*...*/<br />
+        }<br />
+        </code>
+        <p><b>Pozn.:</b> Pokud používáme heap (haldu), která bývá hned za .bss, bude nutné ještě najít podobnou metodou vrchol této haldy.
+        Platí, že halda roste ve směru proti zásobníku až se nakonec potkají. Protože metody vytváření haldy jsou různé, nebudu se tím zabývat.
+        Nakonec vždy se snažím pokud to jen trochu jde, použití haldy vyhnout, trochu se zde ztrácí determinizmus, přináší to víc problémů
+        než užitku. Vytvářet lokální objekty na zásobníku sice také není bez problémů ale mám takový dojem, že cena, kterou je za to
+        nutné zaplatit je menší. Uznávám však, že někdy se bez haldy obehít nelze. To by bylo asi vše.
+        </p>
+    </body>
+</html>
+

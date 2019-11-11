@@ -1,0 +1,173 @@
+<html>
+<head>
+  <title>stack.py</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <style type="text/css">
+td.linenos { background-color: #f0f0f0; padding-right: 10px; }
+span.lineno { background-color: #f0f0f0; padding: 0 5px 0 5px; }
+pre { line-height: 125%; }
+body .hll { background-color: #ffffcc }
+body  { background: #f8f8f8; }
+body .c { color: #408080; font-style: italic } /* Comment */
+body .err { border: 1px solid #FF0000 } /* Error */
+body .k { color: #008000; font-weight: bold } /* Keyword */
+body .o { color: #666666 } /* Operator */
+body .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+body .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+body .cp { color: #BC7A00 } /* Comment.Preproc */
+body .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+body .c1 { color: #408080; font-style: italic } /* Comment.Single */
+body .cs { color: #408080; font-style: italic } /* Comment.Special */
+body .gd { color: #A00000 } /* Generic.Deleted */
+body .ge { font-style: italic } /* Generic.Emph */
+body .gr { color: #FF0000 } /* Generic.Error */
+body .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+body .gi { color: #00A000 } /* Generic.Inserted */
+body .go { color: #888888 } /* Generic.Output */
+body .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+body .gs { font-weight: bold } /* Generic.Strong */
+body .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+body .gt { color: #0044DD } /* Generic.Traceback */
+body .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+body .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+body .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+body .kp { color: #008000 } /* Keyword.Pseudo */
+body .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+body .kt { color: #B00040 } /* Keyword.Type */
+body .m { color: #666666 } /* Literal.Number */
+body .s { color: #BA2121 } /* Literal.String */
+body .na { color: #7D9029 } /* Name.Attribute */
+body .nb { color: #008000 } /* Name.Builtin */
+body .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+body .no { color: #880000 } /* Name.Constant */
+body .nd { color: #AA22FF } /* Name.Decorator */
+body .ni { color: #999999; font-weight: bold } /* Name.Entity */
+body .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+body .nf { color: #0000FF } /* Name.Function */
+body .nl { color: #A0A000 } /* Name.Label */
+body .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+body .nt { color: #008000; font-weight: bold } /* Name.Tag */
+body .nv { color: #19177C } /* Name.Variable */
+body .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+body .w { color: #bbbbbb } /* Text.Whitespace */
+body .mb { color: #666666 } /* Literal.Number.Bin */
+body .mf { color: #666666 } /* Literal.Number.Float */
+body .mh { color: #666666 } /* Literal.Number.Hex */
+body .mi { color: #666666 } /* Literal.Number.Integer */
+body .mo { color: #666666 } /* Literal.Number.Oct */
+body .sb { color: #BA2121 } /* Literal.String.Backtick */
+body .sc { color: #BA2121 } /* Literal.String.Char */
+body .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+body .s2 { color: #BA2121 } /* Literal.String.Double */
+body .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+body .sh { color: #BA2121 } /* Literal.String.Heredoc */
+body .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+body .sx { color: #008000 } /* Literal.String.Other */
+body .sr { color: #BB6688 } /* Literal.String.Regex */
+body .s1 { color: #BA2121 } /* Literal.String.Single */
+body .ss { color: #19177C } /* Literal.String.Symbol */
+body .bp { color: #008000 } /* Name.Builtin.Pseudo */
+body .vc { color: #19177C } /* Name.Variable.Class */
+body .vg { color: #19177C } /* Name.Variable.Global */
+body .vi { color: #19177C } /* Name.Variable.Instance */
+body .il { color: #666666 } /* Literal.Number.Integer.Long */
+
+  </style>
+</head>
+<body>
+<h2></h2>
+
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">gdb</span>
+<span class="kn">from</span> <span class="nn">array</span> <span class="kn">import</span> <span class="n">array</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">  Pouziti v arm-none-eabi-gdb:</span>
+<span class="sd">    source stack.py</span>
+<span class="sd">    stack_usage</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="n">tmp_filename</span> <span class="o">=</span> <span class="s1">&#39;stack.tmp&#39;</span>
+<span class="c1"># Vraci hodnoty symbolu definovanych v linker scriptu</span>
+<span class="k">def</span> <span class="nf">get_sym</span> <span class="p">(</span><span class="n">sym</span><span class="p">):</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">gdb</span><span class="o">.</span><span class="n">execute</span> <span class="p">(</span><span class="s1">&#39;p/x &amp;&#39;</span> <span class="o">+</span> <span class="n">sym</span><span class="p">,</span> <span class="n">to_string</span><span class="o">=</span><span class="bp">True</span><span class="p">);</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">strip</span> <span class="p">()</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">split</span> <span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span> <span class="k">return</span> <span class="mi">0</span>
+  <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span> <span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">16</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">value</span>
+<span class="c1"># Jen pro uplnost, neni celkem potreba</span>
+<span class="k">def</span> <span class="nf">data_usage</span> <span class="p">():</span>
+  <span class="n">DataBegin</span>   <span class="o">=</span> <span class="n">get_sym</span> <span class="p">(</span><span class="s1">&#39;_sdata&#39;</span><span class="p">)</span>
+  <span class="n">DataEnd</span>     <span class="o">=</span> <span class="n">get_sym</span> <span class="p">(</span><span class="s1">&#39;_edata&#39;</span><span class="p">)</span>
+  <span class="n">DataLen</span> <span class="o">=</span> <span class="n">DataEnd</span> <span class="o">-</span> <span class="n">DataBegin</span>
+  <span class="n">BssBegin</span>    <span class="o">=</span> <span class="n">get_sym</span> <span class="p">(</span><span class="s1">&#39;_sbss&#39;</span><span class="p">)</span>
+  <span class="n">BssEnd</span>      <span class="o">=</span> <span class="n">get_sym</span> <span class="p">(</span><span class="s1">&#39;_ebss&#39;</span><span class="p">)</span>
+  <span class="n">BssLen</span> <span class="o">=</span> <span class="n">BssEnd</span> <span class="o">-</span> <span class="n">BssBegin</span>
+  <span class="n">gdb</span><span class="o">.</span><span class="n">write</span>   <span class="p">(</span><span class="s1">&#39;Data Total: </span><span class="se">\x1B</span><span class="s1">[34;1m0x</span><span class="si">%08X</span><span class="s1"> </span><span class="se">\x1B</span><span class="s1">[33;1m(</span><span class="si">%6d</span><span class="s1">)</span><span class="se">\x1B</span><span class="s1">[0m bytes</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">DataLen</span><span class="p">,</span> <span class="n">DataLen</span><span class="p">))</span>
+  <span class="n">gdb</span><span class="o">.</span><span class="n">write</span>   <span class="p">(</span><span class="s1">&#39;Bss  Total: </span><span class="se">\x1B</span><span class="s1">[34;1m0x</span><span class="si">%08X</span><span class="s1"> </span><span class="se">\x1B</span><span class="s1">[33;1m(</span><span class="si">%6d</span><span class="s1">)</span><span class="se">\x1B</span><span class="s1">[0m bytes</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">BssLen</span><span class="p">,</span> <span class="n">BssLen</span><span class="p">))</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd"># Spocte pocet pouzitych slov ve stacku (ze souboru zjisti posledni DEADBEEF)</span>
+<span class="sd">def parse_file (name, size):</span>
+<span class="sd">  info = os.stat (name)</span>
+<span class="sd">  if size != info.st_size: return 0</span>
+<span class="sd">  file = open (name, &#39;r&#39;)</span>
+<span class="sd">  data = array(&#39;I&#39;)</span>
+<span class="sd">  size = size / 4 # size from bytes to words</span>
+<span class="sd">  data.fromfile (file, size);</span>
+<span class="sd">  file.close()</span>
+<span class="sd">  count = 0</span>
+<span class="sd">  for word in data:</span>
+<span class="sd">    if word != 0xdeadbeef: break</span>
+<span class="sd">    count += 1</span>
+<span class="sd">  return size - count # in words</span>
+<span class="sd"># Vypsat data do souboru je nekdy lepsi - muzeme je podrobne zkoumat</span>
+<span class="sd">def method_file (adr_from, adr_to):</span>
+<span class="sd">  command = &#39;dump memory %s 0x%08X 0x%08X&#39; % (tmp_filename, adr_from, adr_to)</span>
+<span class="sd">  print command</span>
+<span class="sd">  gdb.execute (command)</span>
+<span class="sd">  return parse_file (tmp_filename, adr_to - adr_from) * 4</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="k">def</span> <span class="nf">value_at</span> <span class="p">(</span><span class="n">addr</span><span class="p">):</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">gdb</span><span class="o">.</span><span class="n">execute</span> <span class="p">(</span><span class="s1">&#39;x/x 0x</span><span class="si">%08X</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">addr</span><span class="p">),</span> <span class="n">to_string</span><span class="o">=</span><span class="bp">True</span><span class="p">);</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">strip</span> <span class="p">()</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">split</span> <span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span> <span class="k">return</span> <span class="mi">0</span>
+  <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span> <span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">16</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">value</span>
+<span class="c1"># Hledame nejvetsi prvek souvisle mnoziny slov DEADBEEF</span>
+<span class="k">def</span> <span class="nf">bisection</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">4</span> <span class="p">:</span> <span class="k">return</span> <span class="n">b</span>
+  <span class="n">c</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+  <span class="n">c</span> <span class="o">=</span> <span class="n">c</span> <span class="o">&amp;</span> <span class="o">~</span><span class="mh">0x3</span>
+  <span class="k">if</span> <span class="n">value_at</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0xdeadbeef</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">bisection</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">bisection</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+<span class="c1"># Pro vetsi RAM je lepe pouzit (rekurzivni) bisekci, DEADBEEF je vzdy ve spodni casti</span>
+<span class="k">def</span> <span class="nf">method_bisect</span> <span class="p">(</span><span class="n">adr_from</span><span class="p">,</span> <span class="n">adr_to</span><span class="p">):</span>
+  <span class="n">adr_end</span> <span class="o">=</span> <span class="n">bisection</span> <span class="p">(</span><span class="n">adr_from</span><span class="p">,</span> <span class="n">adr_to</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">adr_to</span> <span class="o">-</span> <span class="n">adr_end</span>
+
+<span class="k">def</span> <span class="nf">stack_usage</span> <span class="p">():</span>
+  <span class="n">data_usage</span><span class="p">()</span>  <span class="c1"># mozno zakomentovat, pokud ukazuje blbosti</span>
+  <span class="n">StackTop</span>    <span class="o">=</span> <span class="n">get_sym</span> <span class="p">(</span><span class="s1">&#39;_estack&#39;</span><span class="p">)</span>
+  <span class="n">StackBottom</span> <span class="o">=</span> <span class="n">get_sym</span> <span class="p">(</span><span class="s1">&#39;_ebss&#39;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">StackTop</span>    <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span>
+  <span class="k">if</span> <span class="n">StackBottom</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span>
+  <span class="n">StackTotal</span>  <span class="o">=</span> <span class="n">StackTop</span> <span class="o">-</span> <span class="n">StackBottom</span>
+  <span class="n">gdb</span><span class="o">.</span><span class="n">write</span> <span class="p">(</span><span class="s1">&#39;StackTotal: </span><span class="se">\x1B</span><span class="s1">[34;1m0x</span><span class="si">%08X</span><span class="s1"> </span><span class="se">\x1B</span><span class="s1">[33;1m(</span><span class="si">%6d</span><span class="s1">)</span><span class="se">\x1B</span><span class="s1">[0m bytes</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">StackTotal</span><span class="p">,</span> <span class="n">StackTotal</span><span class="p">))</span>
+  <span class="n">StackUsed</span> <span class="o">=</span> <span class="n">method_bisect</span> <span class="p">(</span><span class="n">StackBottom</span><span class="p">,</span> <span class="n">StackTop</span><span class="p">)</span>
+  <span class="n">gdb</span><span class="o">.</span><span class="n">write</span> <span class="p">(</span><span class="s1">&#39;Stack Used: </span><span class="se">\x1B</span><span class="s1">[34;1m0x</span><span class="si">%08X</span><span class="s1"> </span><span class="se">\x1B</span><span class="s1">[33;1m(</span><span class="si">%6d</span><span class="s1">)</span><span class="se">\x1B</span><span class="s1">[0m bytes</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">StackUsed</span><span class="p">,</span> <span class="n">StackUsed</span><span class="p">))</span>
+
+<span class="k">class</span> <span class="nc">StackUsageCommand</span> <span class="p">(</span><span class="n">gdb</span><span class="o">.</span><span class="n">Command</span><span class="p">):</span>
+  <span class="s2">&quot;Stack Usage, method DEADBEEF&quot;</span>
+  <span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span> <span class="p">(</span><span class="n">StackUsageCommand</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span> <span class="p">(</span><span class="s2">&quot;stack_usage&quot;</span><span class="p">,</span>
+                         <span class="n">gdb</span><span class="o">.</span><span class="n">COMMAND_SUPPORT</span><span class="p">,</span>
+                         <span class="n">gdb</span><span class="o">.</span><span class="n">COMPLETE_NONE</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">invoke</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">from_tty</span><span class="p">):</span>
+    <span class="n">stack_usage</span> <span class="p">()</span>
+
+<span class="n">StackUsageCommand</span><span class="p">()</span>
+</pre></div>
+</body>
+</html>
