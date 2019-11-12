@@ -93,7 +93,7 @@
         }<br />
         void <b>Reset_Handler</b>(void) {<br />
           <b>fillStack(); /* pokud neladíme stack, můžeme tt. řádek zakomentovat */</b><br />
-          /* Pak už to poktačuje asi takto ... */<br />
+          /* Pak už to pokračuje asi takto ... */<br />
           register unsigned int *src, *dst, *end;<br />
           /* Zero fill the bss section */<br />
           dst = &_sbss;<br />
@@ -111,7 +111,7 @@
         Platí, že halda roste ve směru proti zásobníku až se nakonec potkají. Protože metody vytváření haldy jsou různé, nebudu se tím zabývat.
         Nakonec vždy se snažím pokud to jen trochu jde, použití haldy vyhnout, trochu se zde ztrácí determinizmus, přináší to víc problémů
         než užitku. Vytvářet lokální objekty na zásobníku sice také není bez problémů ale mám takový dojem, že cena, kterou je za to
-        nutné zaplatit je menší. Uznávám však, že někdy se bez haldy obehít nelze. To by bylo asi vše.
+        nutné zaplatit je menší. Uznávám však, že někdy se bez haldy obejít nelze. To by bylo asi vše.
         </p>
     </body>
 </html>
