@@ -147,7 +147,7 @@
   <span class="n">FLASH</span> <span class="p">(</span><span class="n">rx</span><span class="p">)</span> <span class="o">:</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="mh">0x08000000</span><span class="p">,</span> <span class="n">LENGTH</span> <span class="o">=</span> <span class="mi">64</span><span class="n">K</span>
   <span class="n">RAM</span>  <span class="p">(</span><span class="n">xrw</span><span class="p">)</span> <span class="o">:</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="mh">0x20000000</span><span class="p">,</span> <span class="n">LENGTH</span> <span class="o">=</span> <span class="mi">8</span><span class="n">K</span>
 <span class="p">}</span>
-<span class="n">_estack</span> <span class="o">=</span> <span class="n">ORIGIN</span><span class="p">(</span><span class="n">RAM</span><span class="p">)</span> <span class="o">+</span> <span class="n">LENGTH</span><span class="p">(</span><span class="n">RAM</span><span class="p">);</span>
+<b><span class="n">_estack</span> <span class="o">=</span> <span class="n">ORIGIN</span><span class="p">(</span><span class="n">RAM</span><span class="p">)</span> <span class="o">+</span> <span class="n">LENGTH</span><span class="p">(</span><span class="n">RAM</span><span class="p">);</span></b>
 <span class="cm">/* Define output sections */</span>
 <span class="n">SECTIONS</span> <span class="p">{</span>
   <span class="p">.</span><span class="nl">text</span> <span class="p">:</span> <span class="p">{</span>
@@ -169,7 +169,7 @@
     <span class="o">*</span><span class="p">(.</span><span class="n">bss</span><span class="o">*</span><span class="p">)</span>
     <span class="o">*</span><span class="p">(</span><span class="n">COMMON</span><span class="p">)</span>
     <span class="p">.</span> <span class="o">=</span> <span class="n">ALIGN</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
-    <span class="n">_ebss</span> <span class="o">=</span> <span class="p">.;</span>  <span class="cm">/* define a global symbol at bss end    */</span>
+    <b><span class="n">_ebss</span> <span class="o">=</span> <span class="p">.;</span>  <span class="cm">/* define a global symbol at bss end    */</span></b>
   <span class="p">}</span> <span class="o">&gt;</span><span class="n">RAM</span>
 <span class="p">}</span>
 </pre></div>
@@ -216,7 +216,7 @@
   <span class="k">while</span> <span class="p">(</span><span class="n">dst</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">)</span> <span class="o">*</span><span class="n">dst</span><span class="o">++</span> <span class="o">=</span> <span class="mh">0xDEADBEEFU</span><span class="p">;</span>
 <span class="p">}</span>
 <span class="kt">void</span> <span class="nf">Reset_Handler</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">fillStack</span><span class="p">();</span> <span class="cm">/* pokud neladíme stack, můžeme tt. řádek zakomentovat */</span>
+  <b><span class="n">fillStack</span><span class="p">();</span> <span class="cm">/* pokud neladíme stack, můžeme tt. řádek zakomentovat */</span></b>
   <span class="cm">/* Pak už to pokračuje asi takto ... */</span>
   <span class="k">register</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="o">*</span><span class="n">src</span><span class="p">,</span> <span class="o">*</span><span class="n">dst</span><span class="p">,</span> <span class="o">*</span><span class="n">end</span><span class="p">;</span>
   <span class="cm">/* Zero fill the bss section */</span>
@@ -274,17 +274,17 @@
 25
 26
 27
-28
-29</pre></div></td><td class="code"><div class="highlight"><pre>  <span class="nf">.syntax</span> <span class="nv">unified</span>
+28</pre></div></td><td class="code"><div class="highlight"><pre>  <span class="nf">.syntax</span> <span class="nv">unified</span>
   <span class="nf">.cpu</span> <span class="nv">cortex</span><span class="o">-</span><span class="nv">m3</span>
   <span class="nf">.fpu</span> <span class="nv">softvfp</span>
   <span class="nf">.thumb</span>
 
   <span class="nf">.global</span> <span class="nv">g_pfnVectors</span>
-  <span class="nf">.global</span> <span class="nv">Default_Handler</span>
+  <span class="nf">.global</span> <span class="nv">Reset_Handler</span>
+  <span class="nf">.extern</span> <span class="nv">_sdata</span>
+  <span class="nf">.extern</span> <span class="nv">_estack</span>
 
   <span class="nf">.section</span>  <span class="nv">.text.Reset_Handler</span>
-  <span class="nf">.weak</span> <span class="nv">Reset_Handler</span>
   <span class="nf">.type</span> <span class="nv">Reset_Handler</span><span class="p">,</span> <span class="o">%</span><span class="nv">function</span>
 <span class="nl">Reset_Handler:</span>
   <span class="nf">ldr</span>   <span class="nv">r0</span><span class="p">,</span><span class="nv">user_code_begin</span>  <span class="err">@</span> <span class="nv">load</span> <span class="nb">sp</span> <span class="nv">and</span> <span class="nv">pc</span> <span class="nv">from</span> <span class="nv">user</span> <span class="nv">code</span> <span class="p">(</span><span class="nv">vector</span> <span class="nv">table</span><span class="p">)</span>
@@ -293,13 +293,11 @@
 
   <span class="nf">.align</span> <span class="mi">2</span>
 <span class="nl">user_code_begin:</span>
-  <span class="nf">.word</span> <span class="mh">0x20000000</span>
+  <span class="nf">.word</span> <span class="nv">_sdata</span>
   <span class="nf">.size</span> <span class="nv">Reset_Handler</span><span class="p">,</span> <span class="nv">.</span><span class="o">-</span><span class="nv">Reset_Handler</span>
 
   <span class="nf">.section</span>  <span class="nv">.isr_vector</span><span class="p">,</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="o">%</span><span class="nv">progbits</span>
   <span class="nf">.type</span> <span class="nv">g_pfnVectors</span><span class="p">,</span> <span class="o">%</span><span class="nv">object</span>
-  <span class="nf">.extern</span> <span class="nv">_estack</span>
-  
 <span class="nl">g_pfnVectors:</span>
   <span class="nf">.word</span> <span class="nv">_estack</span>
   <span class="nf">.word</span> <span class="nv">Reset_Handler</span>
@@ -337,13 +335,18 @@
 25
 26
 27
-28</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/* Entry Point */</span>
+28
+29
+30
+31
+32
+33</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/* Entry Point */</span>
 <span class="n">ENTRY</span><span class="p">(</span><span class="n">Reset_Handler</span><span class="p">)</span>
 
 <span class="cm">/* Specify the memory areas */</span>
 <span class="n">MEMORY</span> <span class="p">{</span>
   <span class="n">FLASH</span> <span class="p">(</span><span class="n">rx</span><span class="p">)</span>      <span class="o">:</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="mh">0x08000000</span><span class="p">,</span> <span class="n">LENGTH</span> <span class="o">=</span> <span class="mi">512</span><span class="n">K</span>
-  <span class="n">RAM</span> <span class="p">(</span><span class="n">xrw</span><span class="p">)</span>       <span class="o">:</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="mh">0x20000000</span><span class="p">,</span> <span class="n">LENGTH</span> <span class="o">=</span> <span class="mi">128</span><span class="n">K</span>
+  <span class="n">RAM</span> <span class="p">(</span><span class="n">xrw</span><span class="p">)</span>       <span class="o">:</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="mh">0x20000000</span><span class="p">,</span> <span class="n">LENGTH</span> <span class="o">=</span> <span class="mi">8</span><span class="n">K</span>
 <span class="p">}</span>
 
 <span class="cm">/* Highest address of the user mode stack */</span>
@@ -351,14 +354,19 @@
 
 <span class="cm">/* Define output sections */</span>
 <span class="n">SECTIONS</span> <span class="p">{</span>
-  <span class="p">.</span><span class="nl">text</span> <span class="p">:</span>  <span class="p">{</span>
+  <span class="p">.</span><span class="nl">fixed</span> <span class="p">:</span>  <span class="p">{</span>
     <span class="p">.</span> <span class="o">=</span> <span class="n">ALIGN</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
-    <span class="n">PROVIDE_HIDDEN</span> <span class="p">(</span><span class="n">_vect_tab_begin</span> <span class="o">=</span> <span class="p">.);</span>
     <span class="n">KEEP</span><span class="p">(</span><span class="o">*</span><span class="p">(.</span><span class="n">isr_vector</span><span class="p">))</span> <span class="cm">/* Startup code */</span>
     <span class="p">.</span> <span class="o">=</span> <span class="n">ALIGN</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
     <span class="o">*</span><span class="p">(.</span><span class="n">text</span><span class="p">)</span>           <span class="cm">/* .text sections (code) */</span>
     <span class="o">*</span><span class="p">(.</span><span class="n">text</span><span class="o">*</span><span class="p">)</span>          <span class="cm">/* .text* sections (code) */</span>
   <span class="p">}</span> <span class="o">&gt;</span><span class="n">FLASH</span>
+  <span class="p">.</span><span class="nl">relocate</span> <span class="p">:</span> <span class="p">{</span>
+    <span class="p">.</span> <span class="o">=</span> <span class="n">ALIGN</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+    <span class="n">_sdata</span> <span class="o">=</span> <span class="p">.;</span>        <span class="cm">/* create a global symbol at data start */</span>
+    <span class="o">*</span><span class="p">(.</span><span class="n">data</span><span class="o">*</span><span class="p">)</span>          <span class="cm">/* .data* sections */</span>
+    <span class="n">_edata</span> <span class="o">=</span> <span class="p">.;</span>        <span class="cm">/* define a global symbol at data end */</span>
+  <span class="p">}</span> <span class="o">&gt;</span><span class="n">RAM</span>
   <span class="o">/</span><span class="n">DISCARD</span><span class="o">/</span> <span class="o">:</span> <span class="p">{</span>
     <span class="o">*</span><span class="p">(.</span><span class="n">comment</span><span class="o">*</span><span class="p">)</span>
     <span class="o">*</span><span class="p">(.</span><span class="n">ARM</span><span class="p">.</span><span class="o">*</span><span class="p">)</span>
@@ -386,7 +394,7 @@
 13</pre></div></td><td class="code"><div class="highlight"><pre>Disassembly of section <span class="nl">.text</span><span class="p">:</span>
 
 <span class="mh">08000000</span> <span class="p">&lt;</span><span class="nf">g_pfnVectors</span><span class="p">&gt;:</span>
- <span class="nl">8000000:</span> <span class="mh">00 00 02 20 09 00 00 08 </span>                            <span class="s">... ....</span>
+ <span class="nl">8000000:</span> <span class="mh">00 20 00 20 09 00 00 08 </span>                            <span class="s">... ....</span>
 
 <span class="mh">08000008</span> <span class="p">&lt;</span><span class="nf">Reset_Handler</span><span class="p">&gt;:</span>
 <span class="x"> 8000008: 4802        ldr r0, [pc, #8]  ; (8000014 &lt;user_code_begin&gt;)</span>
