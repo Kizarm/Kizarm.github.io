@@ -3,14 +3,81 @@
         <meta charset="utf-8">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>gdb-arm</title>
-        <style>
-          code {
-            font-family: monospace;
-            color: #8000A0;
-          }
+        <style type="text/css">
+          body {background-color: #F0F0A0;}
+          code {  font-family: monospace;       }
+          code .hll { background: #ffffcc }
+          code  { background-color: #f0f0f0; }
+          code .c { color: #408080; font-style: italic } /* Comment */
+          code .err { border: 1px solid #FF0000 } /* Error */
+          code .k { color: #008000; font-weight: bold } /* Keyword */
+          code .o { color: #666666 } /* Operator */
+          code .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+          code .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+          code .cp { color: #BC7A00 } /* Comment.Preproc */
+          code .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+          code .c1 { color: #408080; font-style: italic } /* Comment.Single */
+          code .cs { color: #408080; font-style: italic } /* Comment.Special */
+          code .gd { color: #A00000 } /* Generic.Deleted */
+          code .ge { font-style: italic } /* Generic.Emph */
+          code .gr { color: #FF0000 } /* Generic.Error */
+          code .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+          code .gi { color: #00A000 } /* Generic.Inserted */
+          code .go { color: #888888 } /* Generic.Output */
+          code .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+          code .gs { font-weight: bold } /* Generic.Strong */
+          code .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+          code .gt { color: #0044DD } /* Generic.Traceback */
+          code .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+          code .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+          code .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+          code .kp { color: #008000 } /* Keyword.Pseudo */
+          code .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+          code .kt { color: #B00040 } /* Keyword.Type */
+          code .m { color: #666666 } /* Literal.Number */
+          code .s { color: #BA2121 } /* Literal.String */
+          code .na { color: #7D9029 } /* Name.Attribute */
+          code .nb { color: #008000 } /* Name.Builtin */
+          code .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+          code .no { color: #880000 } /* Name.Constant */
+          code .nd { color: #AA22FF } /* Name.Decorator */
+          code .ni { color: #999999; font-weight: bold } /* Name.Entity */
+          code .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+          code .nf { color: #0000FF } /* Name.Function */
+          code .nl { color: #F00000 } /* Name.Label */
+          code .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+          code .nt { color: #008000; font-weight: bold } /* Name.Tag */
+          code .nv { color: #19177C } /* Name.Variable */
+          code .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+          code .w { color: #bbbbbb } /* Text.Whitespace */
+          code .mb { color: #666666 } /* Literal.Number.Bin */
+          code .mf { color: #666666 } /* Literal.Number.Float */
+          code .mh { color: #666666 } /* Literal.Number.Hex */
+          code .mi { color: #666666 } /* Literal.Number.Integer */
+          code .mo { color: #666666 } /* Literal.Number.Oct */
+          code .sb { color: #BA2121 } /* Literal.String.Backtick */
+          code .sc { color: #BA2121 } /* Literal.String.Char */
+          code .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+          code .s2 { color: #BA2121 } /* Literal.String.Double */
+          code .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+          code .sh { color: #BA2121 } /* Literal.String.Heredoc */
+          code .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+          code .sx { color: #008000 } /* Literal.String.Other */
+          code .sr { color: #BB6688 } /* Literal.String.Regex */
+          code .s1 { color: #BA2121 } /* Literal.String.Single */
+          code .ss { color: #19177C } /* Literal.String.Symbol */
+          code .bp { color: #008000 } /* Name.Builtin.Pseudo */
+          code .vc { color: #19177C } /* Name.Variable.Class */
+          code .vg { color: #19177C } /* Name.Variable.Global */
+          code .vi { color: #19177C } /* Name.Variable.Instance */
+          code .il { color: #666666 } /* Literal.Number.Integer.Long */
+          
+          td.linenos  { background-color: #f0f0f0; padding-right: 10px; }
+          span.lineno { background-color: #f0f0f0; padding: 0 5px 0 5px; }
+          pre { line-height: 125%; }
         </style>
     </head>
-    <body bgcolor=#FFFFA0>
+    <body>
         <h1>GDB a ARM - několik triků.</h1>
         <h2>1. WiFi debuger ESP32.</h2>
         <p> Tohle jsem našel náhodou na <a href="https://github.com/Ebiroll/esp32_blackmagic" target="_blank">webu</a> 
@@ -44,74 +111,297 @@
         protože je pro velký zásobník (>cca 8KiB) rychlejší, ale může ukázat nesmysl pokud struktury na zásobníku neinicializují data. Metodu výpisu
         do souboru a jeho následnou analýzu (method_file (adr_from, adr_to)) lze odkomentovat a použít místo method_bisect (adr_from, adr_to).
         </p>
-        <p>Příklad velmi zjednodušeného linker skriptu (umístění symbolů, podstatné pro tento účel je tučně):</p>
-        <code>
-        ENTRY(<b>Reset_Handler</b>)<br />
-        MEMORY {<br />
-          FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 64K<br />
-          RAM (xrw)       : ORIGIN = 0x20000000, LENGTH = 8K<br />
-        }<br />
-        <b>_estack = ORIGIN(RAM) + LENGTH(RAM);</b><br />
-        /* Define output sections */<br />
-        SECTIONS {<br />
-          .text :  {<br />
-            *(.text*)          /* .text* sections (code) */<br />
-            *(.rodata*)        /* .rodata* sections (constants, strings, etc.) */<br />
-            _etext = .;        /* define a global symbols at end of code */<br />
-          } >FLASH<br />
-          _sidata = .;<br />
-          .data : AT ( _sidata )  {<br />
-            . = ALIGN(4);<br />
-            _sdata = .;        /* create a global symbol at data start */<br />
-            *(.data*)          /* .data* sections */<br />
-            . = ALIGN(4);<br />
-            _edata = .;        /* define a global symbol at data end */<br />
-          } >RAM<br />
-          .bss :  {<br />
-            . = ALIGN(4);<br />
-            _sbss = .;         /* define a global symbol at bss start */<br />
-            *(.bss*)<br />
-            *(COMMON)<br />
-            <b>. = ALIGN(4);</b><br />
-            <b>_ebss = .;         /* define a global symbol at bss end */</b><br />
-          } >RAM<br />
-        }<br />
+        <p>Příklad velmi zjednodušeného linker skriptu :</p>
+        <code class = "code">
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">ENTRY</span><span class="p">(</span><span class="n">Reset_Handler</span><span class="p">)</span>
+<span class="n">MEMORY</span> <span class="p">{</span>
+  <span class="n">FLASH</span> <span class="p">(</span><span class="n">rx</span><span class="p">)</span> <span class="o">:</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="mh">0x08000000</span><span class="p">,</span> <span class="n">LENGTH</span> <span class="o">=</span> <span class="mi">64</span><span class="n">K</span>
+  <span class="n">RAM</span>  <span class="p">(</span><span class="n">xrw</span><span class="p">)</span> <span class="o">:</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="mh">0x20000000</span><span class="p">,</span> <span class="n">LENGTH</span> <span class="o">=</span> <span class="mi">8</span><span class="n">K</span>
+<span class="p">}</span>
+<span class="n">_estack</span> <span class="o">=</span> <span class="n">ORIGIN</span><span class="p">(</span><span class="n">RAM</span><span class="p">)</span> <span class="o">+</span> <span class="n">LENGTH</span><span class="p">(</span><span class="n">RAM</span><span class="p">);</span>
+<span class="cm">/* Define output sections */</span>
+<span class="n">SECTIONS</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nl">text</span> <span class="p">:</span> <span class="p">{</span>
+    <span class="o">*</span><span class="p">(.</span><span class="n">text</span><span class="o">*</span><span class="p">)</span>   <span class="cm">/* .text* sections (code) */</span>
+    <span class="o">*</span><span class="p">(.</span><span class="n">rodata</span><span class="o">*</span><span class="p">)</span> <span class="cm">/* .rodata* sections (constants, strings, etc.) */</span>
+    <span class="n">_etext</span> <span class="o">=</span> <span class="p">.;</span> <span class="cm">/* define a global symbols at end of code */</span>
+  <span class="p">}</span> <span class="o">&gt;</span><span class="n">FLASH</span>
+  <span class="n">_sidata</span> <span class="o">=</span> <span class="p">.;</span>
+  <span class="p">.</span><span class="nl">data</span> <span class="p">:</span> <span class="n">AT</span> <span class="p">(</span> <span class="n">_sidata</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="p">.</span> <span class="o">=</span> <span class="n">ALIGN</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+    <span class="n">_sdata</span> <span class="o">=</span> <span class="p">.;</span> <span class="cm">/* create a global symbol at data start */</span>
+    <span class="o">*</span><span class="p">(.</span><span class="n">data</span><span class="o">*</span><span class="p">)</span>   <span class="cm">/* .data* sections */</span>
+    <span class="p">.</span> <span class="o">=</span> <span class="n">ALIGN</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+    <span class="n">_edata</span> <span class="o">=</span> <span class="p">.;</span> <span class="cm">/* define a global symbol at data end   */</span>
+  <span class="p">}</span> <span class="o">&gt;</span><span class="n">RAM</span>
+  <span class="p">.</span><span class="nl">bss</span> <span class="p">:</span> <span class="p">{</span>
+    <span class="p">.</span> <span class="o">=</span> <span class="n">ALIGN</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+    <span class="n">_sbss</span> <span class="o">=</span> <span class="p">.;</span>  <span class="cm">/* define a global symbol at bss start  */</span>
+    <span class="o">*</span><span class="p">(.</span><span class="n">bss</span><span class="o">*</span><span class="p">)</span>
+    <span class="o">*</span><span class="p">(</span><span class="n">COMMON</span><span class="p">)</span>
+    <span class="p">.</span> <span class="o">=</span> <span class="n">ALIGN</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+    <span class="n">_ebss</span> <span class="o">=</span> <span class="p">.;</span>  <span class="cm">/* define a global symbol at bss end    */</span>
+  <span class="p">}</span> <span class="o">&gt;</span><span class="n">RAM</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
         </code>
         <p>Příklad použití v kódu procesoru (startup.c)</p>
-        <code>
-        extern unsigned int _estack;<br />
-        extern unsigned int _sidata;<br />
-        extern unsigned int _sdata;<br />
-        extern unsigned int _edata;<br />
-        extern unsigned int _sbss;<br />
-        extern unsigned int _ebss;<br />
-        <b>static inline void fillStack (void)</b> {<br />
-          register unsigned int *dst, *end;<br />
-          dst = &_ebss;<br />
-          end = &_estack;<br />
-          while (dst < end)  *dst++ = 0xDEADBEEFU;<br />
-        }<br />
-        void <b>Reset_Handler</b>(void) {<br />
-          <b>fillStack(); /* pokud neladíme stack, můžeme tt. řádek zakomentovat */</b><br />
-          /* Pak už to pokračuje asi takto ... */<br />
-          register unsigned int *src, *dst, *end;<br />
-          /* Zero fill the bss section */<br />
-          dst = &_sbss;<br />
-          end = &_ebss;<br />
-          while (dst < end)  *dst++ = 0U;<br />
-          /* Copy data section from flash to RAM */<br />
-          src = &_sidata;<br />
-          dst = &_sdata;<br />
-          end = &_edata;<br />
-          while (dst < end) *dst++ = *src++;<br />
-          /*...*/<br />
-        }<br />
+        <code class = "code">
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">extern</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">_estack</span><span class="p">;</span>
+<span class="k">extern</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">_sidata</span><span class="p">;</span>
+<span class="k">extern</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">_sdata</span><span class="p">;</span>
+<span class="k">extern</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">_edata</span><span class="p">;</span>
+<span class="k">extern</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">_sbss</span><span class="p">;</span>
+<span class="k">extern</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">_ebss</span><span class="p">;</span>
+<span class="k">static</span> <span class="kr">inline</span> <span class="kt">void</span> <span class="nf">fillStack</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">register</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="o">*</span><span class="n">dst</span><span class="p">,</span> <span class="o">*</span><span class="n">end</span><span class="p">;</span>
+  <span class="n">dst</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">_ebss</span><span class="p">;</span>
+  <span class="n">end</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">_estack</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">dst</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">)</span> <span class="o">*</span><span class="n">dst</span><span class="o">++</span> <span class="o">=</span> <span class="mh">0xDEADBEEFU</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">Reset_Handler</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">fillStack</span><span class="p">();</span> <span class="cm">/* pokud neladíme stack, můžeme tt. řádek zakomentovat */</span>
+  <span class="cm">/* Pak už to pokračuje asi takto ... */</span>
+  <span class="k">register</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="o">*</span><span class="n">src</span><span class="p">,</span> <span class="o">*</span><span class="n">dst</span><span class="p">,</span> <span class="o">*</span><span class="n">end</span><span class="p">;</span>
+  <span class="cm">/* Zero fill the bss section */</span>
+  <span class="n">dst</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">_sbss</span><span class="p">;</span>
+  <span class="n">end</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">_ebss</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">dst</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">)</span> <span class="o">*</span><span class="n">dst</span><span class="o">++</span> <span class="o">=</span> <span class="mi">0U</span><span class="p">;</span>
+  <span class="cm">/* Copy data section from flash to RAM */</span>
+  <span class="n">src</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">_sidata</span><span class="p">;</span>
+  <span class="n">dst</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">_sdata</span><span class="p">;</span>
+  <span class="n">end</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">_edata</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">dst</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">)</span> <span class="o">*</span><span class="n">dst</span><span class="o">++</span> <span class="o">=</span> <span class="o">*</span><span class="n">src</span><span class="o">++</span><span class="p">;</span>
+  <span class="cm">/*...*/</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
         </code>
         <p><b>Pozn.:</b> Pokud používáme heap (haldu), která bývá hned za .bss, bude nutné ještě najít podobnou metodou vrchol této haldy.
         Platí, že halda roste ve směru proti zásobníku až se nakonec potkají. Protože metody vytváření haldy jsou různé, nebudu se tím zabývat.
         Nakonec vždy se snažím pokud to jen trochu jde, použití haldy vyhnout, trochu se zde ztrácí determinizmus, přináší to víc problémů
         než užitku. Vytvářet lokální objekty na zásobníku sice také není bez problémů ale mám takový dojem, že cena, kterou je za to
-        nutné zaplatit je menší. Uznávám však, že někdy se bez haldy obejít nelze. To by bylo asi vše.
+        nutné zaplatit je menší. Uznávám však, že někdy se bez haldy obejít nelze.
+        </p>
+        <h2>3. Ladění aplikace v RAM.</h2>
+        <p>Protože jádra CortexMx umožňují běh programu z RAM, nabízí se možnost ladit přímo v ní. Ani tak by nevadilo, že se FLASH opotřebovává,
+        ale natažení programu do RAM pomocí SWD je mnohem rychlejší. A protože některé čipy mají RAM opravdu dost je nasnadě to zkusit.
+        Co mi však dost vadilo bylo přepínání boot módu pomocí propojek (příp. options). Zde je trik, který umožní běh kompletní aplikace v RAM,
+        přičemž ve FLASH zůstává jen malý kousek programu, který není potřeba přepisovat a bootuje se normálně z FLASH. Inicializační kód pro FLASH
+        manipuluje s ukazatelem zásobníku a je proto potřeba napsat ho v assembleru :
+        </p>
+        <code class = "code">
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29</pre></div></td><td class="code"><div class="highlight"><pre>  <span class="nf">.syntax</span> <span class="nv">unified</span>
+  <span class="nf">.cpu</span> <span class="nv">cortex</span><span class="o">-</span><span class="nv">m3</span>
+  <span class="nf">.fpu</span> <span class="nv">softvfp</span>
+  <span class="nf">.thumb</span>
+
+  <span class="nf">.global</span> <span class="nv">g_pfnVectors</span>
+  <span class="nf">.global</span> <span class="nv">Default_Handler</span>
+
+  <span class="nf">.section</span>  <span class="nv">.text.Reset_Handler</span>
+  <span class="nf">.weak</span> <span class="nv">Reset_Handler</span>
+  <span class="nf">.type</span> <span class="nv">Reset_Handler</span><span class="p">,</span> <span class="o">%</span><span class="nv">function</span>
+<span class="nl">Reset_Handler:</span>
+  <span class="nf">ldr</span>   <span class="nv">r0</span><span class="p">,</span><span class="nv">user_code_begin</span>  <span class="err">@</span> <span class="nv">load</span> <span class="nb">sp</span> <span class="nv">and</span> <span class="nv">pc</span> <span class="nv">from</span> <span class="nv">user</span> <span class="nv">code</span> <span class="p">(</span><span class="nv">vector</span> <span class="nv">table</span><span class="p">)</span>
+  <span class="nf">ldr</span>   <span class="nb">sp</span><span class="p">,[</span><span class="nv">r0</span><span class="p">]</span>             <span class="err">@</span> <span class="nv">ldmia</span> <span class="nv">not</span> <span class="nv">support</span> <span class="nb">sp</span>
+  <span class="nf">ldr</span>   <span class="nv">pc</span><span class="p">,[</span><span class="nv">r0</span><span class="p">,</span> <span class="err">#</span><span class="mi">4</span><span class="p">]</span>         <span class="err">@</span> <span class="nv">jump</span> <span class="nv">to</span> <span class="nv">user</span>
+
+  <span class="nf">.align</span> <span class="mi">2</span>
+<span class="nl">user_code_begin:</span>
+  <span class="nf">.word</span> <span class="mh">0x20000000</span>
+  <span class="nf">.size</span> <span class="nv">Reset_Handler</span><span class="p">,</span> <span class="nv">.</span><span class="o">-</span><span class="nv">Reset_Handler</span>
+
+  <span class="nf">.section</span>  <span class="nv">.isr_vector</span><span class="p">,</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="o">%</span><span class="nv">progbits</span>
+  <span class="nf">.type</span> <span class="nv">g_pfnVectors</span><span class="p">,</span> <span class="o">%</span><span class="nv">object</span>
+  <span class="nf">.extern</span> <span class="nv">_estack</span>
+  
+<span class="nl">g_pfnVectors:</span>
+  <span class="nf">.word</span> <span class="nv">_estack</span>
+  <span class="nf">.word</span> <span class="nv">Reset_Handler</span>
+  <span class="nf">.size</span> <span class="nv">g_pfnVectors</span><span class="p">,</span> <span class="nv">.</span><span class="o">-</span><span class="nv">g_pfnVectors</span>
+</pre></div>
+</td></tr></table>
+        </code>
+        <p> K tomu je použit velmi zjednodušený linker skript (definovat zde přesnou velikost RAM je zde docela zbytečné, ale neměla by přesahovat skutečnou délku):
+        </p>
+        <code class = "code">
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/* Entry Point */</span>
+<span class="n">ENTRY</span><span class="p">(</span><span class="n">Reset_Handler</span><span class="p">)</span>
+
+<span class="cm">/* Specify the memory areas */</span>
+<span class="n">MEMORY</span> <span class="p">{</span>
+  <span class="n">FLASH</span> <span class="p">(</span><span class="n">rx</span><span class="p">)</span>      <span class="o">:</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="mh">0x08000000</span><span class="p">,</span> <span class="n">LENGTH</span> <span class="o">=</span> <span class="mi">512</span><span class="n">K</span>
+  <span class="n">RAM</span> <span class="p">(</span><span class="n">xrw</span><span class="p">)</span>       <span class="o">:</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="mh">0x20000000</span><span class="p">,</span> <span class="n">LENGTH</span> <span class="o">=</span> <span class="mi">128</span><span class="n">K</span>
+<span class="p">}</span>
+
+<span class="cm">/* Highest address of the user mode stack */</span>
+<span class="n">_estack</span> <span class="o">=</span> <span class="n">ORIGIN</span><span class="p">(</span><span class="n">RAM</span><span class="p">)</span> <span class="o">+</span> <span class="n">LENGTH</span><span class="p">(</span><span class="n">RAM</span><span class="p">);</span>
+
+<span class="cm">/* Define output sections */</span>
+<span class="n">SECTIONS</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nl">text</span> <span class="p">:</span>  <span class="p">{</span>
+    <span class="p">.</span> <span class="o">=</span> <span class="n">ALIGN</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+    <span class="n">PROVIDE_HIDDEN</span> <span class="p">(</span><span class="n">_vect_tab_begin</span> <span class="o">=</span> <span class="p">.);</span>
+    <span class="n">KEEP</span><span class="p">(</span><span class="o">*</span><span class="p">(.</span><span class="n">isr_vector</span><span class="p">))</span> <span class="cm">/* Startup code */</span>
+    <span class="p">.</span> <span class="o">=</span> <span class="n">ALIGN</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+    <span class="o">*</span><span class="p">(.</span><span class="n">text</span><span class="p">)</span>           <span class="cm">/* .text sections (code) */</span>
+    <span class="o">*</span><span class="p">(.</span><span class="n">text</span><span class="o">*</span><span class="p">)</span>          <span class="cm">/* .text* sections (code) */</span>
+  <span class="p">}</span> <span class="o">&gt;</span><span class="n">FLASH</span>
+  <span class="o">/</span><span class="n">DISCARD</span><span class="o">/</span> <span class="o">:</span> <span class="p">{</span>
+    <span class="o">*</span><span class="p">(.</span><span class="n">comment</span><span class="o">*</span><span class="p">)</span>
+    <span class="o">*</span><span class="p">(.</span><span class="n">ARM</span><span class="p">.</span><span class="o">*</span><span class="p">)</span>
+  <span class="p">}</span>
+  <span class="p">.</span><span class="n">ARM</span><span class="p">.</span><span class="n">attributes</span> <span class="mi">0</span> <span class="o">:</span> <span class="p">{</span> <span class="o">*</span><span class="p">(.</span><span class="n">ARM</span><span class="p">.</span><span class="n">attributes</span><span class="p">)</span> <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
+        </code>
+        <p> Což vygeneruje jen následujících 24 bytů (a to úplně stačí) :
+        </p>
+        <code class = "code">
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre>Disassembly of section <span class="nl">.text</span><span class="p">:</span>
+
+<span class="mh">08000000</span> <span class="p">&lt;</span><span class="nf">g_pfnVectors</span><span class="p">&gt;:</span>
+ <span class="nl">8000000:</span> <span class="mh">00 00 02 20 09 00 00 08 </span>                            <span class="s">... ....</span>
+
+<span class="mh">08000008</span> <span class="p">&lt;</span><span class="nf">Reset_Handler</span><span class="p">&gt;:</span>
+<span class="x"> 8000008: 4802        ldr r0, [pc, #8]  ; (8000014 &lt;user_code_begin&gt;)</span>
+<span class="x"> 800000a: f8d0 d000   ldr.w sp, [r0]</span>
+<span class="x"> 800000e: f8d0 f004   ldr.w pc, [r0, #4]</span>
+<span class="x"> 8000012: bf00        nop</span>
+
+<span class="mh">08000014</span> <span class="p">&lt;</span><span class="nf">user_code_begin</span><span class="p">&gt;:</span>
+<span class="x"> 8000014: 20000000  .word 0x20000000</span>
+</pre></div>
+</td></tr></table>
+      </code>
+        <p>Vše vychází z toho, že FLASH začíná na 0x08000000 a RAM na 0x20000000. Uživatelský program je pak uložen kompletně od 0x20000000,
+        a je nutné v něm nastavit na tuto hodnotu i počátek tabulky vektorů zápisem tt. hodnoty do registru SCB.VTOR ještě před povolením přerušení.
+        <b>Nebude to tedy fungovat na CortexM0.</b> To by bylo asi vše.
         </p>
     </body>
 </html>
