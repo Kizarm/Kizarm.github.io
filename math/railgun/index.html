@@ -28,7 +28,7 @@
     </p>
     <p class="formulaDsp"> \[ L = \frac{1}{2} m {\dot x}^2 + \frac{1}{2} (\mathcal L_0 + \mathcal L_1 x){\dot Q}^2 - \frac{Q^2}{2 \mathcal C} \]</p>
     <p> Protože indukčnost vedení na jednotku délky je (až na nějaký bezrozměrný geometrický faktor) prakticky rovna permeabilitě prostředí a výsledné
-    diferenciální rovnice můžeme integrovat od určité počáteční podmínky pro souřadnici x, která pak nahradí počáteční infukčnost, lze to napsat jako
+    diferenciální rovnice můžeme integrovat od určité počáteční podmínky pro souřadnici x, která pak nahradí počáteční indukčnost, lze to napsat jako
     </p>
     <p class="formulaDsp"> \[ L = \frac{1}{2} m {\dot x}^2 + \frac{1}{2} \mu x {\dot Q}^2 - \frac{Q^2}{2 \mathcal C} \]</p>
     <p> Z toho určíme zobecněné hybnosti a energii
@@ -57,12 +57,27 @@
     <h2>Závěr.</h2>
     <p>Je zřejmé, že to nějak funguje, není to úplně špatně. Rychlost náboje opravdu konverguje k teoretickému
     maximu, které by nastalo, pokud by se veškerá elektromagnetická energie přeměnila v kineckou energii střely.
-    Prakticky lze využít (s elektrolytickým kondenzátorem) jen první půlvlnu přechodového děje, takže maximální
-    rychlost střely by mohla být zhruba čtvrtinová, ale ztráty třením, výboji a na parazitních odporech obvodu
+    Prakticky lze využít (s elektrolytickým kondenzátorem) jen první čtvrtvlnu přechodového děje, takže maximální
+    rychlost střely by i tak mohla být jen zlomek teoretického maxima, ale ztráty třením, výboji a na parazitních odporech obvodu
     budou tak vysoké, že to celkem nestojí za to se s tím počítat, stejně by se ztráty musely spíš jen odhadnout.
     <b>Model tedy slouží jen k hrubému ověření, co se tam děje a nepočítá s jakoukoli disipací energie.</b>
     Zdrojáky <a href = "railgun.zip">přibalíme</a> s tím, že jsou zcela bez záruky a nechť si s tím každý dělá, co umí.
-    Potřebujete k tomu jen make, g++ a gnuplot.
+    Potřebujete k tomu jen make, g++, gnuplot a případně patch.
+    </p>
+    <h2>Přídavek - vylepšení.</h2>
+    <p>
+    Asi by to šlo zlepšit <b>zapojením diody paralelně ke kondenzátoru</b>. Zabrání se tak jeho přepólování a zbytek magnetické energie
+    se pak o něco pomaleji mění na kinetickou energii střely. Jde to i nasimulovat - po vyčerpání náboje Q z kondenzátoru vlastně jakoby zmizí
+    z Hamiltonovy funkce poslední člen. Tedy v případě ideální diody. Ovšem reálná dioda, která snese ve špičce <b>desítky kA</b>, to bude oříšek.
+    </p>
+    <image src="img4.png">
+    <image src="img6.png">
+    <p>Asi to však bude potřebovat delší "hlaveň". Zbytek energie se stejně po jejím opuštění projektilem ztratí, patrně výbojem na konci.
+    Pokud by byla hlaveň nekonečná, rychlost projektilu by opět konvergovala k teoretickému maximu. <b>Simulace je zase bezeztrátová.</b>
+    </p>
+    <image src="img5.png">
+    <p>Aplikace ideální diody v simulaci je realizována pomocí patche, který lze aplikovat příkazem <code>patch -p2 &lt; diode.patch</code>.
+    Lze z něj snadno přečíst, jak se původní kód změní.
     </p>
   <body>
 <html>
