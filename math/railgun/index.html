@@ -3,13 +3,17 @@
 
 
 
+
+
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
   <head>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
     </META>
     <title>RAILGUN</title>
-    <style>body {background-color: rgb(192,255,255);} h2 {color: rgb(64,0,192);}
+    <style>body {background-color: rgb(192,255,255);} h2 {color: rgb(64,0,192);} table {color: rgb(128,0,128);}
     </style>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({
     extensions: ["tex2jax.js"],
@@ -23,7 +27,7 @@
   <body>
     <h1>Railgun, výpočet</h1>
     <h2>Jak na to.</h2>
-    <p>Je s podivem, že základní konstrukci pro výpočet lze najít česky např. <a href = "https://www.aldebaran.cz/studium/mechanika.pdf">zde</a>.
+    <p>Je s podivem, že základní konstrukci pro výpočet lze najít v literatuře i česky např. <a href="#Lit1">[1]</a> zde.
     Z toho lze použít lagranžián (1.153).
     </p>
     <p class="formulaDsp"> \[ L = \frac{1}{2} m {\dot x}^2 + \frac{1}{2} (\mathcal L_0 + \mathcal L_1 x){\dot Q}^2 - \frac{Q^2}{2 \mathcal C} \]</p>
@@ -31,17 +35,21 @@
     diferenciální rovnice můžeme integrovat od určité počáteční podmínky pro souřadnici x, která pak nahradí počáteční indukčnost, lze to napsat jako
     </p>
     <p class="formulaDsp"> \[ L = \frac{1}{2} m {\dot x}^2 + \frac{1}{2} \mu x {\dot Q}^2 - \frac{Q^2}{2 \mathcal C} \]</p>
-    <p> Z toho určíme zobecněné hybnosti a energii
+    <p> Z toho určíme zobecněné hybnosti a energii</p>
     <p class="formulaDsp"> \[ p_x = \frac {\partial L}{\partial {\dot x}} = m \dot x \]</p>
     <p class="formulaDsp"> \[ p_Q = \frac {\partial L}{\partial {\dot Q}} = \mu x \dot Q \]</p>
     <p class="formulaDsp"> \[   E = \frac {\partial L}{\partial {\dot x}} \dot x + \frac {\partial L}{\partial {\dot Q}} \dot Q - L =
     \frac{1}{2} m {\dot x}^2 + \frac{1}{2} \mu x {\dot Q}^2 + \frac{Q^2}{2 \mathcal C} \]</p>
-    Provedeme Legendreovu  duální  transformaci.  Tím  získáme Hamiltonovu funkci
+    <p>Provedeme Legendreovu  duální  transformaci.  Tím  získáme Hamiltonovu funkci</p>
     <p class="formulaDsp"> \[ H = \frac{{p_x}^2}{2 m} + \frac{\dot{p_Q}^2}{2 \mu x} + \frac{Q^2}{2 \mathcal C} \]</p>
-    A z ní už snadno získáme potřebné diferenciální rovnice
-    <p class="formulaDsp"> \[ \dot x = \frac{\partial H}{\partial p_x} = \frac{p_x}{m} \qquad;\qquad \dot p_x = - \frac{\partial H}{\partial x} = \frac{1}{2 \mu} \left(\frac{p_Q}{x}\right)^2 \]</p>
-    <p class="formulaDsp"> \[ \dot Q = \frac{\partial H}{\partial p_Q} = \frac{p_Q}{\mu x} \qquad;\qquad \dot p_Q = - \frac{\partial H}{\partial Q} = - \frac{Q}{\mathcal C} \]</p>
-    které lze už snadno numericky integrovat. Ono to sice na první pohled vypadá dost šíleně, ale je to asi opravdu
+    <p>A z ní už snadno získáme potřebné diferenciální rovnice</p>
+    <p><table align="center">
+    <tr><td class = "formulaDsp">\[ \dot x = \frac{\partial H}{\partial p_x} = \frac{p_x}{m}\qquad \]</td>
+        <td class = "formulaDsp">\[ ;\qquad\dot p_x = - \frac{\partial H}{\partial x} = \frac{1}{2 \mu} \left(\frac{p_Q}{x}\right)^2 \]</td></tr>
+    <tr><td class = "formulaDsp">\[ \dot Q = \frac{\partial H}{\partial p_Q} = \frac{p_Q}{\mu x}\qquad \]</td>
+        <td class = "formulaDsp">\[ ;\qquad\dot p_Q = - \frac{\partial H}{\partial Q} = - \frac{Q}{\mathcal C} \]</td></tr>
+    </table></p>
+    <p>které lze už snadno numericky integrovat. Ono to sice na první pohled vypadá dost šíleně, ale je to asi opravdu
     ten nejjednodušší způsob, jak se dobrat výsledku (tedy pokud už jsme někde ulovili potřebný lagranžián).
     </p>
     <h2>Výsledky.</h2>
@@ -64,7 +72,7 @@
     Zdrojáky <a href = "railgun.zip">přibalíme</a> s tím, že jsou zcela bez záruky a nechť si s tím každý dělá, co umí.
     Potřebujete k tomu jen make, g++, gnuplot a případně patch.
     </p>
-    <h2>Přídavek - vylepšení.</h2>
+    <h2>1. Přídavek - vylepšení.</h2>
     <p>
     Asi by to šlo zlepšit <b>zapojením diody paralelně ke kondenzátoru</b>. Zabrání se tak jeho přepólování a zbytek magnetické energie
     se pak o něco pomaleji mění na kinetickou energii střely. Jde to i nasimulovat - po vyčerpání náboje Q z kondenzátoru vlastně jakoby zmizí
@@ -79,5 +87,36 @@
     <p>Aplikace ideální diody v simulaci je realizována pomocí patche, který lze aplikovat příkazem <code>patch -p2 &lt; diode.patch</code>.
     Lze z něj snadno přečíst, jak se původní kód změní.
     </p>
+    <h2>2. Přídavek - disipace energie.</h2>
+    <p>Protože máme k dispozici Rayleighovu disipační funkci <a href="#Lit1">[1]</a> (1.148)
+    </p>
+    <p class="formulaDsp"> \[ R = \frac{1}{2}\mathcal R {\dot Q}^2 + \frac{1}{2}\beta {\dot x}^2 \]</p>
+    <p>můžeme se pokusit nasimulovat model i s určitým odhadem ztrát v systému. Protože jako elektrikáři dokážeme spíš
+    odhadnout hodnotu $\mathcal R$, zatím zanedbáme člen s mechanickým třením. Opravíme tedy jen poslední rovnici
+    </p>
+    <p class = "formulaDsp">\[\dot p_Q = - \frac{\partial H}{\partial Q} - \frac{\partial R}{\partial \dot Q} = - \frac{Q}{\mathcal C} - \mathcal R \dot Q
+    =  - \frac{Q}{\mathcal C} - \mathcal R \frac{p_q}{\mu x} \]</p>
+    <p>S parazitním odporem kondenzátoru 5 $m\Omega$ jsou výsledky opravdu o něco realističtější. I zde je použit patch - <code>patch -p2 &lt; disip.patch</code>.
+    </p>
+    <image src="img7.png">
+    <image src="img9.png">
+    <p>Simulace i zde předpokládá <b>použití diody paralelně ke kondenzátoru</b>. Situace se ale jejím vynecháním příliš nezmění. Nebudu to sem dávat,
+    i tak je těch obrázků už tolik, že je těžké se v tom vyznat. Ale je vidět, že pokud zvolíme správně parametry modelu, dává asi správné výsledky.
+    </p>
+    <h2>3. Přídavek - automatizace výpočtu matematických formulí.</h2>
+    <p>Přestože pro simulaci elektronických obvodů existují docela dokonalé softwarové nástroje, pokud spojíme elektrický obvod s nějakým mechanickým systémem,
+    býváme obvykle v koncích. Spočítat něco takového, jako je uvedeno výše, jen s běžnou znalostí fyziky by bylo docela na hlavu. Muselo by se počítat
+    magnetické pole vedení, Lorenzova síla působící na příčku, zpětně indukované napětí v té příčce ... Teoretická mechanika jen na základě úvah
+    o energii a kam se tak může nebo spíš nemůže ztrácet tohle umí o hodně elegantněji. Když se na to podíváte, je to jen pár jednoduchých vztahů
+    pro energii, které zřejmě učí už na střední škole, žádně Maxwellovy rovnice, žádná Lorenzova síla, to z toho vyleze tak nějak samo o sobě.
+    Sice je to dost abstraktní, ale funguje to. A protože počítat ty parciální derivace, dosazovat to do výrazů a pak je upravovat je dost otravné
+    a člověk se přitom snadno splete, vytvořil jsem <a href="lagrange.html" target="_blank">skript v pythonu</a>, který tohle umí vyřešit a vyhodí z lagranžiánu přímo Hamiltonovy rovnice.
+    Pro testování jsou tam lagranžiány i pro jiné problémy než tento, produkuje to takovýto <a href="equations.html" target="_blank">poměrně čitelný výsledek</a>.
+    </p>
+    <h2>Literatura.</h2>
+    <ul>
+      <li id="Lit1">1.Prof. Petr Kulhánek : Teoretická mechanika. Doprovodný materiál ke stejnojmennému předmětu.
+      <a href = "https://www.aldebaran.cz/studium/mechanika.pdf" target="_blank">Dostupné online.</a>
+    </ul>
   <body>
 <html>
