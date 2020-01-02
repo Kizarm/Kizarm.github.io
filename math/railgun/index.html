@@ -113,6 +113,12 @@
     a člověk se přitom snadno splete, vytvořil jsem <a href="lagrange.html" target="_blank">skript v pythonu</a>, který tohle umí vyřešit a vyhodí z lagranžiánu přímo Hamiltonovy rovnice.
     Pro testování jsou tam lagranžiány i pro jiné problémy než tento, produkuje to takovýto <a href="equations.html" target="_blank">poměrně čitelný výsledek</a>.
     </p>
+    <h2>4. Přídavek - simulace jako webová aplikace.</h2>
+    <p> Původní simulace má dost velký nedostatek - nejdou měnit jednoduše parametry simulace. Udělat aplikaci v Qt tak, aby šly parametry jednoduše
+    nastavit a přeložit jí do webassembly není zase tak velký problém. Pokud si to chcete <a href="./gui/railgun.html" target="_blank">vyzkoušet</a>, musíte mít browser, který podporuje javascript
+    a webassembly (Firefox, Chrome ...). A ještě <a href="gui.zip">zdrojáky</a>. Licence je to co platí obecně pro Qt, lze použít Qt4 i Qt5. Jako nativní aplikace je to o něco lepší,
+    ta webassembly verze má ještě své mouchy. Pozor - webassembly je dost velké (13MiB), protože si s sebou tahá vše možné včetně fontů.
+    </p>
     <h2>Literatura.</h2>
     <ul>
       <li id="Lit1">1.Prof. Petr Kulhánek : Teoretická mechanika. Doprovodný materiál ke stejnojmennému předmětu.
