@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>WASM Idiot</title>
+    <style>body {background-color: rgb(192,255,255);} p {white-space: pre-wrap;} i {color: rgb(64,0,192);}</style>
+</head>
+
+<body>
+    <h1>IDIOT.</h1>
+    <select id="chunk"   onchange="SelectedText()"></select>
+    <div    id="context" style="font-family:bookman;font-size:100%" align="left"></div>
+    <p align="right"><button id="button" onclick="NextChunk()">Další část</button></p>
+    <script src="cstring.js"></script>
+    <script>
+        var maxChunks = 0;
+        function StringAtIndex (index) {
+            const myText = Module.my_cstring(index);
+            const strBuf = new Uint8ClampedArray(myText);
+            return new TextDecoder().decode(strBuf);
+        };
+        function NextChunk () {
+          var list = document.getElementById("chunk");
+          list.selectedIndex += 1;
+          SelectedText ();
+          window.scrollTo (0,0);
+        }
+        Module.addOnPostRun(() => {
+            const mystr = StringAtIndex (0);
+            const chunk = Module.my_chunks();
+            maxChunks = chunk - 1;
+            var list = document.getElementById("chunk");
+            for (i=0; i<chunk; i++) {
+              var option  = document.createElement("option");
+              option.text = 'Část ' + (i + 1) + '.'
+              list.add (option);
+            }
+            document.getElementById("context").innerHTML = mystr;
+        });
+        function SelectedText() {
+           var list  = document.getElementById("chunk");
+           var index = list.selectedIndex;
+           var but = document.getElementById ("button");
+           //console.log ('max = ' + maxChunks + ', index = ' + index);
+           if (index < maxChunks) but.disabled = false;
+           else                   but.disabled = true;
+           document.getElementById("context").innerHTML = StringAtIndex (index);
+        };
+    </script>
+</body>
+</html>
