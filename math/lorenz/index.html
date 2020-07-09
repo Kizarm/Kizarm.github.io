@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <title>Lorenz</title>
+  </head>
+  <body>
+      <div id="WasmDomElements"></div>
+      <script src="lorenz.js"></script>
+      <script>
+        /* Vše co jen bylo možné je schováno ve zdrojácích C++. Je to sice jedno, nicméně i to funguje. */
+        Module.addOnPostRun(() => {
+          // WebAssembly vytvoří celý DOM a nakonec i funkcionalitu prvků.
+          document.getElementById ('WasmDomElements').innerHTML = Module.Init ();
+          Module.WasmInitAll ();
+        });
+        // Název UniversalDriver je podstatný, DOM to používá.
+        function UniversalDriver (index) {
+          Module.WasmDriver (index);
+        };
+      </script>
+  </body>
+</html>
