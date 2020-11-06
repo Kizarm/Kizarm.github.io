@@ -1,0 +1,13 @@
+#! /bin/sh
+git clone https://github.com/mborik/GPMD85Emulator.git
+cd GPMD85Emulator
+git checkout aabf3df7fe795ed39ab4e43a4805380d94968c0c
+git reset --hard
+cp ../pmd85web.zip .
+unzip pmd85web.zip
+rm pmd85web.zip
+patch -p2 < web.patch
+cp ./res/* ./files/res
+cp ./rom/* ./files/rom
+make -j4
+cd ..
