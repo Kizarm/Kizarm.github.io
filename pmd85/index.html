@@ -55,6 +55,7 @@
       <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
     </div>
     <div>
+      <p><span style="color:blue">Přidat soubory :&nbsp;&nbsp;</span><input type="file" id="file-selector" multiple accept=".ptp"></p>
       <textarea class="emscripten" id="output" rows="8"></textarea>
       <h3>Popis</h3>
       <p><b>Emulátor PMD85 ve webassembly</b>. Základem je tento <a href="https://github.com/mborik/GPMD85Emulator" target="_blank">kód</a>, ve své
@@ -72,18 +73,41 @@
       <p>Poznámky</p>
       <ul>
         <li>1. Je možné přidat software do adresáře ./files/tape, pak je nutno rekompilovat GPMD85emu.js.
-        <li>2. V prostředí Linuxu je možné vytvořit nativní aplikaci (make clean, make TARGET=UNIX) pro testy.
+        <li>2. V prostředí Linuxu je možné vytvořit nativní aplikaci (make clean, make TGT=UNIX) pro testy.
                Pokud použijeme standardní postup (autoconf, configure, ...) přepíší se Makefile.
                Zřejmě existuje možnost použít nástroj emconfigure pro webassembly build, ale nechtělo se mi
-               to studovat, nebude to zase tak jednoduché, takže Makefile vytvořené skriptem ./create_web
+               to studovat, nebude to zase tak jednoduché, takže Makefile.web vytvořené skriptem ./create_web
                jsou ručně napsané. Doladit potřebné parametry nebylo zase úplně triviální.
+        <li>3. Přidán fileselektor, umožní přidat soubory *.ptp z lokálního zdroje. Ani jsem nevěděl, že to jde.
+               Nicméně s tím už to začíná být použitelné pro běžné testy. V adresáři tape zůstala jen ḧra Magicland, je moc hezká.
+               Na webu jsem našel zdrojáky od prastaré hry miny, trochu jsem si s tím hrál - výsledek je modul miny.rmm. Posouvá
+               se šipkami, označení pole je DELETE nebo PGDN (vlajka), dále se používá STOP (ESC), ENTER a K1 (F2).
       </ul>
       
     </div>
     <script type='text/javascript'>
-      var statusElement = document.getElementById('status');
-      var progressElement = document.getElementById('progress');
-      var spinnerElement = document.getElementById('spinner');
+      const statusElement   = document.getElementById('status');
+      const progressElement = document.getElementById('progress');
+      const spinnerElement  = document.getElementById('spinner');
+      const fileSelector    = document.getElementById('file-selector');
+      
+      fileSelector.addEventListener('change', (event) => {
+        const fileList = event.target.files;
+        for (n=0; n<fileList.length; n++) {
+          const file = fileList[n];
+          console.log (file);
+          readFile (file);
+        }
+      });
+      function readFile(file) {
+        const reader = new FileReader();
+        reader.addEventListener('load', (event) => {
+          const context = event.target.result;
+          Module['FS_createDataFile']("./files/tape/", file.name, context, true, true);
+        });
+        reader.readAsBinaryString(file)
+      }
+
       var Module = {
         preRun: [],
         postRun: [],
