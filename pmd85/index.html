@@ -55,13 +55,14 @@
       <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
     </div>
     <div>
-      <p><span style="color:blue">Přidat soubory :&nbsp;&nbsp;</span><input type="file" id="file-selector" multiple accept=".ptp"></p>
+      <p><span style="color:blue">Přidat soubory :&nbsp;&nbsp;</span><input type="file" id="file-selector" multiple accept=".ptp, .p32"></p>
       <textarea class="emscripten" id="output" rows="8"></textarea>
       <h3>Popis</h3>
       <p><b>Emulátor PMD85 ve webassembly</b>. Základem je tento <a href="https://github.com/mborik/GPMD85Emulator" target="_blank">kód</a>, ve své
       podstatě není nic jiného potřeba.
-      Menu se vyvolá klávesou GRAVE v levém horním konci ASCII bloku (anglické !) klávesnice. Ostatní klávesy jsou (snad) zachovány.
-      Ve webovém prostředí se totiž chovají klávesy úplně jinak, zřejmě hodně eventů sežere browser.
+      Menu se vyvolá klávesou PAUSE/BREAK v pravém horním konci klávesnice. Ostatní klávesy jsou (snad) zachovány.
+      Ve webovém prostředí se totiž chovají klávesy úplně jinak, zřejmě hodně eventů sežere browser. Klávesy ALT+Fn jsou v browseru téměř nepoužitelné
+      a vyvolat menu je zde prioritou.
       </p>
       <h3>Instalace</h3>
       <ul>
