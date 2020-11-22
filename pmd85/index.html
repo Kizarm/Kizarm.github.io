@@ -55,7 +55,12 @@
       <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
     </div>
     <div>
-      <p><span style="color:blue">Přidat soubory :&nbsp;&nbsp;</span><input type="file" id="file-selector" multiple accept=".ptp, .p32"></p>
+      <p><span style="color:blue">Přidat soubory :&nbsp;&nbsp;</span>
+        <input type="file" id="file-selector" multiple accept=".ptp, .p32">
+        <input type="button" value="Menu"  onclick="OnClickBut(0);" />
+        <input type="button" value="Pause" onclick="OnClickBut(2);" />
+        <input type="button" value="Reset" onclick="OnClickBut(4);" />
+      </p>
       <textarea class="emscripten" id="output" rows="8"></textarea>
       <h3>Popis</h3>
       <p><b>Emulátor PMD85 ve webassembly</b>. Základem je tento <a href="https://github.com/mborik/GPMD85Emulator" target="_blank">kód</a>, ve své
@@ -83,6 +88,10 @@
                Nicméně s tím už to začíná být použitelné pro běžné testy. V adresáři tape zůstala jen ḧra Magicland, je moc hezká.
                Na webu jsem našel zdrojáky od prastaré hry miny, trochu jsem si s tím hrál - výsledek je modul miny.rmm. Posouvá
                se šipkami, označení pole je DELETE nebo PGDN (vlajka), dále se používá STOP (ESC), ENTER a K1 (F2).
+        <li>4. Další vychytávka byla přidána protože Firefox používá příšerně moc klávesových zkratek a nepovedlo se mi je
+               nějak rozumně zakázat. Tak jsem přidal pár tlačítek, které řeší největší problémy. Je to dost pochybný hack,
+               stejně pak není možné hrát některé hry (prostě s klávesami Fn je pořád problém), ale ukazuje možnou cestu jak z toho ven.
+               Zajímavé je, že např. Chrome tyto problémy nemá.
       </ul>
       
     </div>
@@ -91,7 +100,46 @@
       const progressElement = document.getElementById('progress');
       const spinnerElement  = document.getElementById('spinner');
       const fileSelector    = document.getElementById('file-selector');
-      
+      const PmdCanvas       = document.getElementById('canvas');
+      /* Protože browser zachytává některé potřebné eventy, zde je nasimulujeme tlačítky. */
+      const KeyMap = [[18,'Alt'],[112,'F1'],[113,'F2'],[114,'F3'],[115,'F4'],[116,'F5']];
+      function OnClickBut (order) {
+        CreateAltEvent (order);
+      }
+      function CreateEvent (num) {
+        const lst = KeyMap [num];
+        SendEvent (lst, 'keydown', false);
+        setTimeout (function () {
+          SendEvent (lst, 'keyup', false);
+        }, 100);
+      }
+      function CreateAltEvent (num) {
+        const lst = KeyMap [num+1];
+        SendEvent (KeyMap[0], 'keydown', false);
+        setTimeout (function () {
+          SendEvent (lst, 'keydown', true);
+          setTimeout (function () {
+            SendEvent (lst, 'keyup', true);
+            setTimeout (function () {
+              SendEvent (KeyMap[0], 'keyup', true);
+            }, 50);
+          }, 100);
+        }, 50);
+      }
+      function SendEvent (lst, name, alter) {
+        const key_code = lst [0];
+        const key_name = lst [1];
+        const event = new KeyboardEvent(name, {
+          key:  key_name, charCode: 0, keyCode: key_code,
+          code: key_name,
+          altKey: alter,
+          bubbles: true,
+          cancelable: true,
+          defaultPrevented: true
+        });
+        PmdCanvas.dispatchEvent (event);
+      }
+      /* Tato část přidává uživatelské soubory. */
       fileSelector.addEventListener('change', (event) => {
         const fileList = event.target.files;
         for (n=0; n<fileList.length; n++) {
@@ -108,7 +156,7 @@
         });
         reader.readAsBinaryString(file)
       }
-
+      /* A nakonec vlastní obsluha webassembly části. */
       var Module = {
         preRun: [],
         postRun: [],
