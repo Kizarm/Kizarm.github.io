@@ -1,0 +1,292 @@
+<!doctype html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <title>ColorAce</title>
+      <style>
+          html,
+          body {
+              margin:  0;
+              padding: 0;
+          }
+          .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 16px;
+            border-radius: 5px;  
+            background: #008000;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+          }
+          .slider::-moz-range-thumb {
+            width: 25px;
+            height: 32px;
+            background: #A000A0;
+            cursor: pointer;
+          }
+          .button {
+            width:  100%;
+            background-color: #00F0F0;
+            border: none;
+            color: black;
+            padding: 5px 5px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border: 2px solid #4CAF50;
+          }
+          .frame1 {
+            width:  90%;
+            margin: auto;
+            background-color: #FFFFC0;
+            border: 10px solid #F0C0F0;
+          }
+          .files {
+            width: 30%;
+            background-color: #C0FFC0;
+            border: 2px solid #000000;
+          }
+      </style>
+  </head>
+  <body>
+      <table align="center"><tr>
+        <td><canvas id="cancas_src"></canvas></td>
+        <td><canvas id="cancas_dst"></canvas></td>
+        <tr><td align="center">Original</td><td align="center">ColorAce™</td></tr>
+      </tr></table>
+      <table width="98%">
+        <tr><td width="32px"><img src="red.png"  ></td><td><input type="range" min="0" max="255" class="slider" id="rTrig" oninput="rChangeVal();"></td></tr>
+        <tr><td width="32px"><img src="green.png"></td><td><input type="range" min="0" max="255" class="slider" id="gTrig" oninput="gChangeVal();"></td></tr>
+        <tr><td width="32px"><img src="blue.png" ></td><td><input type="range" min="0" max="255" class="slider" id="bTrig" oninput="bChangeVal();"></td></tr>
+        <tr><td width="32px"><img src="bw.png"   ></td><td><input type="range" min="0" max="255" class="slider" id="cTrig" oninput="cChangeVal();"></td></tr>
+      </table>
+      <div class="frame1">
+        <table>
+          <tr>
+            <td><input type="button" class="button" value="Upload Image" onclick="OnClickUpl();"></td>
+            <td><input type="button" class="button" value="Download asm" onclick="OnClickDnl();"></td>
+            <td><input type="button" class="button" value="Download p32" onclick="OnClickCom();"></td>
+            <td><input type="button" class="button" value="Add com file" onclick="OnClickAdd();"></td>
+          </tr><tr>
+            <td colspan="3"><b>&nbsp;&nbsp;Suffix :&nbsp;&nbsp;</b>
+            <input type="number" id="sufix" name="Suffix" min="0" max="99"></td>
+            <td><input type="button" class="button" value="Set Defaults" id="DefBut" onclick="OnClickDef();"></td>
+          </tr>
+        </table>
+        <p>Files:</p>
+        <table class="files" id="comfiles"></table>
+      </div>
+      <div class="frame1">
+      <p><b>Galerie. </b>Kliknutím na obrázek jej převedete ...</p>
+      <table align="center">
+        <tr>
+          <td><img src="./img/david.png" onclick="Galery('./img/david.png');"></td>
+          <td><img src="./img/lena.png" onclick="Galery('./img/lena.png');"></td>
+          <td><img src="./img/einstein.png" onclick="Galery('./img/einstein.png');"></td>
+        </tr><tr>
+          <td><img src="./img/Bart.png" onclick="Galery('./img/Bart.png');"></td>
+          <td><img src="./img/svejk.png" onclick="Galery('./img/svejk.png');"></td>
+          <td><img src="./img/koule.png" onclick="Galery('./img/koule.png');"></td>
+        </tr>
+      </table>
+      <h3>Popis.</h3>
+        <p>Program je určen pro převod obrázku do formátu ColorAce™ pro zobrazení na historickém počítači PMD85.
+        Lokální obrázek lze načíst tlačítkem <b>Upload</b>, převede se automaticky. Soubor ve formátu *.png by
+        měl mít správné rozměry (288 x 256 pixel), je vhodné jej předem upravit externím programem (např. GIMP).
+        Data lze vyexportovat tlačítkem <b>Download asm</b> ve formátu *.S (gnu binutils pro Z80), jak jsou uspořádána
+        je vidět z použití - viz <a href="image.zip">tento jednoduchý příklad</a>. Výsledkem je *.COM soubor,
+        spustitelný pod MIKROS. Pole <b>Suffix</b> umožní přidat číselnou příponu (pro soubor i globální symbol image_data_NN uvnitř něj),
+        pokud je potřeba používat více *.S souborů v jednom výsledném programu.
+        </p>
+        <p>Další možností je použít tlačítko <b>Add com file</b>, které uloží již hotový *.COM soubor do filesystému browseru.
+        Pak je možné převést další soubor (jiného jména), opět uložit, atd. Nakonec pak použít tlačítko <b>Download p32</b>,
+        které všechny tyto soubory zapíše na bootovatelnou virtuální disketu a tu je pak možné uložit a následně použít v emulátoru.
+        </p>
+        <p>Táhla pro vyvážení barev a práh citlivosti jsou funkční, ale celkem k ničemu, defaulní nastavení je tak to nejlepší,
+        co z toho lze dostat. Proto je tam poslední tlačítko <b>Set Defaults</b>, které to vrátí zpět na původní nastavení.
+        </p>
+      <h3>Poznámky k realizaci.</h3>
+        <p>Na webu je hotový celkem dobrý <a href="https://pmd85.borik.net/colorace/" target="_blank">editor</a>, který umí obrázek převést,
+        ale chtěl jsem vyzkoušet, jak to vlastně funguje. Zkusil jsem tedy napsat jednoduchý převodník v Qt, ale pořád to nebylo ono.
+        Naivní implementace ditheringu řádek po řádku už dávala použitelné výsledky, tak jsem to překlopil do webové verze. Jenže
+        to pochopitelně pořád rozmazávalo svislé čáry. Tak jsem hledal, jak to udělat lépe - a našel jsem Floyd–Steinbergův algoritmus,
+        který je opravdu dobrý pro pixel art. Dokonce i při takto mizerném rozlišení je vidět velká podobnost v testovacích obrázcích
+        jako je Lena nebo hlava Michelangelova Davida. Ovšem funguje to především na černobílé obrázky (a ty jsou pak použitelné pro černobílou verzi PMD85).
+        Barevné obrázky musí mít "čisté" barvy, oddělené tlustou černou čárou, jinak vznikají rušivé artefakty, protože metoda
+        sice dává pixely v čistých barvách, ale různé barvy vedle sebe, což ColorAce neumí. Asi by šla vymyslet nějaká upravená metoda,
+        ale nebylo by to tak jednoduché (a jen bůh ví, jestli by to bylo lepší). Takže ty táhla jsou vlastně jen zbytek po předchozích experimentech.
+        </p>
+        <p>Dobrá, data tedy máme a teď co s nimi. Původně jsem chtěl udělat nějaký image-reader, ale nepovedlo se mi najít jak se
+        v té době ukládaly obrázky. Nějaké finta na to asi byla, obrázky takto vytvořené mají velikost video RAM, tj, asi 12Kib,
+        což je na takto malý systém docela dost. Druhá věc je, že psát to v assembleru je pro mě dost horor a tak jsem zvolil
+        to co bylo nejjednodušší - vzít jednoduchý základ, který umí běžet pod MIKROS a kopíruje jednoduše data do video RAM a
+        vygenerovaná data za to prostě přilepit. Takže výsledkem je *.COM se jménem původního obrázku, který když spustíte,
+        tak ten obrázek vykreslí. Dostat to pak na virtuální disketu už není takový problém - existuje <a href="https://pmd85.borik.net/wiki/CP/M_Image_Manager" target="_blank">program</a>,
+        který to umí a od něhož jsou i dostupné zdrojáky. Takže ty jsou lehce upravené použity i <a href="ColorACE.zip">zde</a>.
+        </p>
+        <p>Na konec jsem si trochu hrál se zdrojáky systémových programů PMD85, ve své době to lidi s assemblerem fakt uměli.
+        Zkusil jsem převést do tvaru použitelného GNU binutils Z80 Monitor (verze 2 a 2A), Basic-G (2A) a driver pro natažení
+        MIKROS z diskety. To byl opravdu oříšek - kód běží z nesouvislých úseků paměti. Tady je <a href="binutils.zip">výsledek</a>,
+        po překladu je vše bit od bitu stejné jako originál.
+        </p>
+      </div>
+      <script src="colorace.js"></script>
+      <script>
+        const Iwidth = 288, Iheight = 256;
+        const Dwidth = Iwidth * 2, Dheight = Iheight * 2;
+        var srcImage = new Image(Iwidth, Iheight);
+        const srcCanvas = document.getElementById ('cancas_src');
+        const dstCanvas = document.getElementById ('cancas_dst');
+        var srcCtx = 0;
+        var dstCtx = 0;
+        Module.addOnPostRun(() => {
+          srcCanvas.width  = Dwidth;
+          srcCanvas.height = Dheight;
+          dstCanvas.width  = Dwidth;
+          dstCanvas.height = Dheight;
+          srcCtx = srcCanvas.getContext ('2d');
+          dstCtx = dstCanvas.getContext ('2d');
+          srcImage.src = 'test.png';
+          srcImage.onload = () => sendCanvas(srcImage, srcImage.src);
+          Defaults ();
+          document.getElementById ('sufix').value = 0;
+        });
+        function Defaults () {
+          document.getElementById ('rTrig').value = Module.getTrig (0);
+          document.getElementById ('gTrig').value = Module.getTrig (1);
+          document.getElementById ('bTrig').value = Module.getTrig (2);
+          document.getElementById ('cTrig').value = Module.getTrig (3);
+        }
+        function sendCanvas(baseImage, nameImage) {
+          const canvas  = document.createElement  ('canvas');
+          // console.log ('sendCanvas: ' + nameImage);
+          canvas.width  = Iwidth;
+          canvas.height = Iheight;
+          const context = canvas.getContext('2d');
+          context.drawImage(baseImage, 0, 0, baseImage.width, baseImage.height);
+          const imgData = context.getImageData(0, 0, canvas.width, canvas.height);
+          const u8sData = new Uint8Array(imgData.data);
+          Module.setData (u8sData, canvas.width, canvas.height, nameImage);
+          // zobraz
+          changeSrc ();
+          changeDst ();
+        }
+        function changeSrc () {
+          const sData = new ImageData (new Uint8ClampedArray (Module.src_data()), Iwidth, Iheight);
+          const backupCanvas  = document.createElement('canvas');
+          backupCanvas.width  = Iwidth;
+          backupCanvas.height = Iheight;
+          const backupContext = backupCanvas.getContext('2d');
+          backupContext.putImageData (sData, 0, 0);
+          srcCtx.drawImage (backupCanvas, 0, 0, Iwidth, Iheight, 0, 0, srcCanvas.width, srcCanvas.height);
+        } 
+        function changeDst () {
+          const dData = new ImageData (new Uint8ClampedArray (Module.dst_data()), Iwidth, Iheight);
+          const backupCanvas  = document.createElement('canvas');
+          backupCanvas.width  = Iwidth;
+          backupCanvas.height = Iheight;
+          const backupContext = backupCanvas.getContext('2d');
+          backupContext.putImageData (dData, 0, 0);
+          dstCtx.drawImage (backupCanvas, 0, 0, Iwidth, Iheight, 0, 0, dstCanvas.width, dstCanvas.height);
+        }
+        function rChangeVal () {
+          const nval = parseInt (document.getElementById('rTrig').value, 10);
+          Module.setTrig (0, nval);
+          changeDst ();
+        }
+        function gChangeVal () {
+          const nval = parseInt (document.getElementById('gTrig').value, 10);
+          Module.setTrig (1, nval);
+          changeDst ();
+        }
+        function bChangeVal () {
+          const nval = parseInt (document.getElementById('bTrig').value, 10);
+          Module.setTrig (2, nval);
+          changeDst ();
+        }
+        function cChangeVal () {
+          const nval = parseInt (document.getElementById('cTrig').value, 10);
+          Module.setTrig (3, nval);
+          changeDst ();
+        }
+        
+        /* Tato část přidává uživatelské soubory. */
+        function readFile(file) {
+          const reader = new FileReader();
+          reader.addEventListener('load', (event) => {
+            const context = event.target.result;
+            srcImage.src = context;
+            srcImage.onload = () => sendCanvas(srcImage, file.name);
+          });
+          reader.readAsDataURL(file);
+        }
+        function OnClickDnl () {
+          // console.log ('download');
+          const suf = document.getElementById ('sufix').value;
+          var element = document.createElement('a');
+          element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(Module.getAsm(parseInt(suf, 10))));
+          element.setAttribute('download', 'data_' + suf + '.S');
+          element.style.display = 'none';
+          document.body.appendChild(element);
+          element.click();
+          document.body.removeChild(element);
+        }
+        var saveByteArray = (function () {
+            var a = document.createElement("a");
+            document.body.appendChild(a);
+            a.style = "display: none";
+            return function (data, name) {
+                var blob = new Blob(data, {type: "octet/stream"}),
+                    url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = name;
+                a.click();
+                window.URL.revokeObjectURL(url);
+            };
+        }());
+        function OnClickCom () {
+          data = new Uint8ClampedArray (Module.bin_data());
+          saveByteArray([data], 'data.p32');
+        }
+        function OnClickAdd () {
+          const text  = Module.AddFile ();
+          if (!text.length) return;
+          const table = document.getElementById ('comfiles');
+          var row   = table.insertRow(0);
+          var cell1 = row.insertCell(0);
+          cell1.setAttribute ('align','center');
+          cell1.innerHTML = text;
+        }
+        function OnClickUpl () {
+          var element = document.createElement('input');
+          element.setAttribute('type', 'file');
+          element.setAttribute('accept', '.png, .jpg');
+          element.style.display = 'none';
+          element.addEventListener('change', (event) => {
+            const fileList = event.target.files;
+            for (n=0; n<fileList.length; n++) {
+              const file = fileList[n];
+              console.log (file);
+              readFile (file);
+            }
+          });
+          document.body.appendChild(element);
+          element.click();
+          document.body.removeChild(element);
+        }
+        function OnClickDef () {
+          Module.setDef ();
+          Defaults  ();
+          changeDst ();
+        }
+        function Galery (name) {
+          srcImage.src = name;
+          srcImage.onload = () => sendCanvas(srcImage, srcImage.src);
+        }
+      </script>
+  </body>
+</html>
