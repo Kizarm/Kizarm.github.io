@@ -1,0 +1,71 @@
+<HTML>
+  <HEAD>
+    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+    <TITLE>Transformátor</TITLE>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+    tex2jax: {inlineMath: [['$','$']]},
+    displayAlign: "left"});
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+    </script>
+  </HEAD>
+
+  <body bgcolor=#FFFFA0>
+    <h1 align=center>Spice simulace transformátoru.</h1>
+    <p> Celé to vzniklo na základě diskuse <a href="https://list.hw.cz/pipermail/hw-list/2021-April/537463.html" target="_blank">na HWLIST</a>.
+    Protože řešení problému je poměrně neintuitivní a ověřovat to měřením se mi nechtělo, řekl jsem si, že by nebylo
+    od věci si to nasimulovat. Protože najít na internetu nějaký relevantní SPICE model transformátoru je horor,
+    zkusil jsem ho vytvořit a to na základě Maxwellových rovnic (Ampérův zákon, Faradayův indukční zákon) :
+    \[ \oint_C \mathbf {H} \,d \mathbf {l} = I \quad ; \quad \oint_{C\,\subset\,S} \mathbf {E} \,d \mathbf {l} = - \frac {d \Phi}{dt} \quad ; \quad \Phi  \equiv \int_S \mathbf {B} \,d \mathbf {S} \]
+    které si zjednodušíme takovým tím středoškolským způsobem, který v integrálech předpokládá konstantní hodnoty
+    \[ H\,l_s = I \quad ; \quad U_z = S\, \frac {dB}{dt} \]
+    kde $ l_s $ je střední délka indukční čáry, $ I $ proud tekoucí v součtu <b>všemi</b> závity, $ U_z $ napětí indukované v jednom závitu. Vztah  $ B\,=\,\mu\,H $ můžeme
+    pak nahradit funkcí $ B\,=\,sath(H)\,=\,B_s\,tanh (\mu_0 \mu_r H) + \mu_0 H $, kde hyperbolický tangens zaručí saturaci magnetické indukce na hodnotu $ B_s $,
+    která bývá kolem 1T. Protože vztah pro napětí $ U_z $ je podobný vztahu pro napětí indukované na ideální indukčnosti $ U_l = L\, \frac {di}{dt} $ lze
+    v modelu pro tuto derivaci použít model cívky, jen místo indukčnosti L dáme jako hodnotu plochu jádra (středního sloupku) S. Všechny jednotky jsou pak v SI, model používá řízené
+    zdroje a vypadá pak takto (zhruba trafo z mikrovlnky, jen trochu upravené počty závitů) :
+    </p>
+    <font size="4" face="Courier New"><table><tr><td><b>
+    .subckt trafo 1 2 3 4<br />
+    .param MU0=1.26e-6 BS=1.0 MUR=1000.0 LS=0.18 N1=600 N2=500<br />
+    .model ltemp l IND=20.0e-4<br />
+    .FUNC SATH(H) {BS * tanh(MU0 * MUR * H) + (MU0 * H)}<br />
+    ** 1. vinuti **<br />
+    E1 1 2 100 0 {N1}<br />
+    F1 101 0 E1  {N1}<br />
+    ** 2. vinuti **<br />
+    E2 3 4 100 0 {N2}<br />
+    F2 101 0 E2  {N2}<br />
+    ** atd ...<br />
+    V0 101 0 0<br />
+    BN 100 0 I=SATH(I(V0) / LS)<br />
+    LX 100 0 ltemp<br />
+    .ends trafo<br />
+    </b></td></tr></table></font>
+    <p> V0 je jen pro měření celkového proudu I, který pak používá nelineární zdroj proudu, řízený proudem BN. Je to celkem jednoduché a lze i jednoduše přidávat další vinutí.
+    Zkusme to tedy použít v tomto jednoduchém obvodu
+    </p>
+    <p align="center"><image src="coil.png"></p>
+    <p> a pokud to spínáme opravdu v nule dostaneme (i je proud v primáru, násobený 10, ve špičce tedy více jak 75A)
+    </p>
+    <p align="center"><image src="x.png"></p>
+    <p>Spínání v maximu napájecího napětí je tedy opravdu lepší. Je celkem jedno, zda je transformátor zatížený rezistorem nebo jede naprázdno.
+    Jinak tomu bude, pokud je zátěží usměrňovač s velkou kapacitou. Pak je celkem jedno, kde spínáme, špička je tam vždy.
+    </p>
+    <p align="center"><image src="y.png"></p>
+    <p>Podobně by to dopadlo, kdyby nebylo v modelu transformátoru feromagnetické jádro saturující indukci B. Pak je i jedno, jestli spínáme
+    v nule nebo v maximu. Tento model je realističtější, není však zahrnuta hystereze ani odpory vinutí (model je bezeztrátový). Odpory vinutí
+    lze zahrnout do modelu celkem jednoduše, hysterezi nikoli ale snad to nebude potřeba. Nelinearita je však velmi užitečná i pro návrhy
+    měničů s feritovými jádry, modelování je o hodně přesnější.
+    </p>
+    <h2>Závěr.</h2>
+    <p>Takže ano, 1kW trafo může vyrazit jistič, pokud ho spínáme v nule a to i naprázdno.
+    Q.E.D.
+    </p>
+    
+  </body>
+
+</HTML>
+
