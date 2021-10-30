@@ -1,0 +1,366 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Bare metal</title>
+  <style>
+      body {background-color: rgb(192,255,255);} h2 {color: rgb(64,0,192); font-size: 24px;}
+      pre  {font-size:18px;}
+  </style>
+</head>
+<body>
+  <h2>Pár poznámek k programování C/C++ přímo na železo.<h2>
+  <h3>Motivace.</h3>
+  <p>Na internetu lze najít leccos a je proto dobré dát si dobrý pozor kdo to
+  vystavuje a proč. Programování přímo na železo (bare-metal) má určitá specifika, lidi co to
+  dělají jsou dost konzervativní, u některých je jen přechod z jazyka symbolických
+  adres (assembleru) k čistému C bolestivá záležitost a používat cokoli pokročilejšího
+  je pak nemyslitelné. Na druhé straně stojí nová generace, která se už takovými
+  detaily např. jak funguje procesor nechce vůbec zabývat a věnují se spíš hledání
+  &quot;svatého grálu&quot; IT, tedy programovacího jazyka, který vyřeší všechny jejich
+  problémy, hlavně však nedostatek znalostí a zkušenosti. 
+  </p>
+  <p>Nebude zde nějaký kompletní návod jak naprogramovat mikroprocesor, ale na co nejjednodušším
+  příkladu se budu snažit demonstrovat čeho se vyvarovat a proč. Styl programování jako Arduino
+  je zde použit proto, že vlastně ničemu moc nevadí a lidi to celkem používají. Nicméně z prostředí
+  Arduina není použito vůbec nic, jako cílový procesor je použit STM32F051, má jednoduché jádro
+  Cortex-M0, které se na tento účel docela hodí. Pro úspěšný překlad a vyzkoušení stačí standardní toolchain
+  arm-none-eabi- a z důvodů, uvedených dále je potřeba ještě clang. Nejsou vlastně použity žádné knihovny
+  kromě libc a libm a ty jsou součástí toolchainu.
+  </p>
+  <p>Pro demonstraci jsem vybral generaci harmonického signálu a jeho výstup na DAC
+  (digitálně-analogový převodník, na STM32F051 výstup na PA4). Aby to bylo co nejjednodušší
+  není ani nějakým specifickým způsobem inicializován celý systém, systémové hodiny tedy běží na defaultní
+  hodnotě (HSI 8MHz). Není ani řešeno přesnější časování výstupu, prostě co se spočítá, okamžitě jde na DAC,
+  což je v praxi samosebou nepoužitelné, ale dobře to demonstruje rychlost výpočtu. Proto chybí i možnost
+  nastavení výstupní frekvence, ve všech příkladech je použito 256 vzorků na periodu.
+  </p>
+  <h3>Úplně stupidní program.</h3>
+  <pre style='font-weight:bold;color:#b2b2b2;background-color:#000000;'>
+  <span style='color:#006e28;'>#include </span><span style='color:#006e28;'>&lt;math.h&gt;</span>
+  <span style='color:#006e28;'>#include </span><span style='color:#006e28;'>&quot;stm32f05x.h&quot;</span>
+
+  <span style='color:#006e28;'>#define STEP (M_PI / 128.0)</span>
+  <span style='color:#006e28;'>#define AMPL (2047.5)</span>
+
+  <b><span style='color:#54ff54;'>double</span></b> phi <b>=</b> <b><span style='color:#ff54ff;'>0.0</span></b><b>;</b>
+
+  <b><span style='color:#54ff54;'>void</span></b> dac_init <b>()</b> <b>{</b>
+    RCC<b>-&gt;</b>AHBENR<b>.</b>B<b>.</b>IOPAEN <b>=</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+    RCC<b>-&gt;</b>APB1ENR<b>.</b>B<b>.</b>DACEN <b>=</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+    DAC<b>-&gt;</b>CR<b>.</b>B<b>.</b>EN1 <b>=</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+  <b>}</b>
+  <b><span style='color:#54ff54;'>int</span></b> dac_step <b>()</b> <b>{</b>
+    <b><span style='color:#54ff54;'>double</span></b> v <b>=</b> AMPL <b>*</b> <b>(</b><b><span style='color:#ff54ff;'>1.0</span></b> <b>+</b> sin <b>(</b>phi<b>));</b>
+    phi <b>+=</b> STEP<b>;</b>
+    <b><span style='color:#dede49;'>return</span></b> <b>(</b><b><span style='color:#54ff54;'>int</span></b><b>)</b> v<b>;</b>
+  <b>}</b>
+  <b><span style='color:#5454ff;'>/*</span></b><b><span style='color:#5454ff;'>*****************************************</span></b><b><span style='color:#5454ff;'>*/</span></b>
+  <b><span style='color:#54ff54;'>void</span></b> setup <b>()</b> <b>{</b>
+    dac_init<b>();</b>
+  <b>}</b>
+  <b><span style='color:#54ff54;'>void</span></b> loop <b>()</b> <b>{</b>
+    <b><span style='color:#54ff54;'>int</span></b> a <b>=</b> dac_step<b>();</b>
+    DAC<b>-&gt;</b>DHR12R1<b>.</b>R <b>=</b> a<b>;</b>
+  <b>}</b>
+  </pre>
+
+  <p>Pokud si myslíte, že je to blbá sranda, není tomu tak. Velmi podobnou blbost jsem opravdu našel na webu.
+  A teď proč je to vlastně úplně špatně
+    <ul>
+      <li>Počítat sinus v reálném čase ve dvojnásobné přesnosti je extrémně náročné.
+      <li>Argument funkce sin() neustále roste až se růst zastaví na numerické nepřesnosti sčítání čísel
+      s pohyblivou čárkou a pak to musí nutně přestat fungovat.
+    </ul>
+  </p>
+  <p>Nicméně něco to dělá, máme určitý základ. Sice to zabere 11KiB ve flash, výstupní frekvence je jen cca 3Hz,
+  ale je to jednoduché. Nakonec pro AVR je double de facto jednoduchá přesnost, takže následující příklad
+  není zase tak moc odlišný.
+  </p>
+  <h3>O něco méně pitomý program.</h3>
+  <pre style='font-weight:bold;color:#b2b2b2;background-color:#000000;'>
+  <span style='color:#006e28;'>#include </span><span style='color:#006e28;'>&lt;math.h&gt;</span>
+  <span style='color:#006e28;'>#include </span><span style='color:#006e28;'>&quot;stm32f05x.h&quot;</span>
+
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#54ff54;'>const</span></b> <b><span style='color:#54ff54;'>float</span></b> D_PI <b>=</b> <b><span style='color:#ff54ff;'>2.0f</span></b> <b>*</b> <b><span style='color:#ff54ff;'>3.141592654f</span></b><b>;</b>
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#54ff54;'>const</span></b> <b><span style='color:#54ff54;'>float</span></b> STEP <b>=</b> <b><span style='color:#ff54ff;'>3.141592654f</span></b> <b>/</b> <b><span style='color:#ff54ff;'>128.0f</span></b><b>;</b>
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#54ff54;'>const</span></b> <b><span style='color:#54ff54;'>float</span></b> AMPL <b>=</b> <b><span style='color:#ff54ff;'>2048.0f</span></b><b>;</b>
+
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#54ff54;'>float</span></b> phi <b>=</b> <b><span style='color:#ff54ff;'>0.0</span></b><b>;</b>
+
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#54ff54;'>void</span></b> dac_init <b>()</b> <b>{</b>
+    RCC<b>-&gt;</b>AHBENR<b>.</b>B<b>.</b>IOPAEN <b>=</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+    RCC<b>-&gt;</b>APB1ENR<b>.</b>B<b>.</b>DACEN <b>=</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+    DAC<b>-&gt;</b>CR<b>.</b>B<b>.</b>EN1 <b>=</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+  <b>}</b>
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#54ff54;'>unsigned</span></b> dac_step <b>()</b> <b>{</b>
+    <b><span style='color:#54ff54;'>const</span></b> <b><span style='color:#54ff54;'>float</span></b> v <b>=</b> AMPL <b>*</b> <b>(</b><b><span style='color:#ff54ff;'>1.0f</span></b> <b>+</b> <b><span style='color:#ff54ff;'>0.9f</span></b> <b>*</b> sinf <b>(</b>phi<b>));</b>
+    phi <b>+=</b> STEP<b>;</b>
+    <b><span style='color:#5454ff;'>// přetečení argumentu přes periodu -&gt; divné chování</span></b>
+    <b><span style='color:#dede49;'>if</span></b> <b>(</b>phi <b>&gt;</b> D_PI<b>)</b> phi <b>-=</b> D_PI<b>;</b>
+    <b><span style='color:#dede49;'>return</span></b> <b>(</b><b><span style='color:#54ff54;'>unsigned</span></b><b>)</b> v<b>;</b>
+  <b>}</b>
+  <b><span style='color:#5454ff;'>/*</span></b><b><span style='color:#5454ff;'>*****************************************</span></b><b><span style='color:#5454ff;'>*/</span></b>
+  <b><span style='color:#54ff54;'>void</span></b> setup <b>()</b> <b>{</b>
+    dac_init<b>();</b>
+  <b>}</b>
+  <b><span style='color:#54ff54;'>void</span></b> loop <b>()</b> <b>{</b>
+    <b><span style='color:#54ff54;'>const</span></b> <b><span style='color:#54ff54;'>unsigned</span></b> a <b>=</b> dac_step<b>();</b>
+    DAC<b>-&gt;</b>DHR12R1<b>.</b>R <b>=</b> a<b>;</b>
+  <b>}</b>
+  </pre>
+  
+  <p>Takže to zkusíme v jednoduché přesnosti, trochu to zmodernizujeme. Místo maker, definujících konstanty
+  použijeme statické konstanty. To se dělá i pro složitějsí makra, nahrazující se statickými inline funkcemi
+  kvůli lepší typové kontrole a přehlednosti. Funguje to i v čistém C, novější překladače to umějí přeložit
+  tak, že negenerují žádný kód navíc. Co lze, označíme jako konstantu (usnadní to život překladači) a zamezíme růstu argumentu.
+  Ale i tak to zabere 8KiB a výstupní frekvence se moc nezvětší. Je docela hezké pozorovat na osciloskopu
+  zkreslení signálu, které vzniká tím, že čas výpočtu funkce sin() se mění s argumentem tt. funkce. Ano, tohle
+  je také hodně špatně.
+  </p>
+  <h3>Zkusíme to napravit pomocí tabulky.</h3>
+  <pre style='font-weight:bold;color:#b2b2b2;background-color:#000000;'>
+  <span style='color:#006e28;'>#include </span><span style='color:#006e28;'>&lt;math.h&gt;</span>
+  <span style='color:#006e28;'>#include </span><span style='color:#006e28;'>&quot;stm32f05x.h&quot;</span>
+
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#54ff54;'>const</span></b> <b><span style='color:#54ff54;'>float</span></b> STEP <b>=</b> <b><span style='color:#ff54ff;'>3.141592654f</span></b> <b>/</b> <b><span style='color:#ff54ff;'>128.0f</span></b><b>;</b>
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#54ff54;'>const</span></b> <b><span style='color:#54ff54;'>float</span></b> AMPL <b>=</b> <b><span style='color:#ff54ff;'>2048.0f</span></b><b>;</b>
+
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#54ff54;'>unsigned</span></b> arg <b>=</b> <b><span style='color:#ff54ff;'>0</span></b><b>;</b>
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#54ff54;'>uint16_t</span></b> sin_tab <b>[</b><b><span style='color:#ff54ff;'>256</span></b><b>];</b>
+
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#54ff54;'>void</span></b> dac_init <b>()</b> <b>{</b>
+    RCC<b>-&gt;</b>AHBENR<b>.</b>B<b>.</b>IOPAEN <b>=</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+    RCC<b>-&gt;</b>APB1ENR<b>.</b>B<b>.</b>DACEN <b>=</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+    DAC<b>-&gt;</b>CR<b>.</b>B<b>.</b>EN1 <b>=</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+  <b>}</b>
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#54ff54;'>void</span></b> tab_init <b>()</b> <b>{</b>
+    <b><span style='color:#54ff54;'>unsigned</span></b> n<b>;</b>
+    <b><span style='color:#dede49;'>for</span></b> <b>(</b>n<b>=</b><b><span style='color:#ff54ff;'>0</span></b><b>;</b> n<b>&lt;</b><b><span style='color:#ff54ff;'>256</span></b><b>;</b> n<b>++)</b> <b>{</b>
+      <b><span style='color:#54ff54;'>const</span></b> <b><span style='color:#54ff54;'>float</span></b> phi <b>=</b> <b>(</b><b><span style='color:#54ff54;'>float</span></b><b>)</b> n <b>*</b> STEP<b>;</b>
+      <b><span style='color:#54ff54;'>const</span></b> <b><span style='color:#54ff54;'>float</span></b> v <b>=</b> AMPL <b>*</b> <b>(</b><b><span style='color:#ff54ff;'>1.0f</span></b> <b>+</b> <b><span style='color:#ff54ff;'>0.90f</span></b> <b>*</b> sinf <b>(</b>phi<b>));</b>
+      sin_tab <b>[</b>n<b>]</b> <b>=</b> <b>(</b><b><span style='color:#54ff54;'>uint16_t</span></b><b>)</b> v<b>;</b>
+    <b>}</b>
+  <b>}</b>
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#54ff54;'>unsigned</span></b> dac_step <b>()</b> <b>{</b>
+    <b><span style='color:#54ff54;'>const</span></b> <b><span style='color:#54ff54;'>uint16_t</span></b> v <b>=</b> sin_tab <b>[</b>arg<b>];</b>
+    arg <b>+=</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+    arg <b>&amp;=</b> <b><span style='color:#ff54ff;'>0x00FF</span></b><b>;</b>
+    <b><span style='color:#dede49;'>return</span></b> v<b>;</b>
+  <b>}</b>
+  <b><span style='color:#5454ff;'>/*</span></b><b><span style='color:#5454ff;'>*****************************************</span></b><b><span style='color:#5454ff;'>*/</span></b>
+  <b><span style='color:#54ff54;'>void</span></b> setup <b>()</b> <b>{</b>
+    dac_init<b>();</b>
+    tab_init<b>();</b>
+  <b>}</b>
+  <b><span style='color:#54ff54;'>void</span></b> loop <b>()</b> <b>{</b>
+    <b><span style='color:#54ff54;'>const</span></b> <b><span style='color:#54ff54;'>unsigned</span></b> a <b>=</b> dac_step<b>();</b>
+    DAC<b>-&gt;</b>DHR12R1<b>.</b>R <b>=</b> a<b>;</b>
+  <b>}</b>
+  </pre>
+
+  <p>Jediná cesta jak z toho ven, je předpočítat si tabulku hodnot sin() a v reálném čase do ní jen sáhnout si
+  pro tu správnou hodnotu. Zrychlení je velmi podstatné, frekvence je zde 1.3kHz a protože sáhnout do tabulky zabere
+  vždy stejný čas, zmenší se zkreslení.
+  </p>
+  <p>Přesně takto by to řešil normální programátor, zvyklý na výhody operačního systému. Možná by tabulku umístil
+  na haldu, ale to není podstatné, faktem zůstává, že tabulka, která se pak už nemění zabere 512B v paměti RAM,
+  která je v malém procesoru relativně drahá. A výpočet té tabulky zabere také celkem zbytečně 8KiB flash.
+  </p>
+  <h3>Tabulku musíme umístit do flash.</h3>
+  <pre style='font-weight:bold;color:#b2b2b2;background-color:#000000;'>
+  <span style='color:#006e28;'>#include </span><span style='color:#006e28;'>&lt;math.h&gt;</span>
+  <span style='color:#006e28;'>#include </span><span style='color:#006e28;'>&quot;stm32f05x.h&quot;</span>
+
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#54ff54;'>unsigned</span></b> arg <b>=</b> <b><span style='color:#ff54ff;'>0</span></b><b>;</b>
+  <b><span style='color:#dede49;'>extern</span></b> <b><span style='color:#54ff54;'>const</span></b> <b><span style='color:#54ff54;'>uint16_t</span></b> sin_tab <b>[];</b>
+
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#54ff54;'>void</span></b> dac_init <b>()</b> <b>{</b>
+    RCC<b>-&gt;</b>AHBENR<b>.</b>B<b>.</b>IOPAEN <b>=</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+    RCC<b>-&gt;</b>APB1ENR<b>.</b>B<b>.</b>DACEN <b>=</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+    DAC<b>-&gt;</b>CR<b>.</b>B<b>.</b>EN1 <b>=</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+  <b>}</b>
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#54ff54;'>unsigned</span></b> dac_step <b>()</b> <b>{</b>
+    <b><span style='color:#54ff54;'>const</span></b> <b><span style='color:#54ff54;'>uint16_t</span></b> v <b>=</b> sin_tab <b>[</b>arg<b>];</b>
+    arg <b>+=</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+    arg <b>&amp;=</b> <b><span style='color:#ff54ff;'>0x00FF</span></b><b>;</b>
+    <b><span style='color:#dede49;'>return</span></b> v<b>;</b>
+  <b>}</b>
+  <b><span style='color:#5454ff;'>/*</span></b><b><span style='color:#5454ff;'>*****************************************</span></b><b><span style='color:#5454ff;'>*/</span></b>
+  <b><span style='color:#54ff54;'>void</span></b> setup <b>()</b> <b>{</b>
+    dac_init<b>();</b>
+  <b>}</b>
+  <b><span style='color:#54ff54;'>void</span></b> loop <b>()</b> <b>{</b>
+    <b><span style='color:#54ff54;'>const</span></b> <b><span style='color:#54ff54;'>unsigned</span></b> a <b>=</b> dac_step<b>();</b>
+    DAC<b>-&gt;</b>DHR12R1<b>.</b>R <b>=</b> a<b>;</b>
+  <b>}</b>
+  </pre>
+  <p>Tabulka je tedy konstantní a můžeme jí dát do flash. Tady to jde prostým označením const. Pro AVR by to bylo složitější,
+  ale to není účelem tohoto pojednání. V čistém C si pro tento účel vygenerujeme pomocný soubor sin.c třeba následujícím skriptem v pythonu
+  </p>
+  <pre style='font-weight:bold;color:#b2b2b2;background-color:#000000;'>
+  <b><span style='color:#5454ff;'>#!/usr/bin/python</span></b>
+  <b><span style='color:#5454ff;'># -*- coding: utf-8 -*-</span></b>
+
+  <b><span style='color:#ff54ff;'>import</span></b> math
+
+  header <b>=</b> <b><span style='color:#af7f00;'>'''</span></b><b><span style='color:#af7f00;'>/* Generated file */</span></b>
+  <b><span style='color:#af7f00;'>#include &lt;stdint.h&gt;</span></b>
+  <b><span style='color:#af7f00;'>const uint16_t sin_tab[] = </span></b><span style='color:#0057ae;'>{{{0:s}</span>
+  <span style='color:#0057ae;'>}}</span><b><span style='color:#af7f00;'>;</span></b>
+  <b><span style='color:#af7f00;'>'''</span></b>
+
+  <b><span style='color:#dede49;'>def</span></b> generate ():
+    s <b>=</b> <b><span style='color:#af7f00;'>''</span></b>
+    <b><span style='color:#dede49;'>for</span></b> n <b>in</b> <b><span style='color:#54ff54;'>range</span></b>(<b><span style='color:#ff54ff;'>0</span></b>,<b><span style='color:#ff54ff;'>256</span></b>):
+      <b><span style='color:#dede49;'>if</span></b> (n <b>%</b> <b><span style='color:#ff54ff;'>16</span></b>) <b>==</b> <b><span style='color:#ff54ff;'>0</span></b>:
+        s <b>+=</b> <b><span style='color:#af7f00;'>'</span></b><b><span style='color:#ff54ff;'>\n</span></b><b><span style='color:#af7f00;'>  '</span></b>
+      a  <b>=</b> <b><span style='color:#54ff54;'>float</span></b>(n) <b>*</b> math.pi <b>/</b> <b><span style='color:#ff54ff;'>128.0</span></b>
+      v  <b>=</b> <b><span style='color:#54ff54;'>int</span></b> (<b><span style='color:#54ff54;'>round</span></b> (<b><span style='color:#ff54ff;'>2048.0</span></b> <b>*</b> (<b><span style='color:#ff54ff;'>1.0</span></b> <b>+</b> <b><span style='color:#ff54ff;'>0.90</span></b> <b>*</b> math.sin (a))))<b>;</b>
+      s <b>+=</b> <b><span style='color:#af7f00;'>'</span></b><span style='color:#0057ae;'>{0:+6d}</span><b><span style='color:#af7f00;'>,'</span></b>.<b><span style='color:#54ff54;'>format</span></b>(v)
+    <b><span style='color:#dede49;'>return</span></b> s
+
+  <b><span style='color:#dede49;'>if</span></b> <span style='color:#006e28;'>__name__</span> <b>==</b> <b><span style='color:#af7f00;'>'__main__'</span></b>:
+    s <b>=</b> generate()
+    f <b>=</b> <b><span style='color:#54ff54;'>open</span></b> (<b><span style='color:#af7f00;'>'sin.c'</span></b>,<b><span style='color:#af7f00;'>'w'</span></b>)
+    f.write(header.<b><span style='color:#54ff54;'>format</span></b>(s))
+    f.close()
+  </pre>
+
+  <p>No a teď už máme jen 748B ve flash, celkem nic v RAM a frekvence se drží na 1.3kHz. To už je slušná
+  optimalizace. Ovšem za cenu použití nějakého externího generátoru. Jestli by to šlo udělat v čistém C
+  přímo pomocí nějakých maker nevím, ale pochybuji o tom.
+  </p>
+  <h3>V moderním C++ to jde přímo, ale trochu to dře.</h3>
+  <p>Za povšimnutí stojí, že v inicializaci periferií se v C++ používají odkazy, v čistém C ukazatele.
+  Není to nutné, šlo by to udělat stejně jako v C, ale vypadá to lépe a nezvětšuje to dělku kódu.
+  </p>
+
+  <pre style='font-weight:bold;color:#b2b2b2;background-color:#000000;'>
+  <span style='color:#006e28;'>#include </span><span style='color:#006e28;'>&quot;init.h&quot;</span>
+  <span style='color:#006e28;'>#include </span><span style='color:#006e28;'>&quot;mmath.h&quot;</span>
+  <span style='color:#006e28;'>#include </span><span style='color:#006e28;'>&quot;stm32f05x.h&quot;</span>
+
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#dede49;'>constexpr</span></b> <b><span style='color:#54ff54;'>unsigned</span></b> <b>W_TB</b> <b>=</b> <b><span style='color:#ff54ff;'>8u</span></b><b>;</b>
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#dede49;'>constexpr</span></b> <b><span style='color:#54ff54;'>double</span></b>   <b>AMPL</b> <b>=</b> <b><span style='color:#ff54ff;'>2048.0</span></b><b>;</b>
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#dede49;'>constexpr</span></b> <b><span style='color:#54ff54;'>int</span></b>      <b>ULEN</b> <b>=</b>  <b><span style='color:#ff54ff;'>1</span></b>  <b>&lt;&lt;</b> <b>W_TB</b><b>;</b>
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#dede49;'>constexpr</span></b> <b><span style='color:#54ff54;'>unsigned</span></b> <b>MASK</b> <b>=</b> <b>(</b><b><span style='color:#ff54ff;'>1u</span></b> <b>&lt;&lt;</b> <b>W_TB</b><b>)</b> <b>-</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#dede49;'>constexpr</span></b> <b><span style='color:#54ff54;'>uint16_t</span></b> u16_sin <b>(</b><b><span style='color:#54ff54;'>const</span></b> <b><span style='color:#54ff54;'>int</span></b> x<b>)</b> <b>{</b>
+    <b><span style='color:#54ff54;'>const</span></b> <b><span style='color:#54ff54;'>double</span></b> a <b>=</b> <b>(</b><b><span style='color:#54ff54;'>double</span></b> <b>(</b>x<b>)</b> <b>*</b> <b>D_PI</b><b>)</b> <b>/</b> <b><span style='color:#54ff54;'>double</span></b> <b>(</b><b>ULEN</b><b>)</b><b>;</b>
+    <b><span style='color:#54ff54;'>const</span></b> <b><span style='color:#54ff54;'>double</span></b> s <b>=</b> <b>AMPL</b> <b>*</b> <b>(</b><b><span style='color:#ff54ff;'>1.0</span></b> <b>+</b> <b><span style='color:#ff54ff;'>0.90</span></b> <b>*</b> sincos <b>(</b>a<b>,</b> <b><span style='color:#dede49;'>true</span></b><b>))</b><b>;</b>
+    <b><span style='color:#dede49;'>return</span></b> i_round <b>(</b>s<b>)</b><b>;</b>
+  <b>}</b>
+  <b><span style='color:#54ff54;'>static</span></b> <b><span style='color:#54ff54;'>const</span></b> <b>TABLE</b><b>&lt;</b><b><span style='color:#54ff54;'>uint16_t</span></b><b>,</b> <b>ULEN</b><b>&gt;</b> sin_tab <b>(</b>u16_sin<b>)</b><b>;</b>
+  <b><span style='color:#5454ff;'>/*</span></b><b><span style='color:#5454ff;'>************************************************</span></b><b><span style='color:#5454ff;'>*/</span></b>
+  <b><span style='color:#dede49;'>class</span></b> DAC_Class <b>{</b>
+    <b><span style='color:#54ff54;'>unsigned</span></b> arg<b>;</b>
+    <b><span style='color:#dede49;'>public</span></b><b>:</b>
+      <b><span style='color:#dede49;'>explicit</span></b> <b><span style='color:#dede49;'>constexpr</span></b> DAC_Class <b>()</b> <b><span style='color:#dede49;'>noexcept</span></b> <b>:</b> arg <b>(</b><b><span style='color:#ff54ff;'>0u</span></b><b>)</b> <b>{</b><b>}</b>
+      <b><span style='color:#54ff54;'>void</span></b> init <b>()</b> <b><span style='color:#54ff54;'>const</span></b> <b>{</b>
+        <b>RCC</b><b>.</b><b>AHBENR</b><b>.</b>B<b>.</b><b>IOPAEN</b> <b>=</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+        <b>RCC</b><b>.</b><b>APB1ENR</b><b>.</b>B<b>.</b><b>DACEN</b> <b>=</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+        <b>DAC</b><b>.</b>CR<b>.</b>B<b>.</b><b>EN1</b> <b>=</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+      <b>}</b>
+      <b><span style='color:#54ff54;'>void</span></b> step <b>()</b> <b>{</b>
+        <b>DAC</b><b>.</b><b>DHR12R1</b><b>.</b>R <b>=</b> sin_tab <b>[</b>arg<b>]</b><b>;</b>
+        arg <b>+=</b> <b><span style='color:#ff54ff;'>1u</span></b><b>;</b>
+        arg <b>&amp;=</b> <b>MASK</b><b>;</b>
+      <b>}</b>
+  <b>}</b><b>;</b>
+  <b><span style='color:#54ff54;'>static</span></b> DAC_Class dac<b>;</b>
+  <b><span style='color:#5454ff;'>/*</span></b><b><span style='color:#5454ff;'>************************************************</span></b><b><span style='color:#5454ff;'>*/</span></b>
+  <b><span style='color:#54ff54;'>extern</span></b> <b><span style='color:#af7f00;'>&quot;C&quot;</span></b> <b><span style='color:#54ff54;'>void</span></b> setup <b>()</b> <b>{</b>
+    dac<b>.</b>init<b>()</b><b>;</b>
+  <b>}</b>
+  <b><span style='color:#54ff54;'>extern</span></b> <b><span style='color:#af7f00;'>&quot;C&quot;</span></b> <b><span style='color:#54ff54;'>void</span></b> loop <b>()</b> <b>{</b>
+    dac<b>.</b>step<b>()</b><b>;</b>
+  <b>}</b>
+  </pre>
+  
+  <p>Na první pohled to nevypadá zase tak hrozně, no dobře je tam nějaké to constexpr, to funguje od C++11, tak proč ne.
+  Ale není to tak jednoduché. To constexpr říká kompilátoru, že pokud je znám argument funkce v době překladu, není nutné
+  aby pro ní generoval kód, ale může to spočítat už právě při překladu a do výsledného kódu by měl dosadit jen celkový
+  výsledek. Může to ale vůbec nějak udělat ? GCC si poradí jen s jednoduchými konstrukcemi, tady však počítáme docela
+  složitou funkci sinus, s tím nás vyhodí. Clang je o něco lepší - zřejmě tím, že si to uvnitř překládá do nějakého
+  interního bytecode, který pak dokáže interpretovat, tedy nějak spustit, poradí si i s tímto. Cenou za to je, že třeba
+  tu funkci sincos(), která počítá sinus (nebo kosinus) si musíme napsat sami a otestovat. Protože i ta musí být constexpr
+  a vlastně křížový překlad pomocí clang ani neumí použít knihovní funkce z cmath. Takže složitost jsme zametli pod koberec
+  v hlavičce mmath.h, ale ty funkce nemusí být vůbec efektivní, spouští se jen při překladu, musí být jen přesné.
+  A ani ta tabulka sin_tab není jen tak obyčejné C-čkové pole, je to šablona z hlavičky init.h.
+  Pokud si všimneme výsledného kódu, opravdu v něm není ani stopa výpočtů v double i když ve zdrojácích je toho dost.
+  Zapouzdření výkonného kódu do třídy DAC_Class je prostě jen zvyklost z C++, která nic nekazí. Kód má shodou okolností
+  také jen 748B ve flash, důležité je, že tabulka sin_tab, která mimochodem zabírá 512B z těch 748B celku, je úplně stejná
+  jako ta externě generovaná. Výstupní frekvence je opět cca 1.3kHz. Není se čemu divit, kód je vlastně stejný.
+  </p>
+  <p>A tady se už projeví limitace přístupu Arduino. V C++ se třídy často instancují tak, aby jejich data byla uložena
+  na zásobníku, tedy uvnitř nějaké funkce. Důvodů pro to může být více, ovšem v bare metal je nutné k tomu potřeba
+  přistupovat dost obezřetně - např. pokud se v konstruktoru inicializují periferie, je pak potřebné v destruktoru
+  tyto zase definovaně odstavit. Můžeme to zkusit a napsat to normálně. Musí se samozřejmě upravit startup kód,
+  metodu init() přeneseme do konstruktoru a opět složitost zameteme do hlavičky main.h. Zůstane jen
+  </p>
+  <pre style='font-weight:bold;color:#b2b2b2;background-color:#000000;'>
+  <span style='color:#006e28;'>#include </span><span style='color:#006e28;'>&quot;main.h&quot;</span>
+
+  <b><span style='color:#54ff54;'>int</span></b> main <b>()</b> <b>{</b>
+    DAC_Class dac<b>;</b>
+    <b><span style='color:#dede49;'>for</span></b> <b>(</b><b>;;</b><b>)</b> <b>{</b>
+      dac<b>.</b>step<b>()</b><b>;</b>
+    <b>}</b>
+  <b>}</b>
+  </pre>
+  
+  <p>To, že se ušetří pár bytů flash není vlastně ani tak podstatné, ale kompaktní kód odstranil volání
+  funkce loop() a smyčka se tím zrychlila na dvojnásobek - výstupní frekvence je pak už celých 2.6kHz.
+  Ale i tak - výkonný kód 144B plus 512B tabulka ve flash a máme plně funkční generátor harmonického průběhu.
+  </p>
+  <h3>Závěr.</h3>
+  <p>Cílem bylo představit konstantní výrazy v C++ a jejich využití v bare-metal. Tento příklad byl poměrně komplikovaný
+  ale constexpr lze použít v jednodušší formě i v GCC. C++ má spoustu různých vychytávek a pochytit
+  jejich výhody (ale i nevýhody) stojí fakticky dost úsilí. Je to složitý jazyk, ale poskytuje programátorovi
+  velkou míru svobody. S ní samozřejmě přichází i velká míra odpovědnosti a tak se nelze divit, že tento
+  jazyk nevyhovuje každému.
+  </p>
+  <p>Co by mě opravdu zajímalo je, jak by prošel takovýto zdrojový kód jakýmkoli auditem. Není v něm vlastně
+  nic divného a funguje. Použité constexpr funkce jsou otestovány komparací s tím, co vygeneroval úplně jiný
+  jazyk (python). Na druhou stranu gcc to nepřeloží a může se stát, že v příští verzi clang někdo zjistí, že
+  takto široce pojaté konstantní výrazy byly vlastně špatně a rázem to utne. Když si vezmu, že pro prosté C má
+  MISRA desítky pravidel, která je nutné pro úspěšný audit dodržovat, neumím si představit soubor podobných
+  smysluplných pravidel pro C++, které je o řád složitější. Ale existuje to i když o smysluplnosti by se
+  asi dalo úspěšně pochybovat.
+  </p>
+  <p>Před časem jsem experimentoval s jazykem Rust, který má podobná pravidla implemetována už v samotném jazyce.
+  Je hodně restriktivní, typový systém je přísnější ale v té době se na bare-metal opravdu nehodil.
+  I takové běžné operace jako zápis do registrů procesoru byl v unsafe sekci a najít aplikaci, která by používala
+  přerušení bylo nemožné. Od té doby se hodně změnilo a možná se k tomu ještě vrátím, prevenci hloupých chyb
+  považuji za důležitou, ale nemyslím si, že by se tímto přístupem dalo zabránit úplně všem chybám.
+  Každý člověk se může zmýlit (mejlej se i ministři, jak říká klasik) a je dobré, když ho na to překladač
+  upozorní, ale ani ten nejlepší překladač nemůže nikdy být na takové úrovni aby odhalil <b>každou</b> chybu.
+  Protože jak se v IT říká, to není chyba, ale vlastnost. Hranice mezi tím je velmi tenká. Když vezmeme jako příklad
+  ten zápis do registru periferie procesoru je hodně na pováženou co lze považovat za bezpečné a co už ne.
+  Tato část adresního prostoru je složitě strukturována a vždy bude existovat nějaký kus kódu, který ji popisuje,
+  ale může obsahovat chybu. Říci, že každý zápis je nebezpečný alespoň potenciálně je tady poměrně silné tvrzení.
+  Programátor nutně musí mít nějaký prostor pro práci, nějakou volnost aby vůbec mohl něco dělat. Nepomůže
+  striktně hlídat adresní prostor aby čtení nebo zápis na neexistující adresu končil segfaultem, i když je to
+  užitečné, pokud to nezabírá příliš prostředků. Pokud se k tomu dostane člověk, který jak se říká neví, která
+  bije, stejně může na existující adresu zapsat informaci, která procesor spolehlivě zničí. Například v procesorech
+  řady STM32 je oblast option sloužící v podstatě (mimo jiné) k ochraně autorských práv, kam lze legálně zapsat
+  určitou sekvenci příkazů a to je to poslední, co s tím procesorem uděláte. A není to chyba, je to záměr výrobce.
+  Chci tím říct, že bare-metal nejde dělat bezpečně bez znalostí. Ano, můžete použít nějakou sadu softwarových
+  nástrojů od výrobce čipu a snažit se tak svalit možný problém na něj, ale ani tato cesta není jednoduchá.
+  </p>
+  <p>Úplně na konec přidám i <a href="lang.zip">zabalené zdrojáky</a> pod licencí MIT (jinak řečeno dělejte si s tím
+  co chcete, ale neotravujte mne s tím, že to nefunguje). V adresáři xgen je tam kompletní příklad zdroje harmonického
+  signálu s přesným časováním a s možností nastavení frekvence. Popisovat to nebudu, výše vysvětlené principy
+  jsou použity i zde.
+  </p>
+  <p>Ve zdrojácích jsou dva patche
+    <ul>
+      <li>static.patch - demonstruje jak by byly instancovány v příkladu xgen třídy staticky, tedy normálně.
+      <li>guard.patch - přidává do šablony TABLE hlídání mezí pole. Je to ale dost zbytečné, meze jsou stejně fakticky hlídány maskou.
+      To jen tak, aby bylo vidět, že to v C++ jde udělat úplně průhledně a je to další vylepšení proti prostému C.
+    </ul>
+    Patche lze aplikovat pomocí Makefile (příkazy <i>#make static</i> nebo <i>#make guard</i>).
+  </p>
+
+</body>
+</html>
