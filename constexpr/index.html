@@ -232,7 +232,7 @@
   </p>
   <h3>V moderním C++ to jde přímo, ale trochu to dře.</h3>
   <p>Za povšimnutí stojí, že v inicializaci periferií se v C++ používají odkazy, v čistém C ukazatele.
-  Není to nutné, šlo by to udělat stejně jako v C, ale vypadá to lépe a nezvětšuje to dělku kódu.
+  Není to nutné, šlo by to udělat stejně jako v C, ale vypadá to lépe a nezvětšuje to délku kódu.
   </p>
 
   <pre style='font-weight:bold;color:#b2b2b2;background-color:#000000;'>
@@ -291,6 +291,9 @@
   Zapouzdření výkonného kódu do třídy DAC_Class je prostě jen zvyklost z C++, která nic nekazí. Kód má shodou okolností
   také jen 748B ve flash, důležité je, že tabulka sin_tab, která mimochodem zabírá 512B z těch 748B celku, je úplně stejná
   jako ta externě generovaná. Výstupní frekvence je opět cca 1.3kHz. Není se čemu divit, kód je vlastně stejný.
+  <p><b>Pozn.</b> Novější verze gcc (zhruba od major verze 5.) to sice umí vše přeložit, ale co mu nejde, je
+  inicializovat tabulku při překladu a umístit jí do sekce .rodata. Proč to clang umí, nevím.
+  </p>
   </p>
   <p>A tady se už projeví limitace přístupu Arduino. V C++ se třídy často instancují tak, aby jejich data byla uložena
   na zásobníku, tedy uvnitř nějaké funkce. Důvodů pro to může být více, ovšem v bare metal je nutné k tomu potřeba
