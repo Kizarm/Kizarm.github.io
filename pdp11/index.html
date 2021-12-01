@@ -521,6 +521,7 @@
        <option value = "hello.ptap">HELLO</option>
        <option value = "fact.ptap">FACTORIAL</option>
        <option value = "banner.ptap">BANNER</option>
+       <option value = "calc.ptap">CALC</option>
        <option value = "">none</option>
      </select></p>
     <br>
@@ -592,7 +593,7 @@ pod RT11 přeložit a slinkovat, výsledek funguje.
 <h3>RSX11M</h3>
 <p>Tohle byl v éře SMEP hojně používaný operační systém, ať už někde ukradený původní DEC
 nebo to co Kancelářské Stroje distribuovaly pod názvem DOS RV (což mělo s legalitou také málo společného).
-Byl to mutlitask, multiuser systém, dokázal obsloužit desítky terminálů, na svou dobu velmi dobrý.
+Byl to multitask, multiuser systém, dokázal obsloužit desítky terminálů, na svou dobu velmi dobrý.
 Neměl stromovou strukturu adresářů, ale existovaly pro něj překladače FORTRAN (F77), COBOL, PASCAL,
 BASIC (překladač i interpretr). Dneska se dá pro verzi RSX11M Plus najít i překladač ANSI C.
 Podle (2.) se dá poměrně rychle vygenerovat vlastní systém RSX11M Plus na míru. V éře SMEP tahle
@@ -622,6 +623,12 @@ hardware - průměrná doba mezi poruchami SM52/11 v základní sestavě byla ud
     <li>0.<a href=""></a>
     -->
   </ul>
+</p>
+<h3>Doplněno.</h3>
+<p>Přidána páska CALC, což je <a href="calc.zip">upravený kód</a> pro <a href="../math/calc/index.html" target="_blank">RPN kalkulátor</a>.
+Nějak to funguje, ale moc bych na to nespoléhal, převod z 32. bitové verze na 16. bitovou bude způsobovat, že někde něco
+přeteče a zkontrolovat co a kde by bylo pro takovou hračku moc práce. Matematické funkce jako je sin, cos, log, exp
+trvají několik sekund, přece jen simulace v JS je pomalá.
 </p>
 
 <script src='bootcode.js' type="text/javascript"></script>
