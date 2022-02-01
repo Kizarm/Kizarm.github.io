@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Sudoku</title>
+</head>
+
+<body bgcolor=#FFFFA0>
+  <canvas id="termImg" width="800" height="600" style="border:1px solid #d3d3d3;">
+  Your browser does not support the HTML canvas tag.</canvas>
+  <h2>Sudoku</h2>
+  <p>je taková divná hra, kterou dobře zvládá počítač. Takže to necháme do velké
+  míry právě na něm. Jde o to najít pozici na které je nejméně možností, jaká čísla
+  vložit. Nejlépe pokud je tato možnost jediná. Člověku to trvá dlouho, počítač
+  to udělá celkem rychle.
+  </p>
+  <p> Používají se následující klávesy :
+    <ul>
+      <li>ESC - vygeneruje novou hru.
+      <li>Šipky umožňují pohyb po hrací ploše.
+      <li>Číslice se vkládají do prázdného pole, pokud je to možné.
+      <li>ENTER vloží správnou číslici do pole, pokud je to jediná možnost. 
+      <li>BACKSPACE vrátí hru na začátek nebo k uloženému stavu, pokud jsou už vyčerpány všechny možnosti (GAME OVER)
+      <li>INSERT kdykoli během hry uloží stávající stav, ke kterému se lze vrátit pomocí BACKSPACE.
+    </ul>
+  </p>
+  <p>Po každém tahu se aktuální pozice nastaví na pole, kde je nejméně možností a tyto jsou
+  vypsány jako nápověda v pravém horním rohu. Pokud už další možnost není, hra končí.
+  <a href="https://github.com/Kizarm/VGA_STM32L452/tree/main/Sudoku">Zdrojové kódy.</a>
+  </p>
+  <script type="text/javascript" src="sudoku.js"></script>
+  <script type="text/javascript">
+  /////////////////////////////////////////////////////////////////////////////////
+  var fgImage = new Image();
+  Module.addOnPostRun(() => {
+    Module.Init();
+    Module.Escape();
+    window.addEventListener("keydown", event => {
+      const x = event.key;
+      if (x == 'Enter') {
+        Module.Enter ();
+      } else if (x == 'Insert') {
+        Module.Save ();
+      } else if (x == 'Escape') {
+        Module.Escape ();
+      } else if (x == 'Backspace') {
+        Module.Backspace ();
+
+      } else if (x == 'ArrowLeft') {
+        Module.Arrow (1);
+      } else if (x == 'ArrowRight') {
+        Module.Arrow (2);      
+      } else if (x == 'ArrowUp') {
+        Module.Arrow (3);
+      } else if (x == 'ArrowDown') {
+        Module.Arrow (4);      
+
+      } else if (x == '1') {
+        Module.Number (1);
+      } else if (x == '2') {
+        Module.Number (2);
+      } else if (x == '3') {
+        Module.Number (3);
+      } else if (x == '4') {
+        Module.Number (4);
+      } else if (x == '5') {
+        Module.Number (5);
+      } else if (x == '6') {
+        Module.Number (6);
+      } else if (x == '7') {
+        Module.Number (7);
+      } else if (x == '8') {
+        Module.Number (8);
+      } else if (x == '9') {
+        Module.Number (9);
+      } else {
+        console.log (x);
+      }
+      event.preventDefault();
+    });
+  });
+  function backup (m_Data) {
+    var backupCanvas  = document.createElement('canvas');
+    backupCanvas.width  = 800;
+    backupCanvas.height = 600;
+    const backupContext = backupCanvas.getContext('2d');
+    const bData = new ImageData (new Uint8ClampedArray (m_Data), backupCanvas.width, backupCanvas.height);
+    backupContext.putImageData (bData, 0, 0);
+    return backupCanvas;
+  }
+  function ReplotPass () {
+    // console.log ('Redraw pass');
+    var canvas  = document.getElementById ('termImg');
+    var context = canvas.getContext ('2d');
+    delete fgImage;
+    fgImage = backup (Module.fg_data());
+    context.clearRect(0, 0, canvas.widht, canvas.height);
+    context.drawImage(fgImage, 0, 0);
+  }
+  </script>
+</body>
+</html>
