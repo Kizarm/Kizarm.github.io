@@ -25,6 +25,14 @@
       <li>BACKSPACE vrátí hru na začátek nebo k uloženému stavu, pokud jsou už vyčerpány všechny možnosti (GAME OVER)
       <li>INSERT kdykoli během hry uloží stávající stav, ke kterému se lze vrátit pomocí BACKSPACE.
     </ul>
+    Pokud by to mělo sloužit jako pomůcka pro řešení sudoku z externího zdroje, byly přidány
+    ještě dvě klávesy :
+    <ul>
+       <li>DELETE, která vytvoří prázdné pole a přepne hru do módu editace, kdy jdou zadávat do buněk číslice.
+        V tomhle módu pak tato klávesa číslo vymaže (nelze jej jednoduše přepsat, číslice se kontrolují).
+        Mód editace se ukončí klávesou ENTER.
+       <li>END celou hru vyřeší.
+    </ul>
   </p>
   <p>Po každém tahu se aktuální pozice nastaví na pole, kde je nejméně možností a tyto jsou
   vypsány jako nápověda v pravém horním rohu. Pokud už další možnost není, hra končí.
@@ -41,6 +49,10 @@
       const x = event.key;
       if (x == 'Enter') {
         Module.Enter ();
+      } else if (x == 'End') {
+        Module.End ();
+      } else if (x == 'Delete') {
+        Module.Delete ();
       } else if (x == 'Insert') {
         Module.Save ();
       } else if (x == 'Escape') {
