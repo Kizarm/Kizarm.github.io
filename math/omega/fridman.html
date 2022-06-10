@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+    </META>
+    <title>Metrika
+    </title>
+    <style>body {background-color: rgb(192,255,255);} h2 {color: rgb(64,0,192);}
+    </style>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+    tex2jax: {inlineMath: [['$','$']]},
+    displayAlign: "left"});
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+    </script>
+  </head>
+  <body>
+    <h1>Odvození Fridmanovy rovnice z OTR.</h1>
+    <p>
+    Zde je použita pro změnu C++ knihovna pro symbolické výpočty <a href="https://www.ginac.de/">GiNaC</a>.
+    Postup zůstává stejný - máme počáteční metriku $ g_{\mu\nu} $ a z ní počítáme symbolicky Einsteinovy rovnice
+    $  G_{\mu\nu} = R_{\mu\nu} - \frac{1}{2} R g_{\mu\nu} = \frac {8\pi G}{c^4} T_{\mu\nu} $
+    <i>(konstanta $\frac {8\pi G}{c^4}$ je zahrnuta do T, takže rovnice je $ G_{\mu\nu}=T_{\mu\nu} $)</i>
+    </p>
+    <h2>Postup výpočtu</h2>
+    <p> Vyjděme z publikace prof. Kulhánka <a href="https://www.aldebaran.cz/studium/otr.pdf">Obecná relativita</a>, 
+    postup má svou hierarchii. Z $g_{\mu\nu}$ vypočteme jako inverzní matici $g^{\mu\nu}$. Pak lze vypočíst Christoffelovy symboly 
+    $ \Gamma^{\gamma}_{\alpha\beta} = \frac{1}{2} g^{\gamma\xi} (g_{\xi\alpha,\beta} + g_{\xi\beta,\alpha} - g_{\alpha\beta,\xi}) $ 
+    a z nich Riemannův tenzor 
+    $ R^{\eta}_{\beta\gamma\delta} = \Gamma^{\eta}_{\beta\delta,\gamma} - \Gamma^{\eta}_{\beta\gamma,\delta}  
+    + \Gamma^{\xi}_{\beta\delta}\Gamma^{\eta}_{\xi\gamma} - \Gamma^{\xi}_{\beta\gamma}\Gamma^{\eta}_{\xi\delta} $ 
+    a jeho zúžením Ricciho tenzor $ R_{\alpha\beta} = R^{\xi}_{\alpha\xi\beta} $ a dále Ricciho skalár $ R = R^{\xi}_{\xi} $ .
+    </p>
+<p>Souřadnice : [$ t , r , \Theta , \Psi , $]</p>
+<p class="formulaDsp"> \[ g_{\mu\nu}  = \left(\begin{array}{cccc}- c^{2}&0&0&0\\0&-\frac{a(t)^{2}}{-1+ r^{2} k}&0&0\\0&0& a(t)^{2} r^{2}&0\\0&0&0& a(t)^{2} r^{2} \sin(\Theta)^{2}\end{array}\right)\quad ; \quad g^{\mu\nu}  = \left(\begin{array}{cccc}-\frac{1}{c^{2}}&0&0&0\\0&-\frac{-1+ r^{2} k}{a(t)^{2}}&0&0\\0&0&\frac{1}{ a(t)^{2} r^{2}}&0\\0&0&0&\frac{1}{ a(t)^{2} r^{2} \sin(\Theta)^{2}}\end{array}\right) \]</p>
+<p class="formulaDsp"> \[ R      = 6 \frac{ c^{2} k+\dot{a}(t)^{2}+ \ddot{a}(t) a(t)}{ a(t)^{2} c^{2}} \]</p>
+<p class="formulaDsp"> \[ G_{00} = 3 \frac{ c^{2} k}{a(t)^{2}}+3 \frac{\dot{a}(t)^{2}}{a(t)^{2}} \]</p>
+<p class="formulaDsp"> \[ G_{11} = \frac{ c^{2} k+\dot{a}(t)^{2}+2  \ddot{a}(t) a(t)}{ {(-1+ r^{2} k)} c^{2}} \]</p>
+<p class="formulaDsp"> \[ G_{22} = -\frac{ r^{2} {( c^{2} k+\dot{a}(t)^{2}+2  \ddot{a}(t) a(t))}}{c^{2}} \]</p>
+<p class="formulaDsp"> \[ G_{33} = -\frac{ r^{2} {( c^{2} k+\dot{a}(t)^{2}+2  \ddot{a}(t) a(t))} \sin(\Theta)^{2}}{c^{2}} \]</p>
+<p class="formulaDsp"> \[ T_{00} = 8  \pi G \rho \]</p>
+<p class="formulaDsp"> \[ T_{11} = -8 \frac{ \pi G a(t)^{2} p}{ {(-1+ r^{2} k)} c^{4}} \]</p>
+<p class="formulaDsp"> \[ T_{22} = 8 \frac{ \pi G a(t)^{2} r^{2} p}{c^{4}} \]</p>
+<p class="formulaDsp"> \[ T_{33} = 8 \frac{ \pi G a(t)^{2} r^{2} \sin(\Theta)^{2} p}{c^{4}} \]</p>
+<h2>Rovnice po automatické úpravě</h2>
+
+<p class="formulaDsp"> \[ \frac{ c^{2} k}{a(t)^{2}}+\frac{\dot{a}(t)^{2}}{a(t)^{2}} = \frac{8}{3}  \pi G \rho \]</p>
+<p class="formulaDsp"> \[ -\frac{ c^{2} k}{a(t)^{2}}-2 \frac{\ddot{a}(t)}{a(t)}-\frac{\dot{a}(t)^{2}}{a(t)^{2}} = 8 \frac{ \pi G p}{c^{2}} \]</p>
+<p class="formulaDsp"> \[ \frac{ c^{2} k}{a(t)^{2}}+2 \frac{\ddot{a}(t)}{a(t)}+\frac{\dot{a}(t)^{2}}{a(t)^{2}} = -8 \frac{ \pi G p}{c^{2}} \]</p>
+<p class="formulaDsp"> \[ \frac{ c^{2} k}{a(t)^{2}}+2 \frac{\ddot{a}(t)}{a(t)}+\frac{\dot{a}(t)^{2}}{a(t)^{2}} = -8 \frac{ \pi G p}{c^{2}} \]</p>
+<h2> hustota: $ \frac{\dot{a}(t)^{2}}{a(t)^{2}} + \frac{ c^{2} k}{a(t)^{2}} = \frac{8 \pi G}{3} \rho $, tlak: $ 2 \frac{\ddot{a}(t)}{a(t)} + \frac {\dot{a}(t)^{2}}{a(t)^{2}} + \frac{c^{2} k}{a(t)^{2}} = - \frac{8 \pi G}{c^{2}}  p  $</h2>
+
+<h2>Diskuse</h2>
+<p>
+Rovnice máme, odpovídají tomu co je publikováno v odborné literatuře. Výpočet je opravdu 
+dost složitý, prof. Michal Křížek vůbec nepřehání, že použité rovnice mají tisíce členů. 
+Každý nenulový člen metriky je použit při výpočtu 865 krát, inverzní metriky 289 krát, což je celkem 4616 členů.  
+Tohle bylo vyzkoušeno jen pro kontrolu - původně jsem to dělal v pythonu (SymPy), tady 
+je použita C++ knihovna, je rychlejší, ale má svá omezení - derivace symbolické funkce 
+je dost divoká (ale správná), knihovna nemá solver pro diferenciální rovnice. To v tomto 
+případě nevadí, finální úpravy je už možné udělat ručně. Důležité je, že jak SymPy, tak i 
+GiNaC poskytují stejné výsledky. Trochu matoucí je použití T na pravé straně. Aby to vycházelo 
+beru $ T^{\mu}_{\nu} $ jako diagonální matici $ diag(-\rho c^2, p, p, p) $, kde $\rho$ je hustota hmoty, 
+p tlak a snížím index přes metriku : $ T_{\mu\nu} = g_{\mu\alpha} T^{\alpha}_{\nu} $. 
+Zřejmě je to korektní postup, hlavně dá rozumný výsledek. I z <a href="https://www.aldebaran.cz/studium/otr.pdf">výše uvedeného pramene</a>, 
+kapitola 8. se to dá takto pochopit.
+</p>
+<p>
+Jak souvisí Gaussova křivost k s Ricciho skalárem R ?
+</p>
+<p>
+Pokud funkci a(t) považujeme na bezrozměrnou s tím, že hodnota a v současnosti je rovna 1, pak
+by mělo být pro sféru S3 $ R = 6 k $. Protože $ k = \frac{1}{R_0^2} $, kde $ R_0 $ je něco
+jako "poloměr" zakřivení vesmíru, je možné chápat a(t) jako tt. poloměr a k je pak -1, 0 nebo +1
+bezrozměrná konstanta.
+</p>
+  </body>
+</html>

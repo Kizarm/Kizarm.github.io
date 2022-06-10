@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+    </META>
+    <title>Expanze</title>
+    <style>body {background-color: rgb(192,255,255);} h2 {color: rgb(64,0,192);}
+           table, th, td {border: 2px solid blue; border-collapse: collapse;   }
+           th, td {padding: 10px;}
+    </style>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+    tex2jax: {inlineMath: [['$','$']]},
+    displayAlign: "left"});
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+    </script>
+  </head>
+  <body>
+    <h1>Temná energie.</h1>
+    <p>Na základě <a href="https://www.youtube.com/watch?v=1oER7qUYXgk">přednášky</a> Václava Vavryčuka
+    a následné diskuse jsem si začal tak trochu hrát s touto problematikou. Celkem brzy jsem si uvědomil,
+    že tato problematika není úplně jednoduchá, nicméně jistou zkušenost s počítaním v rámci OTR mám
+    a moc mi nešlo na rozum, že by použití jiného tvaru počáteční metriky mohlo dát jiné (měřené) výsledky.
+    OTR vlastně říká, že na systému souřadnic nezáleží, v některých se to počítá lépe, v jiných hůře, ale
+    výsledek musí být stejný.
+    </p>
+    <h2>"Comoving" souřadnice vs. komformní souřadnice.</h2>
+    <p>Standardně se pro výpočet jako počáteční metrika používá tzv. FLRW metrika, která má koeficient
+    expanze (obvykle značeno jako a(t), bezrozměrná funkce souřadnicového času) jen u prostorové části.
+    Těmto souřadnicím se říká v angličtině "comoving coordinates", rozumný český překlad neexistuje.
+    Naproti tomu p. Vavryčuk používá konformní souřadnice, kde se a(t) vyskytuje jak v prostorové části
+    metriky, tak v časové. 
+    <table>
+    <tr><td>FLRW metrika</td><td>Konformní metrika</td><td></td></tr>
+    <tr><td> $ ds^2=-c^2dt^2 + a^2\left( t \right) \left[ \frac{dr^2}{1 - \xi r^2} + r^2 d\Omega^2 \right] $ </td>
+        <td> $ ds^2=a^2\left( t \right) \left[-c^2dt^2 +  \frac{dr^2}{1 - \xi r^2} + r^2 d\Omega^2 \right] $ </td><td>[1]</td></tr>
+        <tr><td> $ \dot{a}^2=\frac{8\pi G}{3} \rho a^2 - c^2 \xi $ </td>
+        <td> $ \dot{a}^2=\frac{8\pi G}{3} \rho a^4 - c^2 a^2 \xi $ </td><td>[2]</td></tr>
+        <tr><td> $ \frac{d}{d t} a{\left (t \right )} = k a^{1 - \omega}{\left (t \right )} $ </td>
+        <td> $ \frac{d}{d t} a{\left (t \right )} = k a^{2 - \omega}{\left (t \right )} $ </td><td>[3]</td></tr>
+        <tr><td> $ a{\left (t \right )} = \left(k \omega t \right)^{\frac{1}{\omega}} $ </td>
+        <td> $ a{\left (t \right )} = \left(k \omega t - k t\right)^{\frac{1}{\omega - 1}} $ </td><td>[4]</td></tr>
+        <tr><td> $ ds^2 = -c^2 d\tau^2 = -c^2 dt^2 $ </td><td> $ ds^2 = -c^2 d\tau^2 = -c^2 a^2 \left( t \right) dt^2 $ </td><td>[5]</td></tr>
+        <tr><td> $ d \tau = dt $ </td><td> $ d\tau = \left(k \omega t - k t\right)^{\frac{1}{\omega - 1}} dt $ </td><td>[6]</td></tr>
+        <tr><td> $ \tau = t $ </td><td> $ \tau = \frac{1}{k \omega} \left(k t \left(\omega - 1\right)\right)^{\frac{\omega}{\omega - 1}} $ </td><td>[7]</td></tr>
+        <tr><td> $ t = \tau $ </td><td> $ t = \frac{\left(k \omega \tau\right)^{\frac{\left(\omega - 1\right)}{\omega} }}{k \left(\omega - 1\right)} $ </td><td>[8]</td></tr>
+        <tr><td> $ a{\left (\tau \right )} = \left(k \omega \tau\right)^{\frac{1}{\omega}} $ </td>
+        <td> $ a{\left (\tau \right )} = \left(k \omega \tau\right)^{\frac{1}{\omega}} $ </td><td>[9]</td></tr>
+<!--    <tr><td> $  $ </td><td> $  $ </td><td>[0]</td></tr> -->
+    </table>
+    </p>
+    <p>Obě metriky zapíšeme v obvyklém tvaru [1], úhlové části metriky jsou zjednodušeny.
+    Z Einsteinových rovnic lze spočítat diferenciální rovnici pro expanzní funkci a(t) [2].
+    Aby tyto rovnice šly analyticky řešit, zavedeme následující zjednodušení
+    <ul>
+      <li>zanedbáme křivost (zdá se, že je ve skutečném vesmíru opravdu velmi malá)
+      <li>pro hustotu hmoty platí $ \rho \approx a \left( t \right)^{2 \omega} $ , kde $ \omega $ závisí na povaze látky.
+      Pro záření je to 2, pro koherentní prach 3/2.
+    </ul>
+    Konstanty stáhneme do jediné k, získáme tak expanzní funkce [4]. Jsou však vyjádřeny v použité souřadnicové soustavě
+    a tedy i v souřadnicovém čase. Zafixujeme prostorovou část - pokud budeme něco měřit, potřebujeme souřadnicovou soustavu,
+    která se moc nehýbe - jako třeba Země (není to přesné, ale vlastní pohyb Země lze korigovat např. podle reliktního záření).
+    Z invariantu OTR $ ds^2 $ [5] lze vyjádřit element vlastního času dτ jako závislost
+    na souřadnicovém čase dt [6], integrací pak získáme závislosti [7] a inverzní [8]. Pokud [8] dosadíme do [4],
+    získáme výslednou expanzní funkci [9] ve vlastním čase fixního pozorovatele. Jsou to <b>stejné</b> výrazy.
+    <b>Ve FLRW metrice se počítá o něco lépe, souřadnicový čas je zde roven vlastnímu času volného pozorovatele</b>.
+    </p> 
+    <p>Pro foton platí $ ds^2=0 $, zkusme pro něj spočítat světočáru ve vlastním čase prostorově fixovaného tělesa.
+    <table>
+    <tr><td>FLRW metrika</td><td>Konformní metrika</td><td></td></tr>
+    <tr><td> $ \frac {c \cdot dt}{a{\left ( t \right )}} = dr $ </td><td> $ c \cdot dt = dr $ </td><td>[10]</td></tr>
+    <tr><td> $ r = \frac{c \left(k \omega \tau\right)^{\frac{1}{\omega} \left(\omega - 1\right)}}{k \left(\omega - 1\right)} $ </td>
+    <td> $ r = \frac{c \left(k \omega \tau\right)^{\frac{1}{\omega} \left(\omega - 1\right)}}{k \left(\omega - 1\right)} $ </td><td>[11]</td></tr>
+    </table>
+    Ze vztahů [1] při zanedbání křivosti $ \xi = 0 $  a úhlových částí metriky (foton ve směru r) získáme vzorce [10].
+    Po integraci a dosazení vlastního času [8] dostaneme pro obě metriky <b>stejný</b> výraz [11]. Symbol r zde
+    zřejmě značí délku dráhy, kterou foton urazí za čas $ \tau $. Je zřejmé, že foton musí urazit dráhu větší než prostý
+    součin c.t, je to dáno "roztahováním" prostoru - světlo se musí rozšířit do jakoby většího prostoru.
+    </p>
+    <p>Vzoreček $ c {\int {\frac {dt}{a \left( t \right) }}} $ se v literatuře používá, ale v kosmologických vzdálenostech
+    je dost hokej, takže se jestě toto násobí koeficientem z+1 (čili dělíme a(t) v čase emise). Důvod toho moc nechápu,
+    ale bez toho by zřejmě vyšel úplný nesmysl. Pak je třeba ještě započíst extinkci, což je další magie zřejmě dělaná odhadem,
+    protože na hodnotě extinkce závisí podíl temné energie <b>velmi podstatně</b>.
+    </p>
+    <p>Napsal jsem si na to <a href="omega.html">program</a> v Qt (lze spustit v prohlížeči), data jsou z
+    <a href="https://arxiv.org/abs/astro-ph/0611572">Adam G. Riess a kolektiv 2007</a> (lepší jsem nesehnal),
+    celkem se ty výsledky dají reprodukovat, takže to zase taková věda není, nicméně
+    celé to dělá dojem, že pokud uděláme tečnu k expanzní funkci a(t) v současnosti, protne časovou osu v čase daném
+    převrácenou hodnotou Hubbleovy konstanty (v současnosti) a protože to vlastně udává stáří vesmíru je asi velká snaha vyjádřit
+    expanzní funkci tak, aby začínala právě v tomto bodě. Což ovšem vůbec není nutné.
+    </p>
+    <h2>Závěr.</h2>
+    <p>Dělat z tohoto závěr, že existuje nějaká temná energie, notabene s většinovým podílem na celkové bilanci, je přinejmenším
+    velmi odvážné. Ve zdrojácích <a href="omega.zip">programu</a> je ještě pár praktických poznámek, které se mohou hodit.
+    I když by se mohlo zdát, že nepracnější část je odvodit diferenciální rovnice pro expanzní funkci, není tomu tak.
+    Dnes už umí software zpracovat i složité symbolické výpočty - v tomto <a href="fridman.zip">příkladu</a> je kompletní
+    odvození FLRW metriky z OTR, výsledek je pak <a href="fridman.html">zde</a>.
+    </p>
+  <body>
+<html>
