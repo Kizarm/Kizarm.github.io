@@ -19,17 +19,20 @@
   </head>
   <body>
     <h1>Temná energie.</h1>
-    <p>Na základě <a href="https://www.youtube.com/watch?v=1oER7qUYXgk">přednášky</a> Václava Vavryčuka
+    <p>Na základě <a href="https://www.youtube.com/watch?v=1oER7qUYXgk" target="_blank">přednášky</a> Václava Vavryčuka
     a následné diskuse jsem si začal tak trochu hrát s touto problematikou. Celkem brzy jsem si uvědomil,
     že tato problematika není úplně jednoduchá, nicméně jistou zkušenost s počítaním v rámci OTR mám
     a moc mi nešlo na rozum, že by použití jiného tvaru počáteční metriky mohlo dát jiné (měřené) výsledky.
     OTR vlastně říká, že na systému souřadnic nezáleží, v některých se to počítá lépe, v jiných hůře, ale
-    výsledek musí být stejný.
+    výsledek musí být stejný. V textu se nezmiňuje kosmologická konstanta, dá se převést z levé strany
+    Einsteinových rovnic na pravou a zahrnout do tenzoru energie-hybnosti jako hmota, jejíž hustota
+    nezávisí na expanzi. Není to nic proti ničemu, jen není přímo vidět, že kontrahovaná Bianchiho identita,
+    z níž plyne něco jako zákon zachování energie v OTR, zůstává zachována (kovariantní derivace metrického tenzoru je nulová).
     </p>
     <h2>"Comoving" souřadnice vs. komformní souřadnice.</h2>
     <p>Standardně se pro výpočet jako počáteční metrika používá tzv. FLRW metrika, která má koeficient
     expanze (obvykle značeno jako a(t), bezrozměrná funkce souřadnicového času) jen u prostorové části.
-    Těmto souřadnicím se říká v angličtině "comoving coordinates", rozumný český překlad neexistuje.
+    Těmto souřadnicím se říká v angličtině "comoving coordinates", rozumný český překlad by snad byl "unášené".
     Naproti tomu p. Vavryčuk používá konformní souřadnice, kde se a(t) vyskytuje jak v prostorové části
     metriky, tak v časové. 
     <table>
@@ -56,7 +59,7 @@
     Aby tyto rovnice šly analyticky řešit, zavedeme následující zjednodušení
     <ul>
       <li>zanedbáme křivost (zdá se, že je ve skutečném vesmíru opravdu velmi malá)
-      <li>pro hustotu hmoty platí $ \rho \approx a \left( t \right)^{2 \omega} $ , kde $ \omega $ závisí na povaze látky.
+      <li>pro hustotu hmoty platí $ \rho \approx a \left( t \right)^{-2 \omega} $ , kde $ \omega $ závisí na povaze látky.
       Pro záření je to 2, pro koherentní prach 3/2.
     </ul>
     Konstanty stáhneme do jediné k, získáme tak expanzní funkce [4]. Jsou však vyjádřeny v použité souřadnicové soustavě
@@ -79,34 +82,83 @@
     zřejmě značí délku dráhy, kterou foton urazí za čas $ \tau $. Je zřejmé, že foton musí urazit dráhu větší než prostý
     součin c.t, je to dáno "roztahováním" prostoru - světlo se musí rozšířit do jakoby většího prostoru.
     </p>
-    <p>Vzoreček $ c {\int {\frac {dt}{a \left( t \right) }}} $ se v literatuře používá, ale v kosmologických vzdálenostech
+    <p>Vzoreček $ c \cdot {\int {\frac {dt}{a \left( t \right) }}} $ se v literatuře používá, ale v kosmologických vzdálenostech
     je dost hokej, takže se jestě toto násobí koeficientem z+1 (čili dělíme a(t) v čase emise).
     Důvod toho moc nechápu, nejsa astronom nevím přesně co a jak se měří, nicméně
     z Weinbergovy kosmologie (kap. 1.4, bod 3.) to dává smysl - kdybychom počítali jednotlivé fotony, tento
     koeficient by odpadl, ale praktická měření luminosity dávají něco jako hustotu výkonu záření a protože energie
     fotonů se při jejich cestě universem snižuje (roste vlnová délka), pak je tento koeficient celkem logický
-    a správný (je to podobné reliktnímu záření). Pak je třeba ještě započíst extinkci, což je další magie (zřejmě dělaná odhadem),
-    protože na hodnotě extinkce závisí podíl temné energie v modelu <b>velmi podstatně</b>.
+    a správný (je to podobné reliktnímu záření). <!-- Pak je třeba ještě započíst extinkci, což je další magie (zřejmě dělaná odhadem),
+    protože na hodnotě extinkce závisí podíl temné energie v modelu <b>velmi podstatně</b>. -->
     </p>
-    <p>Napsal jsem si na to <a href="omega.html">program</a> v Qt (lze spustit v prohlížeči), data jsou z
-    <a href="https://arxiv.org/abs/astro-ph/0611572">Adam G. Riess a kolektiv 2007</a> (lepší jsem nesehnal),
+    <h2>Doplnění o extinkci a křivost.</h2>
+    <p>Napsal jsem si na to <a href="omega.html" target="_blank">program</a> v Qt (lze spustit v prohlížeči), data jsou z
+    <a href="https://archive.stsci.edu/prepds/ps1cosmo/scolnic_datatable.html" target="_blank">Scolnic et al. Supernova Catalog</a>,
+    <!-- <a href="https://arxiv.org/abs/astro-ph/0611572">Adam G. Riess a kolektiv 2007</a> (lepší jsem nesehnal), -->
     celkem se ty výsledky dají reprodukovat, takže to zase taková věda není, nicméně
     celé to dělá dojem, že pokud uděláme tečnu k expanzní funkci a(t) v současnosti, protne časovou osu v čase daném
     převrácenou hodnotou Hubbleovy konstanty (v současnosti) a protože to vlastně udává stáří vesmíru je asi velká snaha vyjádřit
     expanzní funkci tak, aby začínala právě v tomto bodě. Což ovšem vůbec není nutné.
+    </p>
+    <p>Program počítá expanzní funkci a(t) numericky podle standardního kosmologického vzorce
+    <p class="formulaDsp">\[ \left( \frac {\dot a}{a} \right) ^2 = H^2 = H_0^2 \cdot \left( \frac{\Omega_R}{a^4} + \frac{\Omega_M}{a^3} - \frac{\Omega_C}{a^2} + \Omega_{\Lambda} \right) \]</p>
+    přičemž (index $ R $ je pro záření, $ M $ pro normální hmotu, $ \Lambda $ pro temnou energii, $ C $ pro křivost, $ H $ je Hubbleova konstanta, $ H_0 $ její současná hodnota)
+    <p class="formulaDsp">\[ \Omega_R + \Omega_M + \Omega_{\Lambda} + \Omega_C = 1 \]</p>
+    takže 1. táhlem nastavujeme poměr $ \Omega_M / \Omega_{\Lambda} $ v procentech, 2. $ \Omega_C $ v rozsahu -10 až +10%
+    (je to omezeno, zatím se obecně spíš počítá s nulovou hodnotou, nicméně nemá to zase tak velký vliv), 3. táhlo D nastavuje
+    koeficient útlumu [dB/Gly], 4. táhlo O jemně offset magnitudy. Hrubě se tt. offset nastavuje automaticky podle
+    magnitudy SN Ia ze zvoleného datasetu s nejmenším z. <i> Ve zdrojácích je přiložen skript v pythonu, který stáhne
+    Scolnicova data z internetu a vytvoří z toho soubor pantheon.h</i>.
+    </p>
+    <p>Výpočet extinkce je dost problematický. Pokud to spočítáme poněkud naivně s tím, že pro světelný tok l zavedeme
+    exponenciální útlum
+    <p class="formulaDsp">\[ \mathscr l \approx \frac {e^{-{D_e \cdot d_l}}}{ \left( z + 1 \right)^2 d_l^2 } \; \Rightarrow \; m = 5 \cdot \log \left[ \left( z + 1 \right) \cdot d_l \right] + D \cdot d_l + O \]</p>
+    pak se to projeví jako aditivní člen ve vzorci pro magnitudu. Takto je to počítáno v programu, dává to podobný charakter
+    závislosti jako temná energie. Koeficient útlumu D lze vyčíst z programu a vychází (pro stejný účinek jako ta temná energie)
+    řádově 3dB na každých 10 miliard světelných let dráhy fotonu. To mi připadá hodně málo. Pohlcování světla v <a href="https://www.aldebaran.cz/glossary/print.php?id=1656" target="_blank">galaxii</a>
+    je o mnoho řádů větší a tak nějak se mi zdá neuvěřitelné, že by v mezigalaktickém prostoru kleslo <b>úplně</b> na nulu.
+    </p>
+    <p>Nicméně fakt je, že dobrá shoda nastane jen když počítáme s tím, že je koeficient útlumu <b>konstantní</b>. 
+    Zde se tedy započítává jakoby světlo procházelo stále stejně hustým prostředím.
+    To ale není pravda - už když vezmeme poměrně malou hodnotu z = 1, byl vesmír v době exploze SN Ia dvakrát "menší"
+    a tedy <b>osmkrát</b> hustší. Pokud máme data pro z = 2, tam je pak hustota 27x větší - podle mne je nutné tento
+    fakt započítat. Ale pokud to uděláme, pak je strmost závislosti m(z) pro větší z příliš velká a zřejmě bude
+    pracné tohle nějak rozumně vysvětlit. Což kosmologové dobře vědí. A zřejmě to má dalekosáhlé konsekvence i v jiných
+    měřeních.
+    </p>
+    <p>Přidání křivosti způsobuje další problém, který je ale dost dobře řešitelný. Uvádím zde postup, protože z programu to není příliš vidět.
+    Z OTR plyne pro dráhu fotonu $ d_l $ (luminositní vzdálenost)
+    <p class="formulaDsp">\[ c \cdot \int_{-t}^{0}{\frac {d \tau}{a \left( \tau \right)}} = \int_{-d_l}^{0} {\frac {dr}{\sqrt {1 + k \cdot r^2}}} \]</p>
+    Levá strana (označíme $ d_0 $) se vypočte numericky, pro integrál na pravé straně použijeme místo křivosti k něco jako poloměr vesmíru R substitucí $ k = 1 / R^2 $
+    <p class="formulaDsp">\[ d_0 = \int_{-d_l}^{0}{\frac {dr}{ \sqrt {1 \pm \frac {r^2}{R^2}}}} \]</p>
+    Z toho je už vidět další substituce $ \xi = r/R, d\xi = dr/R \Rightarrow dr = R d\xi $
+    <p class="formulaDsp">\[ d_0 = R \cdot \int_{-\xi_l}^{0}{\frac{d\xi}{\sqrt{\left( 1 \pm \xi^2 \right)}}} =
+    \begin{cases} R \cdot arcsin \left( \xi_l \right) & \text{k > 0} \\ d_l  & \text{k = 0}\\ R \cdot arcsinh \left( \xi_l \right) & \text{k < 0}  \end{cases}  \]</p>
+    <p class="formulaDsp">\[ \xi_l = \frac {d_l}{R} = \sin  \left( \frac{d_0}{R} \right) \Rightarrow d_l = R \cdot  \sin  \left( \frac{d_0}{R} \right) \]</p>
+    <p class="formulaDsp">\[ \xi_l = \frac {d_l}{R} = \sinh \left( \frac{d_0}{R} \right) \Rightarrow d_l = R \cdot  \sinh \left( \frac{d_0}{R} \right) \]</p>
+    Tyto výrazy moc počítat nejdou, pro malou křivost jsou typu nekonečno * 0, ale je možné jednotně je rozvinout do řady
+    <p class="formulaDsp">\[ d_l = R \cdot \left[ \left( \frac{d_0}{R} \right) \mp \frac{1}{3!} \left( \frac{d_0}{R} \right)^3 + \cdots \right] =
+    d_0 \cdot \left[ 1 \mp \frac{1}{3!} \left( \frac{d_0}{R} \right)^2 + \cdots \right] \]</p>
+    což už počítat jde. Řada v hranatých závorkách je něco jako $ \frac {\sin{\left( x \right)}}{x} $ (příp. sinh), pro kladnou křivost
+    se znaménka střídají, pro zápornou je všude plus.
+    Tyto funkce se ve standardní knihovně nevyskytují, takže je potřeba řadu stejně sečíst. Pak je $ R = \frac{c}{H_0 \sqrt{\Omega_C}} $,
+    argument řady (počítáme ve světelných létech, c = 1) $ \frac{d_0}{R} = H_0 \sqrt{\Omega_C} \cdot d_0 $ by neměl být větší než 1 (zhruba).
+    Je vidět, že pro $ \Omega_C = 0 $ je řada rovna 1 a $ d_l = d_0 $, což jsme chtěli.
+    </p>
+    <p>
     </p>
     <h2>Závěr.</h2>
     <p>Dělat z tohoto závěr, že existuje nějaká temná energie, notabene s většinovým podílem na celkové bilanci, je přinejmenším
     velmi odvážné. Ve zdrojácích <a href="omega.zip">programu</a> je ještě pár praktických poznámek, které se mohou hodit.
     I když by se mohlo zdát, že nepracnější část je odvodit diferenciální rovnice pro expanzní funkci, není tomu tak.
     Dnes už umí software zpracovat i složité symbolické výpočty - v tomto <a href="fridman.zip">příkladu</a> je kompletní
-    odvození FLRW metriky z OTR, výsledek je pak <a href="fridman.html">zde</a>.
+    odvození FLRW metriky z OTR, výsledek je pak <a href="fridman.html" target="_blank">zde</a>.
     </p>
     <p><b>Dovolím si přidat vlastní názor</b>.
     Přidání temné energie do modelu je celkem jednoduchý způsob jak vysvětlit naměřená data.
     Pořád ale zůstává rozpor mezi současnou hodnotou Hubbleovy konstanty vypočtenou z pozorování supernov Ia kontra hodnotou
     vypočtenou z rozboru reliktního záření. Podle mne jsme něco přehlédli nebo nedomysleli. Sama OTR mi připadá taková jakoby
-    "gumová" - jakobychom měřili metrem, který se sám natahuje. Není problém něco spočítat, obtížné je pak ten výsledek správně
+    "gumová" - jako bychom měřili metrem, který se sám natahuje. Není problém něco spočítat, obtížné je pak ten výsledek správně
     interpretovat. Ono je to vidět i ze schůzek KS ČAS, respektive z diskusí po přednáškách. Co člověk, to jiný pohled na
     problematiku. Není to ani tak tím, že problematika je složitá, ale spíš tím, že je obtížné si představit co vlastně
     počítáme. A že to není až taková věda je vidět i z toho, že i já jako člověk bez formálního astronomického nebo
@@ -117,11 +169,44 @@
     To ale vůbec nemusí být pravda a bude poměrně těžké to ověřit. Nejsme schopni vytvořit podmínky jaké panovaly
     v rannějším vesmíru a pozorovat děje tam probíhající přímo, takže to pozorujeme jen nepřímo na velkou vzdálenost,
     což může vést k systematickým chybám, které neumíme dobře odhadnout. Příkladem může být extinkce - na ní závisí
-    parametry modelu poměrně podstatně. Zde se započítává jakoby světlo procházelo stále stejně hustým prostředím.
-    To ale není pravda - už když vezmeme poměrně malou hodnotu z = 1, byl vesmír v době exploze SN Ia dvakrát "menší"
-    a tedy <b>osmkrát</b> hustší. Pokud máme data pro z = 2, tam je pak hustota 27x větší - podle mne je nutné tento
-    fakt započítat. A je vůbec jisté, že SN Ia v daleké minulosti musela vybuchnout právě při hmotnosti 1.4 Ms jako
+    parametry modelu poměrně podstatně. A je vůbec jisté, že SN Ia v daleké minulosti musela vybuchnout právě při hmotnosti 1.4 Ms jako
     dnes a se stejnou intenzitou jako dnes ? A takovéto pochybnosti lze uvést i pro řadu dalších parametrů modelu.
     </p>
+  <i>
+    <p><b>A trochu nezajímavé filozofie na konec tohoto povídání.</b></p>
+    <p>Je k diskusi, zda metrika v OTR je jen matematický nástroj nebo je to něco skutečného, fyzikálního.
+    Metrický tenzor vlastně popisuje gravitaci podobně jako Maxwellův tenzor popisuje elektromagnetizmus.
+    To by svědčilo spíš o tom, že je to v nějakém smyslu reálná fyzikální veličina a nemůžeme jí tedy volit libovolně.
+    Na druhou stranu v elektromagnetizmu není Maxwellův tenzor F invariantní vůči pohybu pozorovatele. Různí, vzájemně
+    se pohybující pozorovatelé naměří různé hodnoty F a celkem nikoho to neudivuje i když pole vektorů <b>E</b> a <b>B</b>, která
+    tento tenzor popisuje považujeme za reálná. Je tu však něco na čem se pozorovatelé shodnou - je to kvadrát Maxwellova
+    tenzoru, klasicky vyjádřeno jako $ \mathcal L = \frac {1}{4 \mu_0} F_{\alpha \beta} \cdot F^{\alpha \beta} 
+    = \frac{1}{2} \left( \mathbf{D \cdot E + B \cdot H} \right) $, což je hustota elektromagnetické energie. V OTR se za invariant teorie
+    považuje kvadrát časoprostorového intervalu $ ds^2 $. Zda je to správně, je otázka, je to asi jen převzato
+    ze STR. Ale počítají tak všichni, tak to zde přebírám bez komentáře, nakonec jinak to neumím. A věřím, že
+    pokud by tomu bylo jinak, pak už by na to snad za těch víc jak sto let od formulace OTR někdo přišel.
+    Z toho by pak mohlo vyplývat, že metrický tenzor je spíš matematický konstrukt než fyzikální veličina, ale to je spíš
+    filozofie než fyzika. Pořád musíme mít na mysli, že je rozdíl mezi matematickým modelem a skutečností.
+    </p>
+    <p>Pak je ovšem zajímavé, že OTR, která je s kvantovou fyzikou zatím na kordy, s ní vykazuje jednu podobnost - je to
+    velká míra volnosti v matematickém popisu. V OTR si můžeme časoprostor "počmárat" souřadnicovou sítí prakticky
+    libovolně, ovšem jen s některým systémem souřadnic se dobře pracuje. A jen tím je vlastně tato volba omezena.
+    V kvantové mechanice je volnost matematického popisu ještě větší. Míra abstrakce se zvětšila tím, že pozorovatelné
+    veličiny popisujeme operátory v Hilbertově prostoru, které jen musí splňovat určité komutační relace ale jinak
+    vůbec nezáleží na tom jaké matematické objekty pro to použijeme. Heisenbergova mechanika používá matice,
+    Schrödingerova diferenciální operátory - výsledky to opět dává stejné. A ještě můžeme použít Schrödingerovu souřadnicovou
+    reprezentaci stejně jako reprezentaci hybnostní a navíc je to zcela ekvivalentní s popisem jaký používá Feynman ve svém
+    dráhovém integrálu, kde vůbec není nutné zavádět abstraktní Hilbertovův prostor. Jen se s tím dost obtížně počítá.
+    V některých případech (znám jen harmonický oscilátor)
+    se dá počítat zcela bez volby reprezentace, čistě jen na základě vlastností operátorů. Tohle v OTR chybí - možná
+    budoucí vývoj ukáže, že bude lépe dělat fyziku v nějakém ještě abstraktnějším matematickém prostoru, ze kterého
+    pak souřadnice vypadnou samy od sebe podobně jako jiné měřitelné veličiny. Nicméně se může ukázat, že to celé
+    děláme úplně blbě a pokud je časoprostor na jisté úrovni diskrétní, je docela možné, že matematický aparát
+    pro takovýto popis ještě neexistuje (a může se ukázat, že ani existovat nemůže). Je dobré si uvědomit, že popis
+    fyzikálního světa pomocí reálných či komplexních čísel spolu s diferenciálními rovnicemi se používá jen proto,
+    že je relativně jednoduchý a úspěšný. Divergující veličiny v OTR i ta nekonečna ve standardním modelu kvantové
+    teorie pole naznačují, že je tam něco špatně.
+    </p>
+  </i>
   <body>
 <html>
