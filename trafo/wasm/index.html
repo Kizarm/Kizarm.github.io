@@ -1,0 +1,73 @@
+<!DOCTYPE html>   
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>ngspice webassembly</title>
+    <style>
+      body {background-color: rgb(192,255,255); }
+      h2   {color: rgb(64,0,192); font-size: 18px;}
+      b    {color: rgb(64,0,192);}
+      tr, td { border: 1px solid black; border-collapse: collapse; }
+      table  { width:100%; border: 1px solid blue;  border-collapse: collapse; text-align: center; }
+      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
+      textarea.emscripten { font-family: monospace; font-size: 16px; width: 100%; overflow-x: scroll; white-space: pre; background: black; color: rgb(0,255,0);}
+      .progressBar { width: 0%; height: 40px; background-color: orange; text-align: center; line-height: 40px; color: white; }
+      .canvas      { width: 99vw;  height: 80vh; background-color: black; }
+  </style>
+  </head>
+  <body>
+    <table><tr>
+    <td width="40%"><textarea class="emscripten" id="input"  rows="25" spellcheck="false"></textarea></td>
+    <td><textarea readonly class="emscripten" id="output" rows="25" spellcheck="false"></textarea></td>
+    </tr></table>
+    <table><tr>
+    <td width="100px"><input id="start"   type="button" value="Run"  onclick="ClickRun();" disabled="true"/></td>
+    <td width="100px"><input id="circuit" type="button" value="File" onclick="ClickUpl();" disabled="true"/></td>
+    <td><div class="progressBar" id="status"><div></td>
+    </tr></table>
+    <canvas id="canvas" class="canvas"></canvas>
+    <div>
+      <h2>Simulace obvodů v prohlížeči.</h2>
+      <p>Na webu jsem našel pokus jak přeložit knihovnu ngspice pro webassembly. Tak jsem to zkusil.
+      Bohužel bez výsledku, linkování skončilo nekonečným swapem. Uplynul nějaký čas, nástroje se zlepšily,
+      s emscripten 3.1.15 se to už povedlo, takže si s tím šlo hrát. Knihovna ngspice potřebuje pár
+      drobných úprav (wasm.patch), takže je dobré použít verzi 32, na které je to otestováno.
+      </p>
+      <p>Ukázalo se, že to nebude tak jednoduché. Výpočet tranzientní simulace může trvat poměrně dlouho,
+      normálně se spouští vlákno, což v prohlížeči působí značné potíže. I když už by to mělo být také
+      vyřešeno, zde jsem problém obešel tím, že je to koncipováno jako web worker. Na druhou stranu
+      se mi zase nepodařilo propašovat z C++ do javascriptu složitější objekty, takže to skončilo tím,
+      že vykreslování do canvasu je divné. C++ kód vygeneruje text, který je pak v javascriptu interpretován
+      jako kód (eval()). Ano, je to divné, ale funguje to a poměrně svižně.
+      </p>
+      <p>Program je jednoduchý - v levém textovém poli, které lze editovat je simulovaný obvod, lze ho ručně
+      upravovat nebo pomocí copy/paste si tam dát úplně něco jiného. Musí to být <b>kompletní</b> popis obvodu,
+      nemá to souborový systém, který by umožňoval .include, na konci musí být parametry tranzientní simulace.
+      Je také možné načíst text z lokálního souboru tlačítkem <i>File</i>. Simulace si tedy načte obvod z obsahu tohoto pole.
+      Tlačítkem <i>Run</i> se spustí simulace, vpravo se zobrazuje průběh výpočtu - status bar.
+      V pravém textovém poli se vypisuje text průběhu simulace a případné chyby (status bar může proběhnout tak rychle, že si toho nevšimnete).
+      Dole je pak canvas, do kterého se vykreslují grafy. Je použit trik z Kicadu - uzly, označené pomocí label
+      se prefixují znakem '/' (slash), a ty se pak vykreslují. Ostatní jsou <b>ignorovány</b>.
+      </p>
+      <p>Defaultní obvod popisuje proudový náraz při zapnutí velkého transformátoru (s reálným feromagnetickým jádrem)
+      v nule napětí (kdyby tomu někdo nevěřil). Je vidět, že to používá dost pokročilé funkce, není to prostý lineární obvod.
+      Pokud do řádku pro zdroj v1 místo sin(0 325 50 0m) dáme sin(0 325 50 <i>-5m</i>), zapínáme v maximu napětí, špička zmizí.
+      Po pravdě řečeno, je to dost citlivé na parametry, změníme-li frekvenci z 50 na 100 Hz, nic zajímavého se zase neděje.
+      </p>
+      <p>Lze si vyzkoušet třeba tento <a href="./cmos.cir" onclick="getUrl(this); return false;">obvod</a>, je to
+      <a href="../../spice/index.html" target="_blank">diskretizovaný RC oscilátor ze dvou hradel</a>. Jednoduše na to klikněte, ono se to načte samo.
+      </p>
+      <h2>Závěr</h2>
+      <p>Je to jen hračka, na skutečnou práci to není a nebude, na hraní to vyhovyje. Na webu najdete mnoho webových
+      simulátorů v různém stadiu propracovanosti a samotné ngspice lze jednoduše nainstalovat, nebo je vestavěno i v Kicadu.
+      Ukazuje to možnosti co vše lze ve webovém prohlížeči spustit. Stejně už to začíná být dost velké - zabere to asi 4MiB.
+      Kdyby si s tím chtěl někdo hrát, přibalím i <a href="./wasm.zip">zdrojáky</a>, licence bude asi záviset od
+      použité knihovny ngspice, ale pochybuji, že to někdo dokáže komerčně využít. Jak vytořit knihovnu ngspice pro
+      webassembly je popsáno v Makefile, je to pár příkazů, které ale mohou selhat, tedy dělat z toho nějaký skript nemá smysl.
+      </p>
+    </div>
+    <script src="index.js">
+    </script>
+  </body>
+</html>
+
