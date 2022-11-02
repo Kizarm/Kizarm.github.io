@@ -16,16 +16,16 @@
   </style>
   </head>
   <body>
-    <table><tr>
-    <td width="40%"><textarea class="emscripten" id="input"  rows="25" spellcheck="false"></textarea></td>
-    <td><textarea readonly class="emscripten" id="output" rows="25" spellcheck="false"></textarea></td>
-    </tr></table>
+    <canvas id="canvas" class="canvas"></canvas>
     <table><tr>
     <td width="100px"><input id="start"   type="button" value="Run"  onclick="ClickRun();" disabled="true"/></td>
     <td width="100px"><input id="circuit" type="button" value="File" onclick="ClickUpl();" disabled="true"/></td>
     <td><div class="progressBar" id="status"><div></td>
     </tr></table>
-    <canvas id="canvas" class="canvas"></canvas>
+    <table><tr>
+    <td width="40%"><textarea class="emscripten" id="input"  rows="25" spellcheck="false"></textarea></td>
+    <td><textarea readonly class="emscripten" id="output" rows="25" spellcheck="false"></textarea></td>
+    </tr></table>
     <div>
       <h2>Simulace obvodů v prohlížeči.</h2>
       <p>Na webu jsem našel pokus jak přeložit knihovnu ngspice pro webassembly. Tak jsem to zkusil.
