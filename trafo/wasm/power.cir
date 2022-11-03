@@ -13,14 +13,14 @@ R14 Net-_R14-Pad1_ Net-_C3-Pad2_ 1k
 R15 Net-_R15-Pad1_ Net-_C4-Pad2_ 1k
 V3 0 BIAS 25
 V2 VB1 0 400
-C4 /TA2 Net-_C4-Pad2_ 100n IC=300
-C3 /TA1 Net-_C3-Pad2_ 100n IC=300
-C1 Net-_C1-Pad1_ 0 47p IC=160
-C2 Net-_C2-Pad1_ 0 100n IC=160
+C4 /TA2 Net-_C4-Pad2_ 100n
+C3 /TA1 Net-_C3-Pad2_ 100n
+C1 Net-_C1-Pad1_ 0 47p
+C2 Net-_C2-Pad1_ 0 100n
 R21 VB1 VB2 8.2k
 R20 VB2 VB3 100k
-C6 VB2 0 22u IC=350
-C5 VB3 0 22u IC=250
+C6 VB2 0 22u
+C5 VB3 0 22u
 XV3 /TA1 /BDF Net-_R9-Pad1_ 0 0 /TA2 Net-_C2-Pad1_ Net-_R10-Pad2_ ECC82
 XV1 /BDF Net-_R1-Pad1_ Net-_R3-Pad1_ 0 0 0 0 0 ECC83
 R9 Net-_R9-Pad1_ Net-_R10-Pad1_ 1.5k
@@ -101,5 +101,5 @@ XCP1 3 4 5 8 6CA7
 EXX1 0 /INP 0 INPUT 100
 EXX2 0 /OUT 0 OUT   10
 *****************************
-.tran 1u 10m uic
+.tran 1u 10m
 .end
