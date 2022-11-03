@@ -38,6 +38,11 @@ function ClickRun() {
 window.onload = (event) => {    // vycistit texty
   document.getElementById('output').value = "";
   document.getElementById( 'input').value = "";
+  const content = canvas.getContext('2d');
+  content.font = '24px serif';
+  content.fillStyle = '#00FF00';
+  content.textAlign = 'center';
+  content.fillText ('Spice Simulator', canvas.width / 2, canvas.height / 2);
 };
 /* Tato část přidává uživatelské soubory. */
 function readFile(file) {

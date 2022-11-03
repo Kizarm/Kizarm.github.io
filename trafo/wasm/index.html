@@ -46,7 +46,7 @@
       Je také možné načíst text z lokálního souboru tlačítkem <i>File</i>. Simulace si tedy načte obvod z obsahu tohoto pole.
       Tlačítkem <i>Run</i> se spustí simulace, vpravo se zobrazuje průběh výpočtu - status bar.
       V pravém textovém poli se vypisuje text průběhu simulace a případné chyby (status bar může proběhnout tak rychle, že si toho nevšimnete).
-      Dole je pak canvas, do kterého se vykreslují grafy. Je použit trik z Kicadu - uzly, označené pomocí label
+      Nahoře je pak canvas, do kterého se vykreslují grafy. Je použit trik z Kicadu - uzly, označené pomocí label
       se prefixují znakem '/' (slash), a ty se pak vykreslují. Ostatní jsou <b>ignorovány</b>.
       </p>
       <p>Defaultní obvod popisuje proudový náraz při zapnutí velkého transformátoru (s reálným feromagnetickým jádrem)
@@ -54,16 +54,23 @@
       Pokud do řádku pro zdroj v1 místo sin(0 325 50 0m) dáme sin(0 325 50 <i>-5m</i>), zapínáme v maximu napětí, špička zmizí.
       Po pravdě řečeno, je to dost citlivé na parametry, změníme-li frekvenci z 50 na 100 Hz, nic zajímavého se zase neděje.
       </p>
+      <h2>Testy</h2>
       <p>Lze si vyzkoušet třeba tento <a href="./cmos.cir" onclick="getUrl(this); return false;">obvod</a>, je to
       <a href="../../spice/index.html" target="_blank">diskretizovaný RC oscilátor ze dvou hradel</a>. Jednoduše na to klikněte, ono se to načte samo.
+      Nebo lze vyzkoušet <a href="./power.cir" onclick="getUrl(this); return false;">elektronkový zesilovač</a>, je
+      na něm vidět, že to umí i dost složitý obvod. Původně jsem chtěl udělat nějaký nástroj, kterým by se daly
+      přidávat zobrazení, ale není to nutné. Prostě se přidá zdroj napětí řízený napětím (viz EXXn), kde je výstupní
+      uzel prefixován slash. Je tak možné změnit i měřítko zobrazení v ose Y, případně zobrazit napětí mezi dvěma uzly.
       </p>
+      <img src="power.png"/>
       <h2>Závěr</h2>
-      <p>Je to jen hračka, na skutečnou práci to není a nebude, na hraní to vyhovyje. Na webu najdete mnoho webových
-      simulátorů v různém stadiu propracovanosti a samotné ngspice lze jednoduše nainstalovat, nebo je vestavěno i v Kicadu.
-      Ukazuje to možnosti co vše lze ve webovém prohlížeči spustit. Stejně už to začíná být dost velké - zabere to asi 4MiB.
-      Kdyby si s tím chtěl někdo hrát, přibalím i <a href="./wasm.zip">zdrojáky</a>, licence bude asi záviset od
-      použité knihovny ngspice, ale pochybuji, že to někdo dokáže komerčně využít. Jak vytořit knihovnu ngspice pro
-      webassembly je popsáno v Makefile, je to pár příkazů, které ale mohou selhat, tedy dělat z toho nějaký skript nemá smysl.
+      <p>Je to jen hračka, na skutečnou práci to není a nebude, na hraní to vyhovuje. Neumí to digitální a smíšené obvody.
+      Na webu najdete mnoho webových simulátorů v různém stadiu propracovanosti a samotné ngspice lze jednoduše nainstalovat,
+      nebo je vestavěno i v Kicadu. Ukazuje to možnosti co vše lze ve webovém prohlížeči spustit. Stejně už to začíná
+      být dost velké - zabere to asi 4MiB. Kdyby si s tím chtěl někdo hrát, přibalím i <a href="./wasm.zip">zdrojáky</a>,
+      licence bude asi záviset od použité knihovny ngspice, ale pochybuji, že to někdo dokáže komerčně využít.
+      Jak vytvořit knihovnu ngspice pro webassembly je popsáno v Makefile, je to pár příkazů, které ale mohou selhat,
+      tedy dělat z toho nějaký skript nemá smysl.
       </p>
     </div>
     <script src="index.js">

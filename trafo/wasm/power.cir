@@ -1,0 +1,105 @@
+.title power tube
+V1 INPUT 0 SIN(0 0.75 500) DC=0
+XT1 Net-_V4-Pad2_ VB1 Net-_V5-Pad2_ 0 OUT TROI
+XV2 Net-_R19-Pad2_ 0 /PA2 Net-_R23-Pad2_ Net-_R15-Pad1_ 0 Net-_R19-Pad2_ EL34
+XV4 Net-_R18-Pad1_ 0 /PA1 Net-_R22-Pad2_ Net-_R14-Pad1_ 0 Net-_R18-Pad1_ EL34
+R18 Net-_R18-Pad1_ 0 15
+R19 0 Net-_R19-Pad2_ 15
+R22 /PA1 Net-_R22-Pad2_ 100
+R23 /PA2 Net-_R23-Pad2_ 100
+R12 Net-_C3-Pad2_ BIAS 120k
+R13 BIAS Net-_C4-Pad2_ 120k
+R14 Net-_R14-Pad1_ Net-_C3-Pad2_ 1k
+R15 Net-_R15-Pad1_ Net-_C4-Pad2_ 1k
+V3 0 BIAS 25
+V2 VB1 0 400
+C4 /TA2 Net-_C4-Pad2_ 100n IC=300
+C3 /TA1 Net-_C3-Pad2_ 100n IC=300
+C1 Net-_C1-Pad1_ 0 47p IC=160
+C2 Net-_C2-Pad1_ 0 100n IC=160
+R21 VB1 VB2 8.2k
+R20 VB2 VB3 100k
+C6 VB2 0 22u IC=350
+C5 VB3 0 22u IC=250
+XV3 /TA1 /BDF Net-_R9-Pad1_ 0 0 /TA2 Net-_C2-Pad1_ Net-_R10-Pad2_ ECC82
+XV1 /BDF Net-_R1-Pad1_ Net-_R3-Pad1_ 0 0 0 0 0 ECC83
+R9 Net-_R9-Pad1_ Net-_R10-Pad1_ 1.5k
+R10 Net-_R10-Pad1_ Net-_R10-Pad2_ 2.2k
+R11 0 Net-_R10-Pad1_ 33k
+R16 VB2 /TA1 27k
+R17 VB2 /TA2 27k
+R8 /BDF Net-_C2-Pad1_ 1Meg
+R1 Net-_R1-Pad1_ INPUT 220
+R5 VB3 /BDF 100k
+R2 INPUT 0 100k
+R7 /BDF Net-_C1-Pad1_ 47k
+R3 Net-_R3-Pad1_ Net-_R3-Pad2_ 1.2k
+R4 Net-_R3-Pad2_ 0 47
+R24 0 OUT 4
+R6 OUT Net-_R3-Pad2_ 1k
+V5 /PA2 Net-_V5-Pad2_ 0
+V4 /PA1 Net-_V4-Pad2_ 0
+*****************************
+.SUBCKT 12AX7A P G K
+E1  2  0  VALUE={45+V(P,K)+95.43*V(G,K)}
+R1  2  0  1.0K
+Gp  P  K  VALUE={1.147E-6*(PWR(V(2),1.5)+PWR(URAMP(V(2)),1.5))/2}
+Cgk G  K  1.6P
+Cgp G  P  1.7P
+Cpk P  K  0.46P
+.ENDS 12AX7A
+.SUBCKT 12AU7A P G K
+E1  2  0  VALUE={V(P,K)+18.28*V(G,K)}
+R1  2  0  1.0K
+Gp  P  K  VALUE={10.88E-6*(PWR(V(2),1.5)+PWR(URAMP(V(2)),1.5))/2}
+Cgk G  K  1.6P
+Cgp G  P  1.5P
+Cpk P  K  0.5P
+.ENDS 12AU7A
+.SUBCKT 6CA7 A S G K
+Bat	at  0	V=0.636*ATAN(V(A,K)/23)
+Bgs	gs  0	V=URAMP(V(S,K)/9.3+V(G,K)*0.95)
+Bgs2	gs2 0	V=V(gs)^1.5
+Bcath	cc  0	V=V(gs2)*V(at)
+Ba	A   K	I=1.86E-3*V(cc)
+Bscrn	sc  0	V=V(gs2)*(1.1-V(at))
+Bs	S   K	I=1.518E-3*V(sc)
+Bg	G   K	I=(URAMP(V(G,K)+1)^1.5)*50E-6
+Cg1	G	K	15.4p
+Cak	A	K	8.4p
+Cg1a	G	A	1.1p
+.ENDS 
+*****************************
+.SUBCKT TROI 1 2 3 4 5
+.PARAM N1=15 N2=1
+BI12 1 2 I=I(VM12)/N1
+BU12 6 0 V=(V(1)-V(2))*N2
+VM12 6 9 0
+BI23 2 3 I=I(VM23)/N1
+BU23 7 0 V=(V(2)-V(3))*N2
+VM23 7 9 0
+BI45 4 5 I=I(VM45)/N2
+BU45 8 0 V=(V(4)-V(5))*N1
+VM45 8 9 0
+RXX  0 9 1e6
+.ENDS TROI
+.SUBCKT ECC82 1 2 3 4 5 6 7 8
+XVP1 1 2 3 12AU7A
+XVP2 6 7 8 12AU7A
+RXP1 4 5 10
+.ENDS ECC82
+.SUBCKT ECC83 1 2 3 4 5 6 7 8
+XVP1 1 2 3 12AX7A
+XVP2 6 7 8 12AX7A
+RXP1 4 5 10
+.ENDS ECC83
+.SUBCKT EL34 1 2 3 4 5 7 8
+RXP1 2 7 10
+RXP2 1 8 1
+XCP1 3 4 5 8 6CA7
+.ENDS EL34
+EXX1 0 /INP 0 INPUT 100
+EXX2 0 /OUT 0 OUT   10
+*****************************
+.tran 1u 10m uic
+.end
