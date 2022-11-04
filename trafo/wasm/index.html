@@ -55,14 +55,18 @@
       Po pravdě řečeno, je to dost citlivé na parametry, změníme-li frekvenci z 50 na 100 Hz, nic zajímavého se zase neděje.
       </p>
       <h2>Testy</h2>
-      <p>Lze si vyzkoušet třeba tento <a href="./cmos.cir" onclick="getUrl(this); return false;">obvod</a>, je to
+      <p><ul>
+      <li>Lze si vyzkoušet třeba tento <a href="./cir/cmos.cir" onclick="getUrl(this, './cir/cmos.png'); return false;">obvod</a>, je to
       <a href="../../spice/index.html" target="_blank">diskretizovaný RC oscilátor ze dvou hradel</a>. Jednoduše na to klikněte, ono se to načte samo.
-      Nebo lze vyzkoušet <a href="./power.cir" onclick="getUrl(this); return false;">elektronkový zesilovač</a>, je
+      <li>Nebo lze vyzkoušet <a href="./cir/power.cir" onclick="getUrl(this, './cir/power.png'); return false;">elektronkový zesilovač</a>, je
       na něm vidět, že to umí i dost složitý obvod. Původně jsem chtěl udělat nějaký nástroj, kterým by se daly
       přidávat zobrazení, ale není to nutné. Prostě se přidá zdroj napětí řízený napětím (viz EXXn), kde je výstupní
       uzel prefixován slash. Je tak možné změnit i měřítko zobrazení v ose Y, případně zobrazit napětí mezi dvěma uzly.
-      </p>
-      <img src="power.png"/>
+      <li>Dalším je nejjednodušší harmonický <a href="./cir/osc.cir" onclick="getUrl(this, './cir/osc.png'); return false;">oscilátor</a>
+      s tzv. lambda diodou, což je vlastně sériové zapojení komplementárních JFET tranzistotů, což vytváří charakteristiku
+      se záporným diferenciálním odporem typu "Lambda". Tady se zobrazené vektory tvoří jednodušeji pomocí VXX s nulovým napětím.
+      </ul></p>
+      <!-- <img src="power.png"/> -->
       <h2>Závěr</h2>
       <p>Je to jen hračka, na skutečnou práci to není a nebude, na hraní to vyhovuje. Neumí to digitální a smíšené obvody.
       Na webu najdete mnoho webových simulátorů v různém stadiu propracovanosti a samotné ngspice lze jednoduše nainstalovat,

@@ -7,6 +7,7 @@ function resizeCanvas() {
   const height = canvas.clientHeight;
   canvas.width  = width;
   canvas.height = height;
+  console.log ('resize', width, height);
   g_WebWorker.postMessage ({ id: 1, w: width, h: height});
 }
 g_WebWorker.onmessage = function (evt) {
@@ -38,8 +39,10 @@ function ClickRun() {
 window.onload = (event) => {    // vycistit texty
   document.getElementById('output').value = "";
   document.getElementById( 'input').value = "";
+  canvas.width  = canvas.clientWidth;
+  canvas.height = canvas.clientHeight;
   const content = canvas.getContext('2d');
-  content.font = '24px serif';
+  content.font = '48px serif';
   content.fillStyle = '#00FF00';
   content.textAlign = 'center';
   content.fillText ('Spice Simulator', canvas.width / 2, canvas.height / 2);
@@ -80,7 +83,7 @@ function loadFile(filePath) {
     console.log (result);
   }
 }
-function getUrl (e) {
+function getUrl (e, imgUrl) {
   fetch(e.href)
     .then((response) => {
       if (!response.ok) {
@@ -89,5 +92,15 @@ function getUrl (e) {
       return response.text();
     })
     .then((text) => document.getElementById('input').value = text)
-    .catch((err) => console.error('Fetch problem'));
+    .catch((err) => console.error('Fetch problem circuit'));
+  if (imgUrl == null) return;
+  circImg = new Image ();
+  circImg.onload = function () {
+    const content = canvas.getContext('2d');
+    content.clearRect (0,0,canvas.width, canvas.height)
+    const w = this.width, h = this.height;
+    console.log (w, h, canvas.width, canvas.height);
+    content.drawImage (this, 0, 0, w, h);
+  }
+  circImg.src = imgUrl;
 }

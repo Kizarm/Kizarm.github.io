@@ -16,7 +16,7 @@ XQ2 /OUT /MID 0   SXN
 XQ3 /MID /INP VCC SXP
 XQ4 /MID /INP 0   SXN
 C1  /INP /OUT 5n IC=2
-R1  /MID /INP 1k
+R1  /MID /INP 10k
 *********************
-.tran 10n 50u uic
+.tran 100n 500u uic
 .end
