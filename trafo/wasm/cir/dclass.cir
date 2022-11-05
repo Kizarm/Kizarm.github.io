@@ -1,0 +1,88 @@
+.title DClass amplifier
+.global gnd
+xu1 net-_c1-pad1_ net-_c1-pad2_ net-_r10-pad2_ vee net-_r3-pad1_ 0 net-_q1-pad2_ vdd tl072
+r2 vint net-_c1-pad2_ 10k
+r4 net-_q1-pad2_ net-_r3-pad1_ 10k
+r3 net-_r3-pad1_ net-_c1-pad1_ 2.2k
+c1 net-_c1-pad1_ net-_c1-pad2_ 1n
+v2 vdd 0 15
+v3 0 vee 15
+v1 vinp 0 sin(0 20 2k) dc=0
+l1 vint vout 300u
+c2 0 vout 1.2u
+r8 0 vout 8
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ qbc847
+q2 net-_q2-pad1_ net-_q1-pad2_ net-_q1-pad3_ qbc857
+r7 0 net-_q1-pad3_ 47
+q3 vint net-_q1-pad1_ vpf qbd136
+q4 vint net-_q2-pad1_ vnf qbd137
+r5 net-_q1-pad1_ vpf 1k
+r6 vnf net-_q2-pad1_ 1k
+v4 vpp 0 30
+v5 0 vpn 30
+d1 vint vpf d1n4007
+d2 vnf vint d1n4007
+r1 net-_c1-pad2_ 0 1k
+r9 net-_r10-pad2_ vinp 10k
+r10 0 net-_r10-pad2_ 1k
+c3 vpf 0 100u ic=30
+l2 vpf vpp 10u
+l3 vnf vpn 10u
+c4 0 vnf 100u ic=30
+.subckt tl072 1 2 3 4 5 6 7 8
+x00 3 2 8 4 1 tl071
+x01 5 6 8 4 7 tl071
+.ends tl072
+.model d1n4007 d is=7.02767e-09 rs=0.0341512 n=1.80803 eg=1.05743 xti=5 bv=1000 ibv=5e-08 cjo=1e-11 vj=0.7 m=0.5 fc=0.5 tt=1e-07 kf=0 af=1
+.subckt tl071 2 1 4 5 3
+.model mdth d is=1e-8 kf=5.306587e-14 cjo=10f
+cip 2 5 1.000000e-12
+cin 1 5 1.000000e-12
+eip 10 5 2 5 1
+ein 16 5 1 5 1
+rip 10 11 1.130435e+00
+rin 15 16 1.130435e+00
+ris 11 15 2.476554e-01
+dip 11 12 mdth 400e-12
+din 15 14 mdth 400e-12
+vofp 12 13 dc 0
+vofn 13 14 dc 0
+ipol 13 5 2.300000e-04
+cps 11 15 4.091333e-08
+dinn 17 13 mdth 400e-12
+vin 17 5 3.000000e+00
+dinr 15 18 mdth 400e-12
+vip 4 18 0.000000e+00
+fcp 4 5 vofp 6.096957e+00
+fcn 5 4 vofn 6.096957e+00
+fip 5 19 vofp 8.217391e+02
+fin 5 19 vofn 8.217391e+02
+rg1 19 5 1.112645e+06
+rg2 19 4 1.112645e+06
+cc 19 29 1.300000e-08
+hztp 30 29 vofp 7.743183e+02
+hztn 5 30 vofn 7.743183e+02
+dopm 19 22 mdth 400e-12
+donm 21 19 mdth 400e-12
+hopm 22 28 vout 3.750000e+03
+vipm 28 4 1.500000e+02
+honm 21 27 vout 3.750000e+03
+vinm 5 27 1.500000e+02
+eout 26 23 19 5 1
+vout 23 5 0
+rout 26 3 9.384786e+01
+cout 3 5 1.000000e-12
+dop 19 25 mdth 400e-12
+vop 4 25 3.259753e+00
+don 24 19 mdth 400e-12
+von 24 5 3.259753e+00
+.ends
+.model qbc847 npn is=1.822e-14 nf=0.9932 ise=2.894e-16 ne=1.4 bf=324.4 ikf=0.109 vaf=82 nr=0.9931 isc=9.982e-12 nc=1.763 br=8.29 ikr=0.09 var=17.9 rb=10 irb=5e-06 rbm=5 re=0.649 rc=0.7014 xtb=0 eg=1.11 xti=3 cje=1.244e-11 vje=0.7579 mje=0.3656 tf=4.908e-10 xtf=9.51 vtf=2.927 itf=0.3131 ptf=0 cjc=3.347e-12 vjc=0.5463 mjc=0.391 xcjc=0.6193 tr=9e-08 cjs=0 vjs=0.75 mjs=0.333 fc=0.979
+.model qbc857 pnp is=2.014e-14 nf=0.9974 ise=6.578e-15 ne=1.45 bf=315.3 ikf=0.079 vaf=39.15 nr=0.9952 isc=1.633e-14 nc=1.15 br=8.68 ikr=0.09 var=9.5 rb=10 irb=5e-06 rbm=5e-06 re=0.663 rc=0.718 xtb=0 eg=1.11 xti=3 cje=1.135e-11 vje=0.7071 mje=0.3808 tf=6.546e-10 xtf=5.387 vtf=6.245 itf=0.2108 ptf=0 cjc=6.395e-12 vjc=0.4951 mjc=0.44 xcjc=0.6288 tr=5.5e-08 cjs=0 vjs=0.75 mjs=0.333 fc=0.9059
+.model qbd136 pnp is=1e-09 bf=681.414 nf=0.85 vaf=10 ikf=0.196957 ise=1e-08 ne=1.57381 br=56.5761 nr=1.5 var=0.975138 ikr=0.952908 isc=1e-08 nc=3.58666 rb=40.4245 irb=0.1 rbm=0.106663 re=0.00034585 rc=1.31191 xtb=22.4074 xti=1 eg=1.05 cje=1e-11 vje=0.75 mje=0.33 tf=1e-09 xtf=1 vtf=10 itf=0.01 cjc=1e-11 vjc=0.75 mjc=0.33 xcjc=0.9 fc=0.5 cjs=0 vjs=0.75 mjs=0.5 tr=1e-07 ptf=0 kf=0 af=1
+.model qbd137 npn is=1e-09 bf=222.664 nf=0.85 vaf=36.4079 ikf=0.166126 ise=5.03418e-09 ne=1.45313 br=1.35467 nr=1.33751 var=142.931 ikr=1.66126 isc=5.02557e-09 nc=3.10227 rb=26.9143 irb=0.1 rbm=0.1 re=0.000472454 rc=1.04109 xtb=0.727762 xti=1.04311 eg=1.05 cje=1e-11 vje=0.75 mje=0.33 tf=1e-09 xtf=1 vtf=10 itf=0.01 cjc=1e-11 vjc=0.75 mjc=0.33 xcjc=0.9 fc=0.5 cjs=0 vjs=0.75 mjs=0.5 tr=1e-07 ptf=0 kf=0 af=1
+vxx1 vinp /inp 0
+vxx2 vout /out 0
+vxx3 vint /int 0
+.tran 100n 0.8m
+.end
