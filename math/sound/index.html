@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>SOUND</title>
+  <style>
+    .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
+    textarea.emscripten { font-family: monospace; font-size: 18px; width: 100%; overflow-x: scroll; white-space: pre; background: black; color: rgb(0,255,0);}
+   .frame1 {  width: 97%;  margin: 0; padding: 10px;  background-color: #FFFFC0; border: 10px solid #F0C0F0; }
+  </style>
+</head>
+<body>
+  <script type="module" src="index.js"></script>
+  <textarea class="emscripten" id="output" rows="25" spellcheck="false"></textarea>
+  <div class="frame1">
+    <input id="buttonTest" type="button" value="Test">
+  </div>
+  <div class="frame1">
+  <h2>Popis.</h2>
+  <p><a href="https://webassembly.org/" target="_blank">Webassembly</a> je nástroj, který umožňuje
+  spouštět nativní kód přímo v prohlížeči. Zdrojáky pro tento kód lze napsat v jazycích, které podporuje
+  <a href="https://llvm.org/" target="_blank">LLVM</a>, obvykle to bývá C/C++ a pro vývoj se používá
+  <a href="https://emscripten.org/" target="_blank">Emscripten</a>. Je to dost komplexní nástroj,
+  který umí všechno možné a v podstatě nevyžaduje žádné hluboké znalosti o tom jak to chodí uvnitř.
+  Používám to, ale vadí mi, že i pro velmi jednoduché věci to vygeneruje spoustu balastu ve kterém
+  se nevyznám, protože nejsem úplně odborník na web a javascript. Už dlouho se zabývám programováním
+  jednočipů bez externích knihoven (čisté bare-metal programování) a v poslední době se osvědčuje
+  jako nástroj clang. Do LLVM přibylo něco jako binutils, takže ve své podstatě nic jiného není potřeba.
+  A protože LLVM má jako cílovou platformu též webassembly, lze to použít i zde. A obejdeme se zcela
+  bez Emscripten, stejně je to jen obal na clang/LLVM.
+  </p>
+  <p>Celkem není problém volat z javascriptu kód napsaný v C/C++, ostatně k tomu je to určeno,
+  jak to slepit dohromady se dá na webu najít, není to složité, jen je nutné pochopit jak fungují
+  pohledy do paměti, protože C-čkový ukazatel je v javascriptu jen celé číslo, které určuje ofset
+  od bodu WebAssembly.memory.buffer. Tyhle pohledy se vytváří v javascriptu jako Uint8Array (nebo jiný ie. Uint32Array
+  podle typu ukazatele v C/C++) a voláním funkce ve webassembly se mohou změnit (třeba jen alokací paměti uvnitř).
+  Lidi, kteří se tím zabývají se s tím moc nemažou, exportují obvykle vše (wasm-ld parametr <i>--export-all</i>).
+  Ale potřeba je jen něco - dá se najít, že exportované funkce se dají deklarovat pomocí
+  <i>__attribute__((used, export_name("func_name")))</i>, přičemž <i>func_name</i> je vidět z javascriptu.
+  </p>
+  <p>Tím jsem se pomalu dostal k podstatě věci - občas je nutné volat z C/C++ kódu javascriptové funkce.
+  To je poněkud problematické, emscripten na to nabízí hned několik metod, ale všechny jsou komplikované.
+  Přitom to jde úplně jednoduše - v C/C++ javascriptovou funkci deklarujeme pomocí <i>__attribute__((import_name("func_name")))</i>
+  a v javascriptu jí přidáme do importObject. <b>Tuhle informaci na webu nenajdete</b>, alespoň ne snadno.
+  Buď je to nová fičůrka, nebo to lidi nepoužívají a nebo je to v emscripten zahrabané tak hluboko,
+  že už se to nedá vyhrabat. Sice to při linkování vyhodí chybu, pochopitelně
+  tyto externí funkce nejsou definovány, ale dá se to vypnout parametrem wasm-ld <i>--allow-undefined</i>.
+  Zde použitá matoda je o něco pokročilejší. Symboly definované v javascriptu dáme do souboru (zde symbols.txt)
+  a místo <i>--allow-undefined</i> použijeme parametr <i>--allow-undefined-file=symbols.txt</i>.
+  Pokud se pak objeví nějaké další nedefinované symboly, což se u většího projektu snadno stane,
+  linker o tom dá vědět.
+  </p>
+  <p>Všechny knihovní funkce pro výpis na konzoli jako je printf(), puts() vedou na něco jako
+  <i>void printout (const char * ptr, const int len);</i> a to právě musí být nějak ošetřeno javascriptem.
+  Zde už by měla být poměrně korektně dodělána základní knihovna pro debug pomocí printf().
+  Funkce malloc() používá pro sbrk() memory.grow(), pokud máme málo paměti. Pro tento test
+  se používá javascript AudioContext, hraje pomocí createBufferSource(), což vyžaduje poměrně
+  dost paměti. Sice nechápu jak to funguje, čekal bych, že po přehrání buferu to vygeneruje
+  nějakou událost, která tomu řekne o další data, ale zřejmě je to tak vysokoúrovňové, že je
+  to celé úplně jinak. Zdrojáky jsou <a href="./sound.zip">zde</a>.
+  </p>
+  </div>
+</body>
+</html>
