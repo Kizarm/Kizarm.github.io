@@ -1,0 +1,25 @@
+.title chua
+.global gnd
+.subckt sxn 1 2 3
+.model mmn nmos level=3 l=10u w=35.4u vto=1v kp=111u
+m01 1 2 3 3 mmn
+.ends sxn
+.subckt sxp 1 2 3
+.model mmp pmos level=3 l=10u w=70.8u vto=-1v kp=55.5u
+m02 1 2 3 3 mmp
+.ends sxp
+v1 vcc 0 9
+xq1 chb cha vcc sxp
+xq2 chb cha 0 sxn
+xq3 cha chb vcc sxp
+xq4 cha chb 0 sxn
+r0 chd vlc 9.17
+c2 chc chd 537p ic=1
+l1 chc vlc 29.4u
+c1 cha chd 49p
+r1 cha chc 880
+v2 chb chd 0
+em1 0 /vmi cha chb 1
+em2 0 /vmo chc chd 1
+.tran 10n 100u uic
+.end
