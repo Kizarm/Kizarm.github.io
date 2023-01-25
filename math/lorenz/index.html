@@ -3,22 +3,97 @@
   <head>
       <meta charset="utf-8">
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-      <title>Lorenz</title>
+      <title>Lorenz Atractor</title>
+      <style>
+          html,
+          body {
+              height:  98%;
+              margin:  0;
+              padding: 0;
+          }
+          .canvas {
+              width:  98vw;
+              height: 78vh;
+          }
+          .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 50px;
+            border-radius: 5px;  
+            background: #00FF00;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+          }
+          .slider::-moz-range-thumb {
+            width: 25px;
+            height: 50px;
+            background: #A000A0;
+            cursor: pointer;
+          }
+          .button {
+            background-color: #00F0F0;
+            border: none;
+            color: black;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 32px;
+            border: 2px solid #4CAF50;
+          }
+          .frame1 {
+            width:  90%;
+            margin: auto;
+            background-color: #FFFFC0;
+            border: 10px solid #F0C0F0;
+          }
+      </style>
   </head>
   <body>
-      <div id="WasmDomElements"></div>
-      <script src="lorenz.js"></script>
-      <script>
-        /* Vše co jen bylo možné je schováno ve zdrojácích C++. Je to sice jedno, nicméně i to funguje. */
-        Module.addOnPostRun(() => {
-          // WebAssembly vytvoří celý DOM a nakonec i funkcionalitu prvků.
-          document.getElementById ('WasmDomElements').innerHTML = Module.Init ();
-          Module.WasmInitAll ();
-        });
-        // Název UniversalDriver je podstatný, DOM to používá.
-        function UniversalDriver (index) {
-          Module.WasmDriver (index);
-        };
-      </script>
+      <script src="index.js"></script>
+      <table width="99%"><tr>
+        <td><h2 id="graphdesc"></h2></td>
+        <td><h3 id="paramw"></h3></td>
+        <td><h3 id="params"></h3></td>
+      </tr></table>
+      <canvas id="canvas" class="canvas"></canvas>
+      <table width="99%">
+        <tr>
+        <td width="100%"><input type="range" min="200" max="300" value="270" class="slider" id="wRange" oninput="wChangeVal();" disabled></td>
+        <td><button class="button" id="StartButton" onClick="StartStop();">Start</button></td>
+        <td><button class="button" id="ResetButton" onClick="ResetImag();">Clear</button></td>
+        </tr>
+        <tr>
+        <td width="100%" colspan="3"><input type="range" min="5" max="200" value="10" class="slider" id="wSpeed" oninput="wChangeSpeed();" disabled></td>
+        </tr>
+        </table>
+        <div class="frame1">
+        <h3>Popis.</h3>
+          <p>Tento skript sice také není k ničemu, ale ukazuje, že lze použít Webassembly i bez jakýchkoli grafických knihoven, pokud jde jen
+          o vykreslování čar (ale třeba i kroužků - nakreslit kruh jde i bez trigonometrických funkcí, jen pomocí násobení a sčítání, je ale potřeba trochu
+          znát vlastnosti unitárních matic). Sice to není hezké, ale zato je to hodně malé. Možná i rychlé, ale o to zde moc nešlo.
+          Spíš šlo o to použít něco, co by bylo v samotném javascriptu pomalé nebo neohrabané. Zde je to <b>řešení soustavy nelineárních
+          diferenciálních rovnic metodou Runge-Kutta 4.řádu</b>. To je v C++ prosté, rychlé a poměrně přesné. Wasm část trajektorie vyklesluje
+          do paměti, problém je to zpátky zobrazit. Je potřeba z toho udělat obrázek a k tomu je nutný pomocný canvas, což docela zdržuje.
+          Je tu ukázána (celkem zbytečně) i metoda jak vytvořit obrázek pozadí a přes to překreslit samotné trajektorie - vrchní obrázek
+          musí být průhledný. I když ty transformace dat asi nejsou udělány nejlépe, funguje to celkem svižně, lze udělat 60fps při zatížení
+          procesoru 80%. Přitom v každém kroku je možné udělat až 200 iterací rovnic a na zatížení se to moc neprojeví. Zřejmě to nejvíc zabíjí
+          to zobrazování. Je to jedna z mála možností, kde by wasm kód mohl mít alespoň trochu smysl. Měl jsem to samé uděláno v Qt (tedy i pro Webassembly),
+          ale celé to zabralo 13MiB, tohle má celkem jen asi 82 KiB. A to je docela znát.
+          </p>
+          <p>25.01.2023 - upraveno jako bare bone modul, tzn. není potřeba emscripten, jen clang. To potlačilo hodně
+          zbytečného lepidla v javascriptu, takže teď to má celkem jen asi 13 KiB. To sice není zase tak podstatné,
+          ale zkusil jsem udělat postupné stmívání vykreslované čáry tak, jak by to dělal třeba analogový osciloskop
+          s dlouhým dosvitem (i když ten není obvykle barevný). Dost dlouho jsem si lámal hlavu, jak tohle udělat.
+          Nakonec se ukázalo jako nejjednodušší udělat neprůhledný podklad (ta síť) a přes to plácnout obrázek
+          do kterého se to vykresluje s tím, že jeho průhlednost je řízena. Řízení je vlastně jednoduché - při
+          každé iteraci se snižuje hodnota (a) v barvě (rgba) až na nulu. Sice to zabírá dost procesorového času (je třeba
+          prolézt všechny pixely), ale není to zase tak hrozné, takže i to se dá počítat ve smyčce událostí.
+          </p>
+          <p>I když jsou v tom chyby a zřejmě to není optimálně napsáno, přibalím i <a href="lorenz.zip">zdrojáky</a>.
+          </p>
+        </div>
   </body>
 </html>
