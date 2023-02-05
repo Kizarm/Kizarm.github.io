@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" http-equiv="Content-Type" content="text/html" />
+  <title>Mandelbrot</title>
+  <style>
+    .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
+    textarea.emscripten { font-family: monospace; font-size: 18px; width: 100%; white-space: pre; background: black; color: rgb(0,255,0);}
+   .frame1 { width: 96%;  margin: 0; padding: 10px;  background-color: #FFFFC0; border: 10px solid #F0C0F0; }
+   .canvas { width: 800px; height: 600px; background-color: black; }
+  </style>
+</head>
+<body>
+  <script type="module" src="index.js"></script>
+  <div class="frame1">
+  <table><tr>
+  <td><canvas class="canvas" id="canvas"></canvas></td>
+  <td id="description" VALIGN=TOP></td>
+  </tr></table>
+  <textarea class="emscripten" id="output" rows="10" spellcheck="false"></textarea>
+  </div>
+  <div class="frame1">
+  <h2>Popis.</h2>
+  <p>Je to sice jen taková blbina, na Internetu lze najít 1000+1 podobných vykreslení,
+  fungujících možná i rychleji a lépe, ale je to ukázka použití bare bone webassembly
+  modulu ve funkci workeru. Samotný výpočet je vlastně jen malý kousek kódu, který se
+  patrně vejde celý do cache a JIT kompilátor javascriptu by si s tím poradil asi stejně
+  rychle jako nativní kód, nicméně proč to nezkusit.
+  </p>
+  <p>Zoomování se provádí kolečkem myši, klávesy 0 až 9 mění paletu zobrazení, klávesa
+  ENTER (nebo HOME) vrátí zobrazení na původní velikost. Čísla vypisovaná vpravo
+  znamenají : Z je měřítko, X,Y souřadnice bodu v centru zobrazení (canvasu). Toť vše.
+  </p>
+  <p>Přibalím i <a href="mandel.zip">zdrojáky</a>, je v tom i test v Qt, který sice
+  funguje, ale není úplně korektní, bylo to uděláno jen pro test třídy Canvas, smyčka
+  událostí by se musela obsloužit jinak. Celkem korektní je zazipovaný příklad, který používá
+  více vláken a je proto rychlejší. Základ je stejný.
+  </p>
+  </div>
+</body>
+</html>
