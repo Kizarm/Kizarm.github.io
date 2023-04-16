@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Micropython</TITLE>
+    <script src="build/micropython.js"></script>
+    <style>
+      body {background-color: rgb(192,255,255); }
+      h2   {color: rgb(64,0,192); font-size: 18px;}
+      b    {color: rgb(64,0,192);}
+      tr, td { border: 1px solid black; border-collapse: collapse; }
+      table  { width:100%; border: 1px solid blue;  border-collapse: collapse; text-align: center; }
+      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
+      textarea.emscripten { font-family: monospace; font-size: 16px; width: 100%; overflow-x: scroll; white-space: pre; background: black; color: rgb(0,255,0);}
+  </style>
+  </head>
+  <body>
+    <h1>Micropython v browseru.</h1>
+    <table><tr>
+    <td width="40%"><textarea class="emscripten" id="input"  rows="25" spellcheck="false"></textarea></td>
+    <td><textarea readonly class="emscripten" id="micropython-stdout" rows="25" spellcheck="false"></textarea></td>
+    </tr></table>
+    <input id="start" type="button" value="Run"  onclick="ClickRun();" disabled="true"/>
+    <h2>Jak to funguje.</h2>
+    <p>Netuším. Prostě jsem si hrál se <a href="https://github.com/micropython/micropython" target="_blank">zdrojáky</a>
+    a objevil tam klon pro webassembly. Tak jsem to přeložil a ono to fungovalo. Interaktivní forma
+    REPL mi připadala složitá na implementaci, tak jsem nechal levé okno pro skript a pravé pro výsledek (stdout).
+    V browseru mi to připadá přirozenější. Kromě této stránky žádné jiné úpravy nebyly potřeba.
+    </p>
+    <p>Funguje to. Je to sice jen takový modernější BASIC, ale jako programovatelná kalkulačka to klidně poslouží.
+    Modul <i>math</i> je celkem použitelný, dále jsou tam moduly jako <i>os, sys,</i> ale práce se soubory ve webovém prostředí
+    je jaksi k ničemu. Moduly pro práci s hardware zde přirozeně nejsou. Na vyzkoušení jednoduchého algoritmu,
+    který se vejde do okna to stačí i když je editor debilní - lze použít Copy/Paste odjinud.
+    </p>
+    <script>
+      const py_script = "def fact (m):\n  n=1\n  for i in range(1,m):\n    n*=i\n    print('{0:02d}:{1:d}'.format(i,n))\nk=100\nprint('factorials from 1 to {0:d}'.format(k-1))\nfact (k)\n";
+      document.addEventListener("micropython-print", function(e) {
+        let output = document.getElementById("micropython-stdout");
+        output.value += new TextDecoder().decode(e.detail);
+      }, false);
+
+      var mp_js_startup = Module["onRuntimeInitialized"];
+      Module["onRuntimeInitialized"] = function() {
+        document.getElementById("micropython-stdout").value = '';
+        mp_js_startup();
+        mp_js_init(64 * 1024);
+        mp_js_do_str("print('  Welcome to micropython. Press button Run')");
+        document.getElementById("start").disabled = false;
+        document.getElementById("input").value = py_script;
+      };
+      function ClickRun () {
+        document.getElementById("micropython-stdout").value = '';
+        let py_src = document.getElementById ("input").value;
+        mp_js_do_str (py_src);
+      }
+    </script>
+  </body>
+</html>
+
