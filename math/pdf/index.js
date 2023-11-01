@@ -46,6 +46,7 @@ var Butp = document.getElementById("sbut");
 })();
 
 function passwd (str) {
+  if (!str.length) return;
   console.log(str);
   
   const utf8EncodeText = new TextEncoder();
