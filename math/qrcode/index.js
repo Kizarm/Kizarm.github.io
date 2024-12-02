@@ -1,6 +1,7 @@
 var Module;  // globální proměnná + elementy stránky
-const Outs = document.getElementById('output');
-const Btnt = document.getElementById('buttonTest');
+const Outs   = document.getElementById('output');
+const Btnt   = document.getElementById('buttonTest');
+const canvas = document.getElementById('qrcode');
 // async/await z příkladu na webu
 (async () => {
   Btnt.disabled = true;
@@ -21,13 +22,12 @@ const Btnt = document.getElementById('buttonTest');
         memory.grow (len); // patrně to jde volat přímo z C/C++ kódu, ale tohle funguje
       },
       ReplotPass : (ptr, len, w, h) => {
-        const canvas  = document.getElementById ('qrcode');
-        canvas.widht  = w;
+        canvas.width  = w;
         canvas.height = h;
         const context = canvas.getContext ('2d');
         const view    = new Uint8ClampedArray (memory.buffer, ptr, len);
         const fgImage = backup (view, w, h);
-        context.clearRect(0, 0, canvas.widht, canvas.height);
+        context.clearRect(0, 0, canvas.width, canvas.height);
         context.drawImage(fgImage, 0, 0);
       },
       exit : (code) => {
