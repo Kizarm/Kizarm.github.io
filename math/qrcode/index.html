@@ -7,21 +7,32 @@
     .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
     textarea.emscripten { font-family: monospace; font-size: 18px; width: 100%; overflow-x: scroll; white-space: pre; background: black; color: rgb(0,255,0);}
    .frame1 { width: 96%;  margin: 0; padding: 10px;  background-color: #FFFFC0; border: 10px solid #F0C0F0; }
-   .text   { width: 80%; }
+   .text   { width: 75%; }
   </style>
 </head>
 <body>
-  <script type="module" src="index.js"></script>
+  <script type="text/javascript" src="index.js"></script>
   <textarea class="emscripten" id="output" rows="10" spellcheck="false"></textarea>
   <div class="frame1">
     <label for="name">Text of qrcode:</label>
     <input id="name" type="text" name="name" class="text">
     <input id="buttonTest" type="button" value="Test">
+    <input id="buttonCopy" type="button" value="Copy to clipboard">
   </div>
   <p align="center"><canvas id="qrcode" width="100" height="100" style="border:1px solid #d3d3d3;" ></p>
   <div class="frame1">
-  <p>Source code: <a href="./qrcode.zip">bez jakékoli záruky</a>.
-  </p>
+    <p>Source code: <a href="./qrcode.zip">bez jakékoli záruky</a>.
+    </p>
   </div>
+  <script type="text/javascript">
+  window.onload = (event) => {
+    StartQR (document.getElementById ('output'), 
+             document.getElementById ('buttonTest'),
+             document.getElementById ('name'),
+             document.getElementById ('qrcode'),
+             document.getElementById ('buttonCopy'),
+    );
+  };
+  </script>
 </body>
 </html>

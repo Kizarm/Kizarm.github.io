@@ -1,9 +1,4 @@
-var Module;  // globální proměnná + elementy stránky
-const Outs   = document.getElementById('output');
-const Btnt   = document.getElementById('buttonTest');
-const canvas = document.getElementById('qrcode');
-// async/await z příkladu na webu
-(async () => {
+async function StartQR (Outs, Btnt, QRCode, canvas, BtCp) {
   Btnt.disabled = true;
   Outs.value = 'Compiling ...\n';        // presets
   // Build WebAssembly instance - WebAssembly.instantiateStreaming problem
@@ -28,7 +23,7 @@ const canvas = document.getElementById('qrcode');
         const view    = new Uint8ClampedArray (memory.buffer, ptr, len);
         const fgImage = backup (view, w, h);
         context.clearRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(fgImage, 0, 0);
+        context.drawImage(fgImage, 0, 0);        
       },
       exit : (code) => {
         console.log (code);
@@ -39,12 +34,24 @@ const canvas = document.getElementById('qrcode');
   const bytes    = await response.arrayBuffer();
   const module   = await WebAssembly.instantiate(bytes, importObject);
   module.memory  = memory;  // přidat memory, tady sice není potřeba, ale hodí se
-  Module = module;
-  Module.instance.exports.init(memory.buffer.byteLength); // musí se použít
-  document.getElementById ('name').value = 'Hello world'
+  module.instance.exports.init(memory.buffer.byteLength); // musí se použít
+  QRCode.value = 'Hello world';
   Btnt.onclick = () => {
-    const txt = document.getElementById ('name').value;
-    // console.log(txt);
+    setQrCode (QRCode.value);
+  };
+  BtCp.onclick = () => {
+    canvas.toBlob((blob) => {
+      navigator.clipboard.write([
+          new ClipboardItem({ "image/png": blob })
+      ]);
+    }, "image/png");
+  };
+  Outs.value = 'Module compiled - fill input and press button Test\n';
+  Btnt.disabled = false;
+  console.log (module);
+  module.instance.exports.zero();
+  
+  function setQrCode (txt) {
     const utf8EncodeText = new TextEncoder ();
     const bytes = utf8EncodeText.encode (txt);
     const cArrayPtr = module.instance.exports.cAlloc (bytes.length);
@@ -55,11 +62,7 @@ const canvas = document.getElementById('qrcode');
     );
     cArray.set (bytes);
     module.instance.exports.test(cArrayPtr, cArray.length);
-  };
-  Outs.value = 'Module compiled - fill input and press button Test\n';
-  Btnt.disabled = false;
-  console.log (Module);
-  
+  }
   function backup (m_Data, w, h) {
     const backupCanvas  = new OffscreenCanvas (w, h);
     const backupContext = backupCanvas.getContext('2d');
@@ -67,4 +70,4 @@ const canvas = document.getElementById('qrcode');
     backupContext.putImageData  (bData, 0, 0);
     return backupCanvas;
   }
-})();
+};
